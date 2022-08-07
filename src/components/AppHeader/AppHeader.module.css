@@ -1,0 +1,71 @@
+.header {
+	background: #1C1C21;
+	box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 1px rgba(0, 0, 0, 0.04);
+}
+
+.header .headerContainer {
+	display: flex;
+	align-items: center;
+
+	max-width: 1280px;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.header .headerNavLeft {
+	display: inline-flex;
+	align-items: center;
+	justify-content: flex-start;
+
+	flex: 0 0 460px;
+	max-width: 460px;
+	width: 100%;
+}
+
+.header .headerNavLeft .headerNavLeftItem {
+	display: inline-flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.header .headerNavLeft .headerNavLeftItem:not(:last-child) {
+	margin-right: calc(var(--offset-base-size) * 2);
+}
+
+.header .headerLogo {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.header .headerNavRight {
+	display: inline-flex;
+	align-items: center;
+	justify-content: flex-end;
+
+	flex: 0 0 460px;
+	max-width: 460px;
+	width: 100%;
+}
+
+.header .headerNavRight .headerNavRightItem {
+	display: inline-flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.header .headerNavLeft .headerNavLeftItem svg,
+.header .headerNavLeft .headerNavLeftItem span,
+.header .headerNavRight .headerNavRightItem svg,
+.header .headerNavRight .headerNavRightItem span {
+	transition: all 0.3s linear;
+}
+
+.header .headerNavLeft .headerNavLeftItem:hover svg,
+.header .headerNavRight .headerNavRightItem:hover svg {
+	fill: #8585AD;
+}
+
+.header .headerNavLeft .headerNavLeftItem:hover span,
+.header .headerNavRight .headerNavRightItem:hover span {
+	color: #8585AD;
+}
