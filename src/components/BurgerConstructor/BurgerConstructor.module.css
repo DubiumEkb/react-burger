@@ -1,0 +1,47 @@
+.BurgerConstructor {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+
+	flex: 0 0 600px;
+	max-width: 600px;
+	width: 100%;
+}
+
+.BurgerConstructor .BurgerConstructorContainer {
+	display: flex;
+	flex-direction: column;
+	gap: calc(var(--offset-base-size) * 4);
+
+	max-height: 464px;
+	height: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.BurgerConstructor .BurgerConstructorContainer::-webkit-scrollbar {
+    width: 8px;
+	height: 80%;
+	max-height: 80%;
+}
+
+.BurgerConstructor .BurgerConstructorContainer::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+
+.BurgerConstructor .BurgerConstructorContainer::-webkit-scrollbar-thumb,
+.BurgerConstructor .BurgerConstructorContainer::-webkit-scrollbar-thumb:hover,
+.BurgerConstructor .BurgerConstructorContainer::-webkit-scrollbar-thumb:active {
+    background: #8585AD;
+}
+
+.BurgerConstructor .BurgerConstructorOrder {
+	display: inline-flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.BurgerConstructor .BurgerConstructorOrder .BurgerConstructorOrderPrice {
+	display: inline-flex;
+	align-items: center;
+}
