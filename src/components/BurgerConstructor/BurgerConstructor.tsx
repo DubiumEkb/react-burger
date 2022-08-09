@@ -5,8 +5,14 @@ import BurgerConstructorItem from "./ui/BurgerConstructorItem"
 // Import Style
 import style from "./BurgerConstructor.module.css"
 
-const BurgerConstructor = ({data}:any) => {
+// Import Props
+import {dataType} from "../../utils/dataType"
 
+export interface BurgerConstructorProps {
+  data: dataType[]
+}
+
+const BurgerConstructor = ({data}:BurgerConstructorProps) => {
 	return (
 		<section className={`${style.BurgerConstructor} pt-25`}>
 			<BurgerConstructorItem data={data} type="top" />

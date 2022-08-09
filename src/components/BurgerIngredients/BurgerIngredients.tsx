@@ -6,7 +6,14 @@ import BurgerIngredientsItem from "./ui/BurgerIngredientsItem"
 // Import Style
 import style from "./BurgerIngredients.module.css"
 
-const BurgerIngredients = ({data}: any) => {
+// Import Props
+import {dataType} from "../../utils/dataType"
+
+export interface BurgerIngredientsProps {
+  data: dataType[]
+}
+
+const BurgerIngredients = ({data}:BurgerIngredientsProps) => {
 	const [current, setCurrent] = useState('one')
 
 	return (
@@ -36,7 +43,7 @@ const BurgerIngredients = ({data}: any) => {
 				<section id="one" className={`${style.BurgerIngredientsContentSection} pt-10`}>
 					<h2 className="text text_type_main-medium pb-6">Булки</h2>
 					<div className={style.BurgerIngredientsContentSectionRow}>
-						{data.map((item:any) => {
+						{data.map((item) => {
 							return item.type === "bun" ? (
 								<BurgerIngredientsItem key={item._id} item={item} classname="pb-10" />
 							) : null
@@ -47,7 +54,7 @@ const BurgerIngredients = ({data}: any) => {
 				<section id="two" className={style.BurgerIngredientsContentSection}>
 					<h2 className="text text_type_main-medium pb-6">Соусы</h2>
 					<div className={style.BurgerIngredientsContentSectionRow}>
-						{data.map((item:any) => {
+						{data.map((item) => {
 							return item.type === "sauce" ? (
 								<BurgerIngredientsItem key={item._id} item={item} classname="pb-8" />
 							) : null
@@ -58,7 +65,7 @@ const BurgerIngredients = ({data}: any) => {
 				<section id="three" className={style.BurgerIngredientsContentSection}>
 					<h2 className="text text_type_main-medium pb-6">Начинки</h2>
 					<div className={style.BurgerIngredientsContentSectionRow}>
-						{data.map((item:any) => {
+						{data.map((item) => {
 							return item.type === "main" ? (
 								<BurgerIngredientsItem key={item._id} item={item} classname="pb-8" />
 							) : null
