@@ -7,14 +7,14 @@ import BurgerIngredientsItem from "./ui/BurgerIngredientsItem"
 import style from "./BurgerIngredients.module.css"
 
 // Import Props
-import {dataType} from "../../utils/dataType"
+import { dataType } from "../../utils/dataType"
 
 export interface BurgerIngredientsProps {
-  data: dataType[]
+	data: dataType[]
 }
 
-const BurgerIngredients = ({data}:BurgerIngredientsProps) => {
-	const [current, setCurrent] = useState('one')
+const BurgerIngredients = ({ data }: BurgerIngredientsProps) => {
+	const [current, setCurrent] = useState("one")
 
 	return (
 		<section className={`${style.BurgerIngredients} pr-10`}>
@@ -29,12 +29,12 @@ const BurgerIngredients = ({data}:BurgerIngredientsProps) => {
 				</Tab>
 
 				{/* @ts-ignore */}
-				<Tab value="two" active={current === 'two'} onClick={setCurrent}>
+				<Tab value="two" active={current === "two"} onClick={setCurrent}>
 					<span>Соусы</span>
 				</Tab>
 
 				{/* @ts-ignore */}
-				<Tab value="three" active={current === 'three'} onClick={setCurrent}>
+				<Tab value="three" active={current === "three"} onClick={setCurrent}>
 					<span>Начинки</span>
 				</Tab>
 			</nav>
