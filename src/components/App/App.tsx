@@ -5,32 +5,10 @@ import style from "./App.module.css"
 // import data from "../../utils/data"
 
 // Import Components
-import { useState, useEffect } from "react"
 import AppHeader from "../AppHeader/AppHeader"
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients"
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor"
-
-const useFetch = (url: string) => {
-	const [data, setData] = useState(null)
-
-	useEffect(() => {
-		async function fetchData() {
-			fetch(url)
-				.then((response) => {
-					return response.json()
-				})
-				.then((data) => {
-					setData(data.data)
-				})
-				.catch((error) => {
-					console.error(console.error())
-				})
-		}
-		fetchData()
-	}, [url])
-
-	return data
-}
+import useFetch from "../../utils/hooks/useFetch"
 
 function App() {
 	const data = useFetch("https://norma.nomoreparties.space/api/ingredients")

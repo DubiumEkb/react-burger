@@ -52,7 +52,7 @@ const Modal = ({ children, title, isOpen, onClose, overlay = false }: Props) => 
 				)}
 				{children}
 			</div>
-			{overlay === true && <ModalOverlay isOpen={isOpen} />}
+			{overlay === true && <ModalOverlay isOpen={isOpen} closeModal={onClose} />}
 		</>,
 		containerModal,
 	)

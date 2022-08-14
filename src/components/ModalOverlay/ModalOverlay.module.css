@@ -1,6 +1,6 @@
 .Overlay {
 	display: none;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
@@ -8,7 +8,7 @@
 	z-index: 1010;
 
 	background-color: #000;
-	opacity: .6;
+	opacity: 0.6;
 	overflow: hidden;
 }
 
