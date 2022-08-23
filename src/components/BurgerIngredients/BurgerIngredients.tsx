@@ -2,28 +2,19 @@
 import { useState } from "react"
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components"
 import BurgerIngredientsItem from "./ui/BurgerIngredientsItem"
-import Modal from "../Modal/Modal"
-import IngredientDetails from "../IngredientDetails/IngredientDetails"
 
 // Import Style
 import style from "./BurgerIngredients.module.css"
 
 // Import Props
-import { dataType } from "../../utils/dataType"
+import {dataType} from "../../utils/dataType"
 
 export interface BurgerIngredientsProps {
-	data: dataType[]
+  data: dataType[]
 }
 
-const BurgerIngredients = ({ data }: BurgerIngredientsProps) => {
-	const [current, setCurrent] = useState("one")
-	const [ingredient, setIngredient] = useState()
-	const [show, setShow] = useState(false)
-	const handleClose = () => setShow(false)
-	const handleShow = (item: any) => {
-		setShow(true)
-		setIngredient(item)
-	}
+const BurgerIngredients = ({data}:BurgerIngredientsProps) => {
+	const [current, setCurrent] = useState('one')
 
 	return (
 		<section className={`${style.BurgerIngredients} pr-10`}>
@@ -38,12 +29,12 @@ const BurgerIngredients = ({ data }: BurgerIngredientsProps) => {
 				</Tab>
 
 				{/* @ts-ignore */}
-				<Tab value="two" active={current === "two"} onClick={setCurrent}>
+				<Tab value="two" active={current === 'two'} onClick={setCurrent}>
 					<span>Соусы</span>
 				</Tab>
 
 				{/* @ts-ignore */}
-				<Tab value="three" active={current === "three"} onClick={setCurrent}>
+				<Tab value="three" active={current === 'three'} onClick={setCurrent}>
 					<span>Начинки</span>
 				</Tab>
 			</nav>
@@ -54,9 +45,7 @@ const BurgerIngredients = ({ data }: BurgerIngredientsProps) => {
 					<div className={style.BurgerIngredientsContentSectionRow}>
 						{data.map((item) => {
 							return item.type === "bun" ? (
-								<button className={style.BurgerIngredientsBtn} key={item._id} onClick={() => handleShow(item)}>
-									<BurgerIngredientsItem item={item} classname="pb-10" />
-								</button>
+								<BurgerIngredientsItem key={item._id} item={item} classname="pb-10" />
 							) : null
 						})}
 					</div>
@@ -67,9 +56,7 @@ const BurgerIngredients = ({ data }: BurgerIngredientsProps) => {
 					<div className={style.BurgerIngredientsContentSectionRow}>
 						{data.map((item) => {
 							return item.type === "sauce" ? (
-								<button className={style.BurgerIngredientsBtn} key={item._id} onClick={() => handleShow(item)}>
-									<BurgerIngredientsItem item={item} classname="pb-8" />
-								</button>
+								<BurgerIngredientsItem key={item._id} item={item} classname="pb-8" />
 							) : null
 						})}
 					</div>
@@ -80,19 +67,11 @@ const BurgerIngredients = ({ data }: BurgerIngredientsProps) => {
 					<div className={style.BurgerIngredientsContentSectionRow}>
 						{data.map((item) => {
 							return item.type === "main" ? (
-								<button className={style.BurgerIngredientsBtn} key={item._id} onClick={() => handleShow(item)}>
-									<BurgerIngredientsItem item={item} classname="pb-8" />
-								</button>
+								<BurgerIngredientsItem key={item._id} item={item} classname="pb-8" />
 							) : null
 						})}
 					</div>
 				</section>
-
-				{show && ingredient && (
-					<Modal title="Детали ингредиента" isOpen={show} onClose={handleClose} overlay={true}>
-						<IngredientDetails item={ingredient} />
-					</Modal>
-				)}
 			</div>
 		</section>
 	)

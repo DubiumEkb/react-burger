@@ -1,3 +1,13 @@
+.BurgerIngredientsItem:nth-child(2n+1) {
+	flex: 0 0 calc(50% - calc(var(--offset-base-size) * 6) );
+	padding-right:	calc(var(--offset-base-size) * 6);
+}
+
+.BurgerIngredientsItem:nth-child(2n) {
+	flex: 0 0 calc(50% - calc(var(--offset-base-size) * 2) );
+	padding-right:	calc(var(--offset-base-size) * 2);
+}
+
 .BurgerIngredientsItem {
 	display: flex;
 	flex-direction: column;

@@ -1,25 +1,18 @@
 // Imporrt Components
-import { useState } from "react"
-import { CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components"
+import {CurrencyIcon, Button} from "@ya.praktikum/react-developer-burger-ui-components"
 import BurgerConstructorItem from "./ui/BurgerConstructorItem"
-import Modal from "../Modal/Modal"
-import OrderDetails from "../OrderDetails/OrderDetails"
 
 // Import Style
 import style from "./BurgerConstructor.module.css"
 
 // Import Props
-import { dataType } from "../../utils/dataType"
+import {dataType} from "../../utils/dataType"
 
 export interface BurgerConstructorProps {
-	data: dataType[]
+  data: dataType[]
 }
 
-const BurgerConstructor = ({ data }: BurgerConstructorProps) => {
-	const [show, setShow] = useState(false)
-	const handleClose = () => setShow(false)
-	const handleShow = () => setShow(true)
-
+const BurgerConstructor = ({data}:BurgerConstructorProps) => {
 	return (
 		<section className={`${style.BurgerConstructor} pt-25`}>
 			<BurgerConstructorItem data={data} type="top" />
@@ -37,14 +30,9 @@ const BurgerConstructor = ({ data }: BurgerConstructorProps) => {
 				</div>
 
 				{/* @ts-ignore */}
-				<Button type="primary" size="large" onClick={handleShow}>
+				<Button type="primary" size="large">
 					Оформить заказ
 				</Button>
-				{show && (
-					<Modal isOpen={show} onClose={handleClose} overlay={true}>
-						<OrderDetails />
-					</Modal>
-				)}
 			</div>
 		</section>
 	)
