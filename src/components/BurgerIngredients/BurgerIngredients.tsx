@@ -1,5 +1,5 @@
 // Import Components
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components"
 import BurgerIngredientsItem from "./ui/BurgerIngredientsItem"
 import Modal from "../Modal/Modal"
@@ -8,14 +8,14 @@ import IngredientDetails from "../IngredientDetails/IngredientDetails"
 // Import Style
 import style from "./BurgerIngredients.module.css"
 
+// Import Context
+import { IngredientsContext } from "utils/context/IngredientsContext"
+
 // Import Props
-import { dataType } from "../../utils/dataType"
+import { dataType } from "utils/dataType"
 
-export interface BurgerIngredientsProps {
-	data: dataType[]
-}
-
-const BurgerIngredients = ({ data }: BurgerIngredientsProps) => {
+const BurgerIngredients = () => {
+	const data = useContext(IngredientsContext)
 	const [current, setCurrent] = useState("one")
 	const [ingredient, setIngredient] = useState()
 	const [show, setShow] = useState(false)
@@ -52,7 +52,7 @@ const BurgerIngredients = ({ data }: BurgerIngredientsProps) => {
 				<section id="one" className={`${style.BurgerIngredientsContentSection} pt-10`}>
 					<h2 className="text text_type_main-medium pb-6">Булки</h2>
 					<div className={style.BurgerIngredientsContentSectionRow}>
-						{data.map((item) => {
+						{data.map((item: dataType) => {
 							return item.type === "bun" ? (
 								<button className={style.BurgerIngredientsBtn} key={item._id} onClick={() => handleShow(item)}>
 									<BurgerIngredientsItem item={item} classname="pb-10" />
@@ -65,7 +65,7 @@ const BurgerIngredients = ({ data }: BurgerIngredientsProps) => {
 				<section id="two" className={style.BurgerIngredientsContentSection}>
 					<h2 className="text text_type_main-medium pb-6">Соусы</h2>
 					<div className={style.BurgerIngredientsContentSectionRow}>
-						{data.map((item) => {
+						{data.map((item: dataType) => {
 							return item.type === "sauce" ? (
 								<button className={style.BurgerIngredientsBtn} key={item._id} onClick={() => handleShow(item)}>
 									<BurgerIngredientsItem item={item} classname="pb-8" />
@@ -78,7 +78,7 @@ const BurgerIngredients = ({ data }: BurgerIngredientsProps) => {
 				<section id="three" className={style.BurgerIngredientsContentSection}>
 					<h2 className="text text_type_main-medium pb-6">Начинки</h2>
 					<div className={style.BurgerIngredientsContentSectionRow}>
-						{data.map((item) => {
+						{data.map((item: dataType) => {
 							return item.type === "main" ? (
 								<button className={style.BurgerIngredientsBtn} key={item._id} onClick={() => handleShow(item)}>
 									<BurgerIngredientsItem item={item} classname="pb-8" />

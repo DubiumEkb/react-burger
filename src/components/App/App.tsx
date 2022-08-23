@@ -1,26 +1,37 @@
+// Import Components
+import { useEffect, useState } from "react"
+import AppHeader from "../AppHeader/AppHeader"
+import BurgerIngredients from "../BurgerIngredients/BurgerIngredients"
+import BurgerConstructor from "../BurgerConstructor/BurgerConstructor"
+
 // Import Style
 import style from "./App.module.css"
 
 // Import Data
-// import data from "../../utils/data"
+import { fetchDataIngredients } from "utils/api/ingredients"
 
-// Import Components
-import AppHeader from "../AppHeader/AppHeader"
-import BurgerIngredients from "../BurgerIngredients/BurgerIngredients"
-import BurgerConstructor from "../BurgerConstructor/BurgerConstructor"
-import useFetch from "../../utils/hooks/useFetch"
+// Import Context
+import { IngredientsContext } from "../../utils/context/IngredientsContext"
 
 function App() {
-	const data = useFetch("https://norma.nomoreparties.space/api/ingredients")
+	const [state, setState] = useState([])
 
-	if (!data) return <></>
+	useEffect(() => {
+		fetchDataIngredients().then((data) => {
+			setState(data)
+		})
+	}, [])
+
+	if (!state) return <></>
 
 	return (
 		<>
 			<AppHeader />
 			<main className={style.main}>
-				<BurgerIngredients data={data} />
-				<BurgerConstructor data={data} />
+				<IngredientsContext.Provider value={state}>
+					<BurgerIngredients />
+					<BurgerConstructor />
+				</IngredientsContext.Provider>
 			</main>
 		</>
 	)
