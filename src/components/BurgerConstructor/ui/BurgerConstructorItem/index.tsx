@@ -1,24 +1,28 @@
 // Imporrt Components
-import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components"
+import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 
 // Import Style
 import style from "./BurgerConstructorItem.module.css"
 
 // Import Props
-import {dataType} from "../../../../utils/dataType" // В будущем заменю "../" на алиасы
+import { dataType } from "../../../../utils/dataType" // В будущем заменю "../" на алиасы
 
 export interface BurgerConstructorItemProps {
-  data: dataType[],
-  type?: string
+	data: dataType[]
+	type?: string
 }
 
-const BurgerConstructorItem = ({data, type}:BurgerConstructorItemProps) => {
+const BurgerConstructorItem = ({ data, type }: BurgerConstructorItemProps) => {
 	return (
 		<>
 			{data.map((item, index) => {
 				return item.type === "bun" && type && index === 0 ? (
-					<div key={item._id + index} className={`ml-8 mr-4 ${item.type === "bun" && type === "top" ? "mb-4" : "mt-4"} ${style.BurgerConstructorItem} `}>
-
+					<div
+						key={item._id + index}
+						className={`ml-8 mr-4 ${item.type === "bun" && type === "top" ? "mb-4" : "mt-4"} ${
+							style.BurgerConstructorItem
+						} `}
+					>
 						<ConstructorElement
 							type={type === "top" ? "top" : "bottom"}
 							isLocked={true}
@@ -29,7 +33,10 @@ const BurgerConstructorItem = ({data, type}:BurgerConstructorItemProps) => {
 					</div>
 				) : (
 					!type && item.type !== "bun" && (
-						<div key={item._id + index} className={`${style.BurgerConstructorItem} ${style.BurgerConstructorItemContainer}`}>
+						<div
+							key={item._id + index}
+							className={`${style.BurgerConstructorItem} ${style.BurgerConstructorItemContainer}`}
+						>
 							<DragIcon type="primary" />
 							<ConstructorElement
 								isLocked={false}

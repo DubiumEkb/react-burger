@@ -1,5 +1,5 @@
 // Imporrt Components
-import { useState } from "react"
+import { useState, useContext, useEffect } from "react"
 import { CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import BurgerConstructorItem from "./ui/BurgerConstructorItem"
 import Modal from "../Modal/Modal"
@@ -8,17 +8,24 @@ import OrderDetails from "../OrderDetails/OrderDetails"
 // Import Style
 import style from "./BurgerConstructor.module.css"
 
-// Import Props
-import { dataType } from "../../utils/dataType"
+// Import Data
+import { fetchDataOrders } from "utils/api/ingredients"
 
-export interface BurgerConstructorProps {
-	data: dataType[]
-}
+// Import Context
+import { IngredientsContext } from "utils/context/IngredientsContext"
 
-const BurgerConstructor = ({ data }: BurgerConstructorProps) => {
+const BurgerConstructor = () => {
+	const data = useContext(IngredientsContext)
 	const [show, setShow] = useState(false)
 	const handleClose = () => setShow(false)
 	const handleShow = () => setShow(true)
+	const [state, setState] = useState(null)
+
+	useEffect(() => {
+		fetchDataOrders(data).then((num) => {
+			setState(num)
+		})
+	}, [data])
 
 	return (
 		<section className={`${style.BurgerConstructor} pt-25`}>
@@ -42,7 +49,7 @@ const BurgerConstructor = ({ data }: BurgerConstructorProps) => {
 				</Button>
 				{show && (
 					<Modal isOpen={show} onClose={handleClose} overlay={true}>
-						<OrderDetails />
+						<OrderDetails sum={state} />
 					</Modal>
 				)}
 			</div>

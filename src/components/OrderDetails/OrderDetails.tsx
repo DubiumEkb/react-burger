@@ -1,9 +1,10 @@
+// Import Style
 import style from "./OrderDetails.module.css"
 
-const OrderDetails = () => {
+const OrderDetails = ({ sum }: any) => {
 	return (
 		<div className={`${style.OrderDetails} pt-30 pb-30`}>
-			<div className={`${style.OrderDetailsNumber} text text_type_digits-large pb-8`}>034536</div>
+			<div className={`${style.OrderDetailsNumber} text text_type_digits-large pb-8`}>{sum}</div>
 			<div className={` text text_type_main-medium`}>идентификатор заказа</div>
 			<div className={`${style.OrderDetailsIcon} pt-15 pb-15`}>
 				<svg viewBox="0 0 107 102" fill="none" xmlns="http://www.w3.org/2000/svg">
