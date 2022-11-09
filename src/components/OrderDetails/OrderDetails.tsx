@@ -1,10 +1,38 @@
+// Import Library
+import { useEffect } from "react"
+
+// Import Framework
+
+// Import Components
+
+// Import Store
+import { order, sendOrder } from "features/constructor/constructorSlice"
+
 // Import Style
 import style from "./OrderDetails.module.css"
 
+// Import Hooks
+import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
+
 const OrderDetails = ({ sum }: any) => {
+	const dispatch = useAppDispatch()
+
+	const { status } = useAppSelector((state) => state.constSlice)
+
+	useEffect(() => {
+		dispatch(order())
+		if (status) {
+			dispatch(sendOrder())
+		}
+	}, [dispatch, status])
+
 	return (
 		<div className={`${style.OrderDetails} pt-30 pb-30`}>
-			<div className={`${style.OrderDetailsNumber} text text_type_digits-large pb-8`}>{sum}</div>
+			{sum === 0 ? (
+				<div className={`${style.OrderDetailsNumber} text text_type_main-medium pb-8`}>Загрузка...</div>
+			) : (
+				<div className={`${style.OrderDetailsNumber} text text_type_digits-large pb-8`}>{sum}</div>
+			)}
 			<div className={` text text_type_main-medium`}>идентификатор заказа</div>
 			<div className={`${style.OrderDetailsIcon} pt-15 pb-15`}>
 				<svg viewBox="0 0 107 102" fill="none" xmlns="http://www.w3.org/2000/svg">

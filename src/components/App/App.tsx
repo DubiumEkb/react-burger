@@ -1,37 +1,30 @@
+// Import Library
+import { DndProvider } from "react-dnd"
+import { HTML5Backend } from "react-dnd-html5-backend"
+
+// Import Framework
+
 // Import Components
-import { useEffect, useState } from "react"
-import AppHeader from "../AppHeader/AppHeader"
-import BurgerIngredients from "../BurgerIngredients/BurgerIngredients"
-import BurgerConstructor from "../BurgerConstructor/BurgerConstructor"
+import AppHeader from "components/AppHeader"
+import BurgerIngredients from "components/BurgerIngredients/BurgerIngredients"
+import BurgerConstructor from "components/BurgerConstructor/BurgerConstructor"
+
+// Import Store
 
 // Import Style
 import style from "./App.module.css"
 
-// Import Data
-import { fetchDataIngredients } from "utils/api/ingredients"
-
-// Import Context
-import { IngredientsContext } from "../../utils/context/IngredientsContext"
+// Import Hooks
 
 function App() {
-	const [state, setState] = useState([])
-
-	useEffect(() => {
-		fetchDataIngredients().then((data) => {
-			setState(data)
-		})
-	}, [])
-
-	if (!state) return <></>
-
 	return (
 		<>
 			<AppHeader />
 			<main className={style.main}>
-				<IngredientsContext.Provider value={state}>
+				<DndProvider backend={HTML5Backend}>
 					<BurgerIngredients />
 					<BurgerConstructor />
-				</IngredientsContext.Provider>
+				</DndProvider>
 			</main>
 		</>
 	)

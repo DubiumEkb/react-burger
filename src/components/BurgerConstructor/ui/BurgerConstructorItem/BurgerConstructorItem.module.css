@@ -1,12 +1,5 @@
-.BurgerConstructorItem > div {
-	width: 100%;
-}
-
-.BurgerConstructorItem.BurgerConstructorItemContainer {
-	display: inline-flex;
+.Burger {
+	display: flex;
 	align-items: center;
-}
-
-.BurgerConstructorItem.BurgerConstructorItemContainer > div {
-	margin-left: calc(var(--offset-base-size) * 8);
+	gap: 14px;
 }

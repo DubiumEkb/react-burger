@@ -1,13 +1,16 @@
+// Import Style
 import style from "./IngredientDetails.module.css"
 
-// Import Props
-import { dataType } from "../../utils/dataType"
+// Import Types
+import { dataType } from "utils/types/dataType"
 
 export interface IngredientDetailsProps {
-	item: dataType
+	item: dataType | null
 }
 
-const IngredientDetails = ({ item }: IngredientDetailsProps) => {
+export const IngredientDetails = ({ item }: IngredientDetailsProps) => {
+	if (item === null) return <></>
+
 	return (
 		<div className={`${style.IngredientsModal}`}>
 			<div className={style.IngredientsModalImage}>
@@ -35,5 +38,3 @@ const IngredientDetails = ({ item }: IngredientDetailsProps) => {
 		</div>
 	)
 }
-
-export default IngredientDetails
