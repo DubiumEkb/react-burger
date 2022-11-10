@@ -24,7 +24,7 @@ type BurgerIngredientsProps = {
 
 export const BurgerIngredientsItem = ({ ingredient, classname }: BurgerIngredientsProps) => {
 	const { mainList } = useAppSelector((state) => state.constSlice)
-	const count = mainList?.filter((item) => item._id === ingredient?._id).length
+	const count = mainList?.filter((item: dataType) => item._id === ingredient?._id).length
 
 	const [{ isDragging }, drag] = useDrag({
 		type: "ingredient",

@@ -12,9 +12,12 @@ type InitialState = {
 	mainList: dataType[]
 	bunItem: dataType | null
 	totalPrice: number
-	orderCode: number | string
+	orderCode: number
 	list: dataType[]
 	status: boolean
+	pending: boolean
+	fulfilled: boolean
+	rejected: boolean
 }
 
 const initialState: InitialState = {
@@ -24,6 +27,9 @@ const initialState: InitialState = {
 	orderCode: 0,
 	list: [],
 	status: false,
+	pending: false,
+	fulfilled: false,
+	rejected: false,
 }
 
 export const sendOrder = createAsyncThunk("constructor/orderCode", async (_: void, { getState }: any) => {
@@ -90,10 +96,17 @@ export const constructorSlice = createSlice({
 			.addCase(sendOrder.pending, (state) => {
 				// Отправлен запрос
 				// console.log("pending")
-				state.orderCode = "Загрузка..."
+				state.pending = true
+				state.fulfilled = false
+				state.rejected = false
 			})
 			.addCase(sendOrder.fulfilled, (state, { payload }) => {
 				// Положительный запрос
+				// console.dir("fulfilled")
+				state.pending = false
+				state.fulfilled = true
+				state.rejected = false
+
 				state.mainList = []
 				state.bunItem = null
 				state.totalPrice = 0
@@ -103,7 +116,9 @@ export const constructorSlice = createSlice({
 			.addCase(sendOrder.rejected, (state) => {
 				// Ошибка запроса
 				// console.error("rejected")
-				state.orderCode = "Ошибка!"
+				state.pending = false
+				state.fulfilled = false
+				state.rejected = true
 			})
 	},
 })
