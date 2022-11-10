@@ -12,7 +12,7 @@ type InitialState = {
 	mainList: dataType[]
 	bunItem: dataType | null
 	totalPrice: number
-	orderCode: number
+	orderCode: number | string
 	list: dataType[]
 	status: boolean
 }
@@ -54,7 +54,7 @@ export const constructorSlice = createSlice({
 				state.totalPrice = state.totalPrice + payload.price * 2
 			}
 		},
-		order: (state) => {
+		orderNumber: (state) => {
 			if (state.mainList.length > 0) {
 				state.list.push(...state.mainList)
 			}
@@ -71,7 +71,7 @@ export const constructorSlice = createSlice({
 			state.mainList.push({ sortingId: uuidv4(), ...payload })
 			state.totalPrice = state.totalPrice + payload.price
 		},
-		newMainList: (state, { payload }) => {
+		createMainList: (state, { payload }) => {
 			state.mainList = payload
 		},
 		deleteItem: (state, { payload }) => {
@@ -83,9 +83,10 @@ export const constructorSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(sendOrder.pending, () => {
+			.addCase(sendOrder.pending, (state) => {
 				// Отправлен запрос
 				// console.log("pending")
+				state.orderCode = "Загрузка..."
 			})
 			.addCase(sendOrder.fulfilled, (state, { payload }) => {
 				// Положительный запрос
@@ -95,13 +96,14 @@ export const constructorSlice = createSlice({
 				state.orderCode = payload?.order.number
 				state.list = []
 			})
-			.addCase(sendOrder.rejected, () => {
+			.addCase(sendOrder.rejected, (state) => {
 				// Ошибка запроса
 				// console.error("rejected")
+				state.orderCode = "Ошибка!"
 			})
 	},
 })
 
-export const { addBunItem, addMainList, newMainList, deleteItem, order } = constructorSlice.actions
+export const { addBunItem, addMainList, createMainList, deleteItem, orderNumber } = constructorSlice.actions
 
 export default constructorSlice.reducer

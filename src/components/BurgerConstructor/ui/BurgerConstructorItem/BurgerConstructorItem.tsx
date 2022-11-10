@@ -8,7 +8,7 @@ import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burg
 // Import Components
 
 // Import Store
-import { deleteItem } from "features/constructor/constructorSlice"
+import { deleteItem } from "services/constructor/constructorSlice"
 
 // Import Style
 import style from "./BurgerConstructorItem.module.css"

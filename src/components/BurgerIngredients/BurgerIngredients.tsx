@@ -5,15 +5,13 @@ import { useEffect, useState, useRef } from "react"
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components"
 
 // Import Components
-import { BurgerIngredientsItem, IngredientDetails } from "./ui"
-import Modal from "components/Modal"
+import { BurgerIngredientsItem } from "./ui"
 
 // Import Store
-import { getIngredients } from "features/ingredients/ingredientsSlice"
+import { getIngredients } from "services/ingredients/ingredientsSlice"
 import {
-	toggleModal,
-	closeModal,
-} from "features/ingredients/ingredientModalSlice"
+	openModal
+} from "services/modal/modalSlice"
 
 // Import Style
 import style from "./BurgerIngredients.module.css"
@@ -29,7 +27,6 @@ const BurgerIngredients = () => {
 	const [current, setCurrent] = useState<string>("buns")
 
 	const dispatch = useAppDispatch()
-	const { show, itemModal } = useAppSelector((state) => state.ingredientModal)
 	const { items } = useAppSelector((state) => state.ingredients)
 
 	useEffect(() => {
@@ -37,16 +34,8 @@ const BurgerIngredients = () => {
 	}, [dispatch])
 
 	// Begin - Modal
-	const handleClose = () => {
-		dispatch(closeModal(false))
-	}
-
 	const handleShow = (item: dataType): void => {
-		const result = {
-			show: true,
-			itemModal: item,
-		}
-		dispatch(toggleModal(result))
+		dispatch(openModal(item))
 	}
 	// End - Modal
 
@@ -202,16 +191,6 @@ const BurgerIngredients = () => {
 					</div>
 				</section>
 			</div>
-			{show && (
-				<Modal
-					title="Детали ингредиента"
-					isOpen={show}
-					onClose={handleClose}
-					overlay={true}
-				>
-					<IngredientDetails item={itemModal} />
-				</Modal>
-			)}
 		</section>
 	)
 }

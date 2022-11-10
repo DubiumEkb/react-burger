@@ -7,12 +7,10 @@ import { ConstructorElement, CurrencyIcon, Button } from "@ya.praktikum/react-de
 
 // Import Components
 import { BurgerConstructorItem } from "./ui"
-import Modal from "components/Modal"
-import OrderDetails from "components/OrderDetails/OrderDetails"
 
 // Import Store
-import { addBunItem, newMainList, addMainList } from "features/constructor/constructorSlice"
-import { toggleModal, closeModal } from "features/constructor/constructorModalSlice"
+import { addBunItem, createMainList, addMainList } from "services/constructor/constructorSlice"
+import { openModal } from "services/modal/modalSlice"
 
 // Import Style
 
@@ -27,8 +25,7 @@ import style from "./BurgerConstructor.module.css"
 
 const BurgerConstructor = () => {
 	const dispatch = useAppDispatch()
-	const { mainList, bunItem, totalPrice, orderCode } = useAppSelector((state) => state.constSlice)
-	const { show } = useAppSelector((state) => state.constructorSliceModal)
+	const { mainList, bunItem, totalPrice } = useAppSelector((state) => state.constSlice)
 
 	// Begin - Перенос из столбца ингредиентов
 	const [{ dragItem, canDrop }, drop] = useDrop({
@@ -50,23 +47,19 @@ const BurgerConstructor = () => {
 	// Begin - Сортровка
 	const moveCard = useCallback(
 		(dragIndex: number, hoverIndex: number) => {
-			const newIngredients = [...mainList]
+			const updateIngredients = [...mainList]
 
-			newIngredients.splice(dragIndex, 1)
-			newIngredients.splice(hoverIndex, 0, mainList[dragIndex])
-			dispatch(newMainList(newIngredients))
+			updateIngredients.splice(dragIndex, 1)
+			updateIngredients.splice(hoverIndex, 0, mainList[dragIndex])
+			dispatch(createMainList(updateIngredients))
 		},
 		[dispatch, mainList],
 	)
 	// End - Сортровка
 
 	// Begin - Modal
-	const handleClose = () => {
-		dispatch(closeModal(false))
-	}
-
 	const handleShow = (item: dataType): void => {
-		dispatch(toggleModal(true))
+		dispatch(openModal(null))
 	}
 	// End - Modal
 
@@ -122,11 +115,6 @@ const BurgerConstructor = () => {
 				<Button type="primary" size="large" onClick={handleShow} htmlType="button">
 					Оформить заказ
 				</Button>
-				{show && (
-					<Modal isOpen={show} onClose={handleClose} overlay={true}>
-						<OrderDetails sum={orderCode} />
-					</Modal>
-				)}
 			</div>
 		</section>
 	)

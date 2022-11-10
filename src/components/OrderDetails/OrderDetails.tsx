@@ -6,7 +6,7 @@ import { useEffect } from "react"
 // Import Components
 
 // Import Store
-import { order, sendOrder } from "features/constructor/constructorSlice"
+import { orderNumber, sendOrder } from "services/constructor/constructorSlice"
 
 // Import Style
 import style from "./OrderDetails.module.css"
@@ -20,7 +20,7 @@ const OrderDetails = ({ sum }: any) => {
 	const { status } = useAppSelector((state) => state.constSlice)
 
 	useEffect(() => {
-		dispatch(order())
+		dispatch(orderNumber())
 		if (status) {
 			dispatch(sendOrder())
 		}
@@ -28,8 +28,8 @@ const OrderDetails = ({ sum }: any) => {
 
 	return (
 		<div className={`${style.OrderDetails} pt-30 pb-30`}>
-			{sum === 0 ? (
-				<div className={`${style.OrderDetailsNumber} text text_type_main-medium pb-8`}>Загрузка...</div>
+			{typeof sum === "string" ? (
+				<div className={`${style.OrderDetailsNumber} text text_type_main-medium pb-8`}>{sum}</div>
 			) : (
 				<div className={`${style.OrderDetailsNumber} text text_type_digits-large pb-8`}>{sum}</div>
 			)}

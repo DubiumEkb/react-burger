@@ -3,17 +3,15 @@ import { configureStore } from "@reduxjs/toolkit"
 
 // Import Slices
 import ingredientsSlice from "./ingredients/ingredientsSlice"
-import ingredientModalSlice from "./ingredients/ingredientModalSlice"
 import constructorSlice from "./constructor/constructorSlice"
-import constructorModalSlice from "./constructor/constructorModalSlice"
+import modalSlice from "./modal/modalSlice"
 
 export const store = configureStore({
 	reducer: {
 		// Записываем сюда все reducers/slices
 		ingredients: ingredientsSlice,
-		ingredientModal: ingredientModalSlice,
 		constSlice: constructorSlice,
-		constructorSliceModal: constructorModalSlice,
+		modalSlice: modalSlice,
 	},
 })
 
