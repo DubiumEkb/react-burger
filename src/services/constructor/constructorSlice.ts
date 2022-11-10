@@ -27,17 +27,21 @@ const initialState: InitialState = {
 }
 
 export const sendOrder = createAsyncThunk("constructor/orderCode", async (_: void, { getState }: any) => {
-	const response = await fetch(`${urlAPI}/orders`, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json;charset=utf-8",
-		},
-		body: JSON.stringify({
-			ingredients: getState().constSlice.list,
-		}),
-	})
+	try {
+		const response = await fetch(`${urlAPI}/orders`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json;charset=utf-8",
+			},
+			body: JSON.stringify({
+				ingredients: getState().constSlice.list,
+			}),
+		})
 
-	return response.json()
+		return response.json()
+	} catch (error) {
+		throw new Error(`Ошибка ${error}`)
+	}
 })
 
 export const constructorSlice = createSlice({
