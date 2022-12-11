@@ -4,6 +4,10 @@
 	align-items: center;
 }
 
+.BurgerIngredientsItemDragging {
+	opacity: 0.6;
+}
+
 .BurgerIngredientsItem .BurgerIngredientsItemImage {
 	position: relative;
 }

@@ -1,38 +1,60 @@
+// Import Library
+import { DndProvider } from "react-dnd"
+import { HTML5Backend } from "react-dnd-html5-backend"
+
+// Import Framework
+
 // Import Components
-import { useEffect, useState } from "react"
-import AppHeader from "../AppHeader/AppHeader"
-import BurgerIngredients from "../BurgerIngredients/BurgerIngredients"
-import BurgerConstructor from "../BurgerConstructor/BurgerConstructor"
+import AppHeader from "components/AppHeader"
+import BurgerIngredients from "components/BurgerIngredients/BurgerIngredients"
+import BurgerConstructor from "components/BurgerConstructor/BurgerConstructor"
+import Modal from "components/Modal"
+import { IngredientDetails } from "components/BurgerIngredients/ui"
+import OrderDetails from "components/OrderDetails/OrderDetails"
+
+// Import Store
+import { closeModal } from "services/modal/modalSlice"
 
 // Import Style
 import style from "./App.module.css"
 
-// Import Data
-import { fetchDataIngredients } from "utils/api/ingredients"
-
-// Import Context
-import { IngredientsContext } from "../../utils/context/IngredientsContext"
+// Import Hooks
+import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
 function App() {
-	const [state, setState] = useState([])
+	const dispatch = useAppDispatch()
+	const { show, ingredient } = useAppSelector((state) => state.modalSlice)
+	const { orderCode } = useAppSelector((state) => state.constSlice)
 
-	useEffect(() => {
-		fetchDataIngredients().then((data) => {
-			setState(data)
-		})
-	}, [])
+	// Begin - Modal
+	const handleClose = () => {
+		dispatch(closeModal())
+	}
 
-	if (!state) return <></>
+	let ParamsModal
+	if (ingredient !== null) {
+		ParamsModal = {
+			title: "Детали ингредиента",
+			isOpen: show,
+			onClose: handleClose,
+		}
+	}
+	// End - Modal
 
 	return (
 		<>
 			<AppHeader />
 			<main className={style.main}>
-				<IngredientsContext.Provider value={state}>
+				<DndProvider backend={HTML5Backend}>
 					<BurgerIngredients />
 					<BurgerConstructor />
-				</IngredientsContext.Provider>
+				</DndProvider>
 			</main>
+			{show && (
+				<Modal {...ParamsModal} isOpen={show} onClose={handleClose} overlay={true}>
+					{ingredient !== null ? <IngredientDetails item={ingredient} /> : <OrderDetails sum={orderCode} />}
+				</Modal>
+			)}
 		</>
 	)
 }

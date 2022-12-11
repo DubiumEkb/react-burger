@@ -8,15 +8,9 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import style from "./Modal.module.css"
 
 // Types
-type Props = {
-	title?: string
-	children: React.ReactNode
-	isOpen: boolean
-	onClose: () => void
-	overlay?: boolean
-}
+import { modalType } from "utils/types/modalType"
 
-const Modal = ({ children, title, isOpen, onClose, overlay = false }: Props) => {
+const Modal = ({ children, title, isOpen, onClose, overlay = false }: modalType) => {
 	const containerModal = document.getElementById("react-modals")
 
 	useEffect(() => {
@@ -39,13 +33,13 @@ const Modal = ({ children, title, isOpen, onClose, overlay = false }: Props) => 
 				{title ? (
 					<div className={`${style.ModalHeader} pt-10 pl-10 pr-10`}>
 						<strong className="text text_type_main-large">{title}</strong>
-						<button className={style.ModalHeaderClose} onClick={onClose}>
+						<button className={style.ModalHeaderClose} onClick={onClose} type="button">
 							<CloseIcon type="primary" />
 						</button>
 					</div>
 				) : (
 					<div className={`${style.ModalHeaderNotTitle} pt-15 pr-10`}>
-						<button className={style.ModalHeaderNotTitleClose} onClick={onClose}>
+						<button className={style.ModalHeaderNotTitleClose} onClick={onClose} type="button">
 							<CloseIcon type="primary" />
 						</button>
 					</div>
