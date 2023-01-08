@@ -10,7 +10,8 @@ import style from "./Modal.module.css"
 // Types
 import { modalType } from "utils/types/modalType"
 
-const Modal = ({ children, title, isOpen, onClose, overlay = false }: modalType) => {
+const Modal = ({ children, title, isOpen, onClose, overlay }: modalType) => {
+	overlay = overlay || false
 	const containerModal = document.getElementById("react-modals")
 
 	useEffect(() => {
