@@ -1,23 +1,38 @@
-import { useState } from "react"
-import { EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
+import { ChangeEvent, FormEvent } from "react"
+import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import { FormContainer } from "components/FormContainer/FormContainer"
 import { Link } from "react-router-dom"
 import styles from "./ForgotPasswordPage.module.css"
+import { postForgotPassword, emailValue } from "services/forgotPassword/forgotPasswordSlice"
+
+// Import Hooks
+import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
 const ForgotPasswordPage = () => {
-	const [valueEmail, setValueEmail] = useState("")
-	const onChangeEmail = (event: any) => {
-		setValueEmail(event.target.value)
+	// const [valueEmail, setValueEmail] = useState("")
+
+	const dispatch = useAppDispatch()
+	const { email } = useAppSelector((state) => state.forgotPassword)
+
+	const onChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
+		dispatch(emailValue(event.target.value))
+	}
+
+	const handlerForm = (event: FormEvent) => {
+		event.preventDefault()
+		if (email !== "") {
+			dispatch(postForgotPassword())
+		}
 	}
 
 	return (
 		<FormContainer>
 			<p className="text text_type_main-medium">Восстановление пароля</p>
-			<form className={`${styles.form} pt-6 pb-20`} onSubmit={() => console.debug("Отправка")}>
+			<form className={`${styles.form} pt-6 pb-20`} onSubmit={handlerForm}>
 				<EmailInput
 					placeholder={"Укажите e-mail"}
 					onChange={onChangeEmail}
-					value={valueEmail}
+					value={email}
 					name={"email"}
 					isIcon={false}
 					extraClass="mb-6"

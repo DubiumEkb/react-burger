@@ -5,6 +5,7 @@ import { configureStore } from "@reduxjs/toolkit"
 import ingredientsSlice from "./ingredients/ingredientsSlice"
 import constructorSlice from "./constructor/constructorSlice"
 import modalSlice from "./modal/modalSlice"
+import forgotPasswordSlice from "./forgotPassword/forgotPasswordSlice"
 
 export const store = configureStore({
 	reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
 		ingredients: ingredientsSlice,
 		constSlice: constructorSlice,
 		modalSlice: modalSlice,
+		forgotPassword: forgotPasswordSlice,
 	},
 })
 
