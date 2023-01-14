@@ -37,7 +37,7 @@ export const logoutSlice = createSlice({
 	reducers: {},
 	extraReducers: (builder) => {
 		builder
-			.addCase(postLogout.pending, (state) => {
+			.addCase(postLogout.pending, () => {
 				// Отправлен запрос
 				// console.log("pending")
 			})
@@ -45,7 +45,7 @@ export const logoutSlice = createSlice({
 				// Положительный запрос
 				state.success = payload.success
 			})
-			.addCase(postLogout.rejected, (state) => {
+			.addCase(postLogout.rejected, () => {
 				// Ошибка запроса
 				// console.error("rejected")
 			})

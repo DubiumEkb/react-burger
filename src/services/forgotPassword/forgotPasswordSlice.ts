@@ -42,7 +42,7 @@ export const forgotPasswordSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(postForgotPassword.pending, (state) => {
+			.addCase(postForgotPassword.pending, () => {
 				// Отправлен запрос
 				// console.log("pending")
 			})
@@ -52,7 +52,7 @@ export const forgotPasswordSlice = createSlice({
 				if (payload.success) {
 				}
 			})
-			.addCase(postForgotPassword.rejected, (state) => {
+			.addCase(postForgotPassword.rejected, () => {
 				// Ошибка запроса
 				// console.error("rejected")
 			})

@@ -58,7 +58,7 @@ export const registerSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(postRegister.pending, (state) => {
+			.addCase(postRegister.pending, () => {
 				// Отправлен запрос
 				// console.log("pending")
 			})
@@ -66,7 +66,7 @@ export const registerSlice = createSlice({
 				// Положительный запрос
 				state.success = payload.success
 			})
-			.addCase(postRegister.rejected, (state) => {
+			.addCase(postRegister.rejected, () => {
 				// Ошибка запроса
 				// console.error("rejected")
 			})

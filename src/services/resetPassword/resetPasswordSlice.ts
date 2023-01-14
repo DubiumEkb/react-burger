@@ -48,7 +48,7 @@ export const resetPasswordSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(postResetPassword.pending, (state) => {
+			.addCase(postResetPassword.pending, () => {
 				// Отправлен запрос
 				// console.log("pending")
 			})
@@ -56,7 +56,7 @@ export const resetPasswordSlice = createSlice({
 				// Положительный запрос
 				state.success = payload.success
 			})
-			.addCase(postResetPassword.rejected, (state) => {
+			.addCase(postResetPassword.rejected, () => {
 				// Ошибка запроса
 				// console.error("rejected")
 			})

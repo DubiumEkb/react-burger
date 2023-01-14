@@ -53,7 +53,7 @@ export const loginSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(postLogin.pending, (state) => {
+			.addCase(postLogin.pending, () => {
 				// Отправлен запрос
 				// console.log("pending")
 			})
@@ -64,7 +64,7 @@ export const loginSlice = createSlice({
 				setCookie("access_token", payload.accessToken)
 				setCookie("refresh_token", payload.refreshToken)
 			})
-			.addCase(postLogin.rejected, (state) => {
+			.addCase(postLogin.rejected, () => {
 				// Ошибка запроса
 				// console.error("rejected")
 			})
