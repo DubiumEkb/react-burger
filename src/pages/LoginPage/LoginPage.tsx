@@ -7,7 +7,6 @@ import { emailValue, passwordValue, postLogin } from "services/login/loginSlice"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
-import { getCookie } from "utils/cookie/getCookie"
 
 const LoginPage = () => {
 	const navigate = useNavigate()
@@ -32,8 +31,6 @@ const LoginPage = () => {
 			}
 		}
 	}
-
-	console.debug(typeof getCookie("access_token"))
 
 	return (
 		<FormContainer>
