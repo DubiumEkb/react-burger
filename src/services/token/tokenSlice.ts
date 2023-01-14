@@ -5,24 +5,31 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { urlAPI } from "utils/config"
 
 type InitialState = {
+	user: {
+		email: string
+		password: string
+	}
 	success: boolean
-	email: string
 }
 
 const initialState: InitialState = {
+	user: {
+		email: "",
+		password: "",
+	},
 	success: false,
-	email: "",
 }
 
-export const postForgotPassword = createAsyncThunk("user/postForgotPassword", async (_: void, { getState }: any) => {
+export const postToken = createAsyncThunk("user/postToken", async (_: void, { getState }: any) => {
 	try {
-		const response = await fetch(`${urlAPI}/password-reset`, {
+		const response = await fetch(`${urlAPI}/auth/token`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json;charset=utf-8",
 			},
 			body: JSON.stringify({
-				email: getState().forgotPassword.email,
+				email: getState().register.user.email,
+				password: getState().register.user.password,
 			}),
 		})
 
@@ -32,33 +39,34 @@ export const postForgotPassword = createAsyncThunk("user/postForgotPassword", as
 	}
 })
 
-export const forgotPasswordSlice = createSlice({
-	name: "forgotPassword",
+export const tokenSlice = createSlice({
+	name: "token",
 	initialState,
 	reducers: {
 		emailValue: (state, { payload }) => {
-			state.email = payload
+			state.user.email = payload
+		},
+		passwordValue: (state, { payload }) => {
+			state.user.password = payload
 		},
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(postForgotPassword.pending, (state) => {
+			.addCase(postToken.pending, (state) => {
 				// Отправлен запрос
 				// console.log("pending")
 			})
-			.addCase(postForgotPassword.fulfilled, (state, { payload }) => {
+			.addCase(postToken.fulfilled, (state, { payload }) => {
 				// Положительный запрос
 				state.success = payload.success
-				if (payload.success) {
-				}
 			})
-			.addCase(postForgotPassword.rejected, (state) => {
+			.addCase(postToken.rejected, (state) => {
 				// Ошибка запроса
 				// console.error("rejected")
 			})
 	},
 })
 
-export const { emailValue } = forgotPasswordSlice.actions
+export const { emailValue, passwordValue } = tokenSlice.actions
 
-export default forgotPasswordSlice.reducer
+export default tokenSlice.reducer

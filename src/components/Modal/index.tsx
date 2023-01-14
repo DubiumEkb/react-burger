@@ -1,5 +1,5 @@
 // Import Components
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 import ReactDOM from "react-dom"
 import ModalOverlay from "../ModalOverlay/ModalOverlay"
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"

@@ -20,6 +20,7 @@ import ForgotPasswordPage from "pages/ForgotPasswordPage/ForgotPasswordPage"
 import ResetPasswordPage from "pages/ResetPasswordPage/ResetPasswordPage"
 import ProfilePage from "pages/ProfilePage/ProfilePage"
 import IngredientsPage from "pages/IngredientsPage/IngredientsPage"
+import ProtectedRouteElement from "components/ProtectedRouteElement/ProtectedRouteElement"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
@@ -64,11 +65,27 @@ function App() {
 					{/* Страница сброса пароля. */}
 					<Route path="/reset-password" element={<ResetPasswordPage />} />
 
-					{/* Страница с настройками профиля пользователя. */}
-					<Route path="/profile" element={<ProfilePage />} />
-
 					{/* Страница ингредиента. */}
 					<Route path="/ingredients/:id" element={<IngredientsPage />} />
+
+					{/* Проверка безопасности */}
+					<Route
+						path="/profile"
+						element={
+							<ProtectedRouteElement>
+								<>
+									{/* Страница с настройками профиля пользователя. */}
+									<Route path="/profile" element={<ProfilePage />} />
+
+									{/* Страница с историей заказов. */}
+									<Route path="/profile/orders" element={<ProfilePage />} />
+
+									{/* Страница с историей заказа. */}
+									<Route path="/profile/orders/:id" element={<ProfilePage />} />
+								</>
+							</ProtectedRouteElement>
+						}
+					/>
 
 					{/* Редирект. */}
 					<Route path="*" element={<Navigate to="/" replace />} />

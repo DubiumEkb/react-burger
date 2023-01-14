@@ -6,17 +6,17 @@ import { urlAPI } from "utils/config"
 
 type InitialState = {
 	success: boolean
-	email: string
+	password: string
 	token: string
 }
 
 const initialState: InitialState = {
 	success: false,
-	email: "",
+	password: "",
 	token: "",
 }
 
-export const postResetPassword = createAsyncThunk("forgotPassword", async (_: void, { getState }: any) => {
+export const postResetPassword = createAsyncThunk("user/resetPassword", async (_: void, { getState }: any) => {
 	try {
 		const response = await fetch(`${urlAPI}/password-reset`, {
 			method: "POST",
@@ -24,7 +24,8 @@ export const postResetPassword = createAsyncThunk("forgotPassword", async (_: vo
 				"Content-Type": "application/json;charset=utf-8",
 			},
 			body: JSON.stringify({
-				email: getState().forgotPassword.email,
+				password: getState().resetPassword.password,
+				token: getState().resetPassword.token,
 			}),
 		})
 
@@ -35,11 +36,14 @@ export const postResetPassword = createAsyncThunk("forgotPassword", async (_: vo
 })
 
 export const resetPasswordSlice = createSlice({
-	name: "forgotPassword",
+	name: "resetPassword",
 	initialState,
 	reducers: {
-		emailValue: (state, { payload }) => {
-			state.email = payload
+		passwordValue: (state, { payload }) => {
+			state.password = payload
+		},
+		tokenValue: (state, { payload }) => {
+			state.token = payload.replace(/\D/g, "")
 		},
 	},
 	extraReducers: (builder) => {
@@ -59,6 +63,6 @@ export const resetPasswordSlice = createSlice({
 	},
 })
 
-export const { emailValue } = resetPasswordSlice.actions
+export const { passwordValue, tokenValue } = resetPasswordSlice.actions
 
 export default resetPasswordSlice.reducer

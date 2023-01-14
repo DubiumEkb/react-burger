@@ -6,23 +6,22 @@ import { urlAPI } from "utils/config"
 
 type InitialState = {
 	success: boolean
-	email: string
 }
 
 const initialState: InitialState = {
 	success: false,
-	email: "",
 }
 
-export const postForgotPassword = createAsyncThunk("user/postForgotPassword", async (_: void, { getState }: any) => {
+export const postLogout = createAsyncThunk("user/postLogout", async (_: void, { getState }: any) => {
 	try {
-		const response = await fetch(`${urlAPI}/password-reset`, {
+		const response = await fetch(`${urlAPI}/auth/logout`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json;charset=utf-8",
 			},
 			body: JSON.stringify({
-				email: getState().forgotPassword.email,
+				email: getState().register.user.email,
+				password: getState().register.user.password,
 			}),
 		})
 
@@ -32,33 +31,25 @@ export const postForgotPassword = createAsyncThunk("user/postForgotPassword", as
 	}
 })
 
-export const forgotPasswordSlice = createSlice({
-	name: "forgotPassword",
+export const logoutSlice = createSlice({
+	name: "logout",
 	initialState,
-	reducers: {
-		emailValue: (state, { payload }) => {
-			state.email = payload
-		},
-	},
+	reducers: {},
 	extraReducers: (builder) => {
 		builder
-			.addCase(postForgotPassword.pending, (state) => {
+			.addCase(postLogout.pending, (state) => {
 				// Отправлен запрос
 				// console.log("pending")
 			})
-			.addCase(postForgotPassword.fulfilled, (state, { payload }) => {
+			.addCase(postLogout.fulfilled, (state, { payload }) => {
 				// Положительный запрос
 				state.success = payload.success
-				if (payload.success) {
-				}
 			})
-			.addCase(postForgotPassword.rejected, (state) => {
+			.addCase(postLogout.rejected, (state) => {
 				// Ошибка запроса
 				// console.error("rejected")
 			})
 	},
 })
 
-export const { emailValue } = forgotPasswordSlice.actions
-
-export default forgotPasswordSlice.reducer
+export default logoutSlice.reducer

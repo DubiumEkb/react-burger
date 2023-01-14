@@ -6,6 +6,11 @@ import ingredientsSlice from "./ingredients/ingredientsSlice"
 import constructorSlice from "./constructor/constructorSlice"
 import modalSlice from "./modal/modalSlice"
 import forgotPasswordSlice from "./forgotPassword/forgotPasswordSlice"
+import resetPasswordSlice from "./resetPassword/resetPasswordSlice"
+import loginSlice from "./login/loginSlice"
+import registerSlice from "./register/registerSlice"
+import logoutSlice from "./logout/logoutSlice"
+import tokenSlice from "./token/tokenSlice"
 
 export const store = configureStore({
 	reducer: {
@@ -14,10 +19,13 @@ export const store = configureStore({
 		constSlice: constructorSlice,
 		modalSlice: modalSlice,
 		forgotPassword: forgotPasswordSlice,
+		resetPassword: resetPasswordSlice,
+		login: loginSlice,
+		register: registerSlice,
+		logout: logoutSlice,
+		token: tokenSlice,
 	},
 })
-
-// Типы для корретной работы hook'ов
 
 // Нужен для Hook useAppSelector
 export type RootState = ReturnType<typeof store.getState>

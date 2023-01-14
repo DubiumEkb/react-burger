@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent } from "react"
 import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import { FormContainer } from "components/FormContainer/FormContainer"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import styles from "./ForgotPasswordPage.module.css"
 import { postForgotPassword, emailValue } from "services/forgotPassword/forgotPasswordSlice"
 
@@ -9,10 +9,9 @@ import { postForgotPassword, emailValue } from "services/forgotPassword/forgotPa
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
 const ForgotPasswordPage = () => {
-	// const [valueEmail, setValueEmail] = useState("")
-
+	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
-	const { email } = useAppSelector((state) => state.forgotPassword)
+	const { email, success } = useAppSelector((state) => state.forgotPassword)
 
 	const onChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
 		dispatch(emailValue(event.target.value))
@@ -22,6 +21,11 @@ const ForgotPasswordPage = () => {
 		event.preventDefault()
 		if (email !== "") {
 			dispatch(postForgotPassword())
+			if (success === true) {
+				setTimeout(() => {
+					navigate("/reset-password")
+				}, 1000)
+			}
 		}
 	}
 
@@ -36,6 +40,7 @@ const ForgotPasswordPage = () => {
 					name={"email"}
 					isIcon={false}
 					extraClass="mb-6"
+					required
 				/>
 				<Button htmlType="submit" type="primary" size="medium">
 					Восстановить
