@@ -13,7 +13,9 @@ const useAuth = () => {
 
 const ProtectedRoutes = () => {
 	const isAuth = useAuth()
-	console.debug("isAuth: ", isAuth)
+	if (!isAuth) {
+		return null
+	}
 	return isAuth ? <Outlet /> : <Navigate to="/login" />
 }
 

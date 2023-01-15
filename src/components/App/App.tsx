@@ -90,6 +90,12 @@ function App() {
 					<Route element={<ProtectedRouteElement />}>
 						{/* Страница с настройками профиля пользователя. */}
 						<Route path="/profile" element={<ProfilePage />} />
+
+						{/* Страница с историей заказов. */}
+						<Route path="/profile/orders" element={<ProfilePage />} />
+
+						{/* Страница с историей заказа. */}
+						<Route path="/profile/orders/:id" element={<ProfilePage />} />
 					</Route>
 
 					{/* Редирект. */}
