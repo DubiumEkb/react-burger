@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent } from "react"
+import { ChangeEvent, FormEvent, useEffect } from "react"
 import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import { FormContainer } from "components/FormContainer/FormContainer"
 import { Link, useNavigate } from "react-router-dom"
@@ -13,6 +13,14 @@ const ForgotPasswordPage = () => {
 	const dispatch = useAppDispatch()
 	const { email, success } = useAppSelector((state) => state.forgotPassword)
 
+	useEffect(() => {
+		if (success === true) {
+			setTimeout(() => {
+				navigate("/reset-password")
+			}, 1000)
+		}
+	}, [success, navigate])
+
 	const onChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
 		dispatch(emailValue(event.target.value))
 	}
@@ -21,11 +29,6 @@ const ForgotPasswordPage = () => {
 		event.preventDefault()
 		if (email !== "") {
 			dispatch(postForgotPassword())
-			if (success === true) {
-				setTimeout(() => {
-					navigate("/reset-password")
-				}, 1000)
-			}
 		}
 	}
 

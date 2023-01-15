@@ -4,50 +4,38 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 // Import Config
 import { urlAPI } from "utils/config"
 
+import { setCookie } from "utils/cookie/setCookie"
+
 type InitialState = {
-	user: {
-		email: string
-		password: string
-	}
+	token: ""
 	success: boolean
 }
 
 const initialState: InitialState = {
-	user: {
-		email: "",
-		password: "",
-	},
+	token: "",
 	success: false,
 }
 
 export const postToken = createAsyncThunk("user/postToken", async (_: void, { getState }: any) => {
-	try {
-		const response = await fetch(`${urlAPI}/auth/token`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json;charset=utf-8",
-			},
-			body: JSON.stringify({
-				email: getState().register.user.email,
-				password: getState().register.user.password,
-			}),
-		})
+	const response = await fetch(`${urlAPI}/auth/token`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json;charset=utf-8",
+		},
+		body: JSON.stringify({
+			token: getState().token.token,
+		}),
+	})
 
-		return response.json()
-	} catch (error) {
-		throw new Error(`Ошибка ${error}`)
-	}
+	return await response.json()
 })
 
 export const tokenSlice = createSlice({
 	name: "token",
 	initialState,
 	reducers: {
-		emailValue: (state, { payload }) => {
-			state.user.email = payload
-		},
-		passwordValue: (state, { payload }) => {
-			state.user.password = payload
+		tokenValue: (state, { payload }) => {
+			state.token = payload
 		},
 	},
 	extraReducers: (builder) => {
@@ -59,6 +47,8 @@ export const tokenSlice = createSlice({
 			.addCase(postToken.fulfilled, (state, { payload }) => {
 				// Положительный запрос
 				state.success = payload.success
+				setCookie("access_token", payload.accessToken)
+				setCookie("refresh_token", payload.refreshToken)
 			})
 			.addCase(postToken.rejected, () => {
 				// Ошибка запроса
@@ -67,6 +57,6 @@ export const tokenSlice = createSlice({
 	},
 })
 
-export const { emailValue, passwordValue } = tokenSlice.actions
+export const { tokenValue } = tokenSlice.actions
 
 export default tokenSlice.reducer

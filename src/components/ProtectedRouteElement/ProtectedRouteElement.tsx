@@ -1,13 +1,20 @@
-import { Navigate, useLocation } from "react-router-dom"
+import { Navigate, Outlet } from "react-router-dom"
 
-const ProtectedRouteElement = ({ children }: { children: JSX.Element }) => {
-	const location = useLocation()
+// Import Hooks
+import { useAppSelector } from "utils/hooks/useAppStore"
 
-	if (true) {
-		return <Navigate to="/login" state={{ from: location }} replace />
+const useAuth = () => {
+	const { status, success } = useAppSelector((state) => state.profile)
+
+	if (status) {
+		return success
 	}
-
-	return children
 }
 
-export default ProtectedRouteElement
+const ProtectedRoutes = () => {
+	const isAuth = useAuth()
+	console.debug("isAuth: ", isAuth)
+	return isAuth ? <Outlet /> : <Navigate to="/login" />
+}
+
+export default ProtectedRoutes

@@ -1,16 +1,25 @@
-import { ChangeEvent, FormEvent } from "react"
+import { ChangeEvent, FormEvent, useEffect } from "react"
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import { FormContainer } from "components/FormContainer/FormContainer"
 import styles from "./ResetPasswordPage.module.css"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { postResetPassword, passwordValue, tokenValue } from "services/resetPassword/resetPasswordSlice"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
 const ResetPasswordPage = () => {
+	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
-	const { password, token } = useAppSelector((state) => state.resetPassword)
+	const { password, token, success } = useAppSelector((state) => state.resetPassword)
+
+	useEffect(() => {
+		if (success === true) {
+			setTimeout(() => {
+				navigate("/")
+			}, 1000)
+		}
+	}, [success, navigate])
 
 	const onChangeToken = (event: ChangeEvent<HTMLInputElement>) => {
 		dispatch(tokenValue(event.target.value))

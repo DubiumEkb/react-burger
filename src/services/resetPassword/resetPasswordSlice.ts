@@ -18,7 +18,7 @@ const initialState: InitialState = {
 
 export const postResetPassword = createAsyncThunk("user/resetPassword", async (_: void, { getState }: any) => {
 	try {
-		const response = await fetch(`${urlAPI}/password-reset`, {
+		const response = await fetch(`${urlAPI}/password-reset/reset`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json;charset=utf-8",
@@ -43,7 +43,7 @@ export const resetPasswordSlice = createSlice({
 			state.password = payload
 		},
 		tokenValue: (state, { payload }) => {
-			state.token = payload.replace(/\D/g, "")
+			state.token = payload
 		},
 	},
 	extraReducers: (builder) => {

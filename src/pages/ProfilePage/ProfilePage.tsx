@@ -2,14 +2,18 @@ import { useState, useRef, FormEvent, ChangeEvent, FocusEvent } from "react"
 import { NavLink, useLocation } from "react-router-dom"
 import { Input, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from "./ProfilePage.module.css"
+import { emailValue, nameValue, passwordValue } from "services/profile/profileSlice"
+
+// Import Hooks
+import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
+
 const ProfilePage = () => {
 	const { pathname } = useLocation()
-	const [email, setEmail] = useState("test@test.ru")
-	const [password, setPassword] = useState("qwerty123456")
+	const dispatch = useAppDispatch()
+	const { user, success } = useAppSelector((state) => state.profile)
 
 	// Begin - Input Name
 	const [fieldDisabled, setDisabled] = useState(true)
-	const [name, setName] = useState("Михаил")
 
 	const inputNameRef = useRef<HTMLInputElement>(null)
 	const handlerForm = (event: FormEvent) => {
@@ -17,7 +21,7 @@ const ProfilePage = () => {
 	}
 
 	const onChangeName = (e: ChangeEvent<HTMLInputElement>) => {
-		setName(e.target.value)
+		dispatch(nameValue(e.target.value))
 	}
 
 	const onIconClickName = () => {
@@ -31,11 +35,11 @@ const ProfilePage = () => {
 	// End - Input Name
 
 	const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
-		setEmail(e.target.value)
+		dispatch(emailValue(e.target.value))
 	}
 
 	const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
-		setPassword(e.target.value)
+		dispatch(passwordValue(e.target.value))
 	}
 
 	return (
@@ -75,7 +79,7 @@ const ProfilePage = () => {
 				<form onSubmit={handlerForm}>
 					<Input
 						onChange={onChangeName}
-						value={name}
+						value={user.name}
 						placeholder="Имя"
 						onIconClick={onIconClickName}
 						icon={"EditIcon"}
@@ -86,13 +90,13 @@ const ProfilePage = () => {
 					/>
 					<EmailInput
 						onChange={onChangeEmail}
-						value={email}
+						value={user.email}
 						name={"email"}
 						placeholder="Логин"
 						isIcon={true}
 						extraClass="mb-6"
 					/>
-					<PasswordInput onChange={onChangePassword} value={password} name={"password"} icon="EditIcon" />
+					<PasswordInput onChange={onChangePassword} value={user.password} name={"password"} icon="EditIcon" />
 				</form>
 			</div>
 		</div>

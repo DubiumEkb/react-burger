@@ -5,37 +5,39 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { urlAPI } from "utils/config"
 
 type InitialState = {
-	token: string
 	user: {
 		email: string
 		name: string
+		password: string
+		token: string
 	}
 	success: boolean
+	updateToken: boolean
+	status: boolean
 }
 
 const initialState: InitialState = {
-	token: "",
 	user: {
 		email: "",
 		name: "",
+		password: "",
+		token: "",
 	},
 	success: false,
+	updateToken: false,
+	status: false,
 }
 
 export const getProfile = createAsyncThunk("user/profile", async (_: void, { getState }: any) => {
-	try {
-		const response = await fetch(`${urlAPI}/auth/user`, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				authorization: getState().profile.token,
-			},
-		})
+	const response = await fetch(`${urlAPI}/auth/user`, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			authorization: getState().profile.user.token,
+		},
+	})
 
-		return response.json()
-	} catch (error) {
-		throw new Error(`Ошибка ${error}`)
-	}
+	return await response.json()
 })
 
 export const profileSlice = createSlice({
@@ -48,8 +50,11 @@ export const profileSlice = createSlice({
 		nameValue: (state, { payload }) => {
 			state.user.name = payload
 		},
-		token: (state, { payload }) => {
-			state.token = payload
+		passwordValue: (state, { payload }) => {
+			state.user.password = payload
+		},
+		tokenValue: (state, { payload }) => {
+			state.user.token = payload
 		},
 	},
 	extraReducers: (builder) => {
@@ -60,15 +65,28 @@ export const profileSlice = createSlice({
 			})
 			.addCase(getProfile.fulfilled, (state, { payload }) => {
 				// Положительный запрос
+
+				if (payload.message === "jwt expired") {
+					state.updateToken = true
+				}
+
 				state.success = payload.success
+
+				if (payload.success) {
+					state.user.email = payload.user.email
+					state.user.name = payload.user.name
+				}
+
+				state.status = true
 			})
-			.addCase(getProfile.rejected, () => {
+			.addCase(getProfile.rejected, (state) => {
 				// Ошибка запроса
 				// console.error("rejected")
+				state.status = true
 			})
 	},
 })
 
-export const { emailValue, nameValue, token } = profileSlice.actions
+export const { emailValue, nameValue, passwordValue, tokenValue } = profileSlice.actions
 
 export default profileSlice.reducer

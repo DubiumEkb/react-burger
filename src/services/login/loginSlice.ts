@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
 // Import Config
 import { urlAPI } from "utils/config"
+
 import { setCookie } from "utils/cookie/setCookie"
 
 type InitialState = {
@@ -22,22 +23,18 @@ const initialState: InitialState = {
 }
 
 export const postLogin = createAsyncThunk("user/postLogin", async (_: void, { getState }: any) => {
-	try {
-		const response = await fetch(`${urlAPI}/auth/login`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json;charset=utf-8",
-			},
-			body: JSON.stringify({
-				email: getState().login.user.email,
-				password: getState().login.user.password,
-			}),
-		})
+	const response = await fetch(`${urlAPI}/auth/login`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json;charset=utf-8",
+		},
+		body: JSON.stringify({
+			email: getState().login.user.email,
+			password: getState().login.user.password,
+		}),
+	})
 
-		return response.json()
-	} catch (error) {
-		throw new Error(`Ошибка ${error}`)
-	}
+	return await response.json()
 })
 
 export const loginSlice = createSlice({

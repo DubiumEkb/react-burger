@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent } from "react"
+import { ChangeEvent, FormEvent, useEffect } from "react"
 import { EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import { FormContainer } from "components/FormContainer/FormContainer"
 import styles from "./LoginPage.module.css"
@@ -13,6 +13,14 @@ const LoginPage = () => {
 	const dispatch = useAppDispatch()
 	const { user, success } = useAppSelector((state) => state.login)
 
+	useEffect(() => {
+		if (success === true) {
+			setTimeout(() => {
+				navigate("/")
+			}, 1000)
+		}
+	}, [success, navigate])
+
 	const onChangeEmail = (event: ChangeEvent<HTMLInputElement>): void => {
 		dispatch(emailValue(event.target.value))
 	}
@@ -20,15 +28,11 @@ const LoginPage = () => {
 	const onChangePassword = (event: ChangeEvent<HTMLInputElement>): void => {
 		dispatch(passwordValue(event.target.value))
 	}
+
 	const handlerForm = (event: FormEvent) => {
 		event.preventDefault()
 		if (user.email !== "" && user.password !== "") {
 			dispatch(postLogin())
-			if (success === true) {
-				setTimeout(() => {
-					navigate("/")
-				}, 1000)
-			}
 		}
 	}
 

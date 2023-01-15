@@ -23,23 +23,19 @@ const initialState: InitialState = {
 }
 
 export const postRegister = createAsyncThunk("user/postRegister", async (_: void, { getState }: any) => {
-	try {
-		const response = await fetch(`${urlAPI}/auth/register`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json;charset=utf-8",
-			},
-			body: JSON.stringify({
-				email: getState().register.user.email,
-				password: getState().register.user.password,
-				name: getState().register.user.name,
-			}),
-		})
+	const response = await fetch(`${urlAPI}/auth/register`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json;charset=utf-8",
+		},
+		body: JSON.stringify({
+			email: getState().register.user.email,
+			password: getState().register.user.password,
+			name: getState().register.user.name,
+		}),
+	})
 
-		return response.json()
-	} catch (error) {
-		throw new Error(`Ошибка ${error}`)
-	}
+	return await response.json()
 })
 
 export const registerSlice = createSlice({

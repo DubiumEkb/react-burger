@@ -11,6 +11,7 @@ import loginSlice from "./login/loginSlice"
 import registerSlice from "./register/registerSlice"
 import logoutSlice from "./logout/logoutSlice"
 import tokenSlice from "./token/tokenSlice"
+import profileSlice from "./profile/profileSlice"
 
 export const store = configureStore({
 	reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
 		register: registerSlice,
 		logout: logoutSlice,
 		token: tokenSlice,
+		profile: profileSlice,
 	},
 })
 
