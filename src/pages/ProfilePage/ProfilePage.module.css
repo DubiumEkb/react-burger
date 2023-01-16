@@ -26,3 +26,13 @@
 .profile .navLink.navLinkActive {
 	color: #fff;
 }
+
+.profile .profileUpdate {
+	display: none;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.profile .profileUpdate .profileUpdateActive {
+	display: flex;
+}

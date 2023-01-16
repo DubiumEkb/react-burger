@@ -13,7 +13,7 @@ const AppHeader = () => {
 						<span className="text text_type_main-default pl-2">Конструктор</span>
 					</NavLink>
 
-					<NavLink to="/" className={`${style.headerNavLeftItem} p-5`}>
+					<NavLink to="/feed" className={`${style.headerNavLeftItem} p-5`}>
 						{/* @ts-ignore */}
 						<ListIcon />
 						<span className="text text_type_main-default pl-2">Лента заказов</span>

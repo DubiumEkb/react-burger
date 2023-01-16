@@ -1,6 +1,6 @@
 import { useState, useRef, FormEvent, ChangeEvent, FocusEvent, useEffect } from "react"
 import { NavLink, useLocation, useNavigate } from "react-router-dom"
-import { Input, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components"
+import { Input, EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from "./ProfilePage.module.css"
 import { emailValue, nameValue, passwordValue } from "services/profile/profileSlice"
 import { tokenValue, postLogout } from "services/logout/logoutSlice"
@@ -99,6 +99,7 @@ const ProfilePage = () => {
 						value={user.name}
 						placeholder="Имя"
 						onIconClick={onIconClickName}
+						// icon={"CloseIcon"}
 						icon={"EditIcon"}
 						onBlur={onBlur}
 						extraClass="mb-6"
@@ -113,7 +114,21 @@ const ProfilePage = () => {
 						isIcon={true}
 						extraClass="mb-6"
 					/>
-					<PasswordInput onChange={onChangePassword} value={user.password} name={"password"} icon="EditIcon" />
+					<PasswordInput
+						onChange={onChangePassword}
+						value={user.password}
+						name={"password"}
+						icon="EditIcon"
+						extraClass="mb-6"
+					/>
+					<div className={`${styles.profileUpdate} ${styles.profileUpdateActive}`}>
+						<Button htmlType="reset" type="secondary" size="medium">
+							Отмена
+						</Button>
+						<Button htmlType="submit" type="primary" size="medium">
+							Сохранить
+						</Button>
+					</div>
 				</form>
 			</div>
 		</div>
