@@ -17,6 +17,10 @@
 	text-decoration: none;
 	color: var(--text-inactive-color);
 	min-height: 64px;
+	cursor: pointer;
+	background-color: transparent;
+	border: none;
+	padding: 0;
 }
 
 .profile .navLink.navLinkActive {

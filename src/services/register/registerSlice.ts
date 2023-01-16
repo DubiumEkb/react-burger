@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
 // Import Config
 import { urlAPI } from "utils/config"
+import { setCookie } from "utils/cookie/setCookie"
 
 type InitialState = {
 	user: {
@@ -61,6 +62,9 @@ export const registerSlice = createSlice({
 			.addCase(postRegister.fulfilled, (state, { payload }) => {
 				// Положительный запрос
 				state.success = payload.success
+
+				setCookie("access_token", payload.accessToken)
+				setCookie("refresh_token", payload.refreshToken)
 			})
 			.addCase(postRegister.rejected, () => {
 				// Ошибка запроса

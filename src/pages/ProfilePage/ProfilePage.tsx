@@ -1,16 +1,26 @@
-import { useState, useRef, FormEvent, ChangeEvent, FocusEvent } from "react"
-import { NavLink, useLocation } from "react-router-dom"
+import { useState, useRef, FormEvent, ChangeEvent, FocusEvent, useEffect } from "react"
+import { NavLink, useLocation, useNavigate } from "react-router-dom"
 import { Input, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from "./ProfilePage.module.css"
 import { emailValue, nameValue, passwordValue } from "services/profile/profileSlice"
+import { tokenValue, postLogout } from "services/logout/logoutSlice"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
+import { getCookie } from "utils/cookie/getCookie"
 
 const ProfilePage = () => {
 	const { pathname } = useLocation()
+	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
-	const { user, success } = useAppSelector((state) => state.profile)
+	const { user } = useAppSelector((state) => state.profile)
+	const { success } = useAppSelector((state) => state.logout)
+
+	useEffect(() => {
+		if (success) {
+			navigate("/")
+		}
+	}, [navigate, success])
 
 	// Begin - Input Name
 	const [fieldDisabled, setDisabled] = useState(true)
@@ -20,8 +30,8 @@ const ProfilePage = () => {
 		event.preventDefault()
 	}
 
-	const onChangeName = (e: ChangeEvent<HTMLInputElement>) => {
-		dispatch(nameValue(e.target.value))
+	const onChangeName = (event: ChangeEvent<HTMLInputElement>) => {
+		dispatch(nameValue(event.target.value))
 	}
 
 	const onIconClickName = () => {
@@ -34,12 +44,19 @@ const ProfilePage = () => {
 	}
 	// End - Input Name
 
-	const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
-		dispatch(emailValue(e.target.value))
+	const onChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
+		dispatch(emailValue(event.target.value))
 	}
 
-	const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
-		dispatch(passwordValue(e.target.value))
+	const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
+		dispatch(passwordValue(event.target.value))
+	}
+
+	const handlerLogout = (event: React.MouseEvent<HTMLButtonElement>) => {
+		console.debug("qerty")
+		event.preventDefault()
+		dispatch(tokenValue(getCookie("refresh_token")))
+		dispatch(postLogout())
 	}
 
 	return (
@@ -64,9 +81,9 @@ const ProfilePage = () => {
 						История заказов
 					</NavLink>
 
-					<NavLink to="/profile" className={`${styles.navLink} text_type_main-medium`}>
+					<button className={`${styles.navLink} text_type_main-medium`} onClick={handlerLogout}>
 						Выход
-					</NavLink>
+					</button>
 				</nav>
 
 				<p className="text text_type_main-default text_color_inactive">

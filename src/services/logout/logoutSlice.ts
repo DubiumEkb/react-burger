@@ -3,12 +3,15 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
 // Import Config
 import { urlAPI } from "utils/config"
+import { deleteCookie } from "utils/cookie/deleteCookie"
 
 type InitialState = {
+	token: string
 	success: boolean
 }
 
 const initialState: InitialState = {
+	token: "",
 	success: false,
 }
 
@@ -20,8 +23,7 @@ export const postLogout = createAsyncThunk("user/postLogout", async (_: void, { 
 				"Content-Type": "application/json;charset=utf-8",
 			},
 			body: JSON.stringify({
-				email: getState().register.user.email,
-				password: getState().register.user.password,
+				token: getState().logout.token,
 			}),
 		})
 
@@ -34,7 +36,11 @@ export const postLogout = createAsyncThunk("user/postLogout", async (_: void, { 
 export const logoutSlice = createSlice({
 	name: "logout",
 	initialState,
-	reducers: {},
+	reducers: {
+		tokenValue: (state, { payload }) => {
+			state.token = payload
+		},
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(postLogout.pending, () => {
@@ -44,6 +50,8 @@ export const logoutSlice = createSlice({
 			.addCase(postLogout.fulfilled, (state, { payload }) => {
 				// Положительный запрос
 				state.success = payload.success
+				deleteCookie("access_token")
+				deleteCookie("refresh_token")
 			})
 			.addCase(postLogout.rejected, () => {
 				// Ошибка запроса
@@ -51,5 +59,7 @@ export const logoutSlice = createSlice({
 			})
 	},
 })
+
+export const { tokenValue } = logoutSlice.actions
 
 export default logoutSlice.reducer
