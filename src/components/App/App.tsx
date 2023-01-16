@@ -7,7 +7,7 @@ import { IngredientDetails } from "components/BurgerIngredients/ui"
 import OrderDetails from "components/OrderDetails/OrderDetails"
 import ProtectedRouteElement from "components/ProtectedRouteElement/ProtectedRouteElement"
 
-import { Routes, Route, Navigate } from "react-router-dom"
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom"
 
 // Import Store
 import { closeModal } from "services/modal/modalSlice"
@@ -31,6 +31,8 @@ import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 import { getCookie } from "utils/cookie/getCookie"
 
 function App() {
+	const location = useLocation()
+	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
 	const { show, ingredient } = useAppSelector((state) => state.modalSlice)
 	const { orderCode } = useAppSelector((state) => state.constSlice)
@@ -53,6 +55,11 @@ function App() {
 		dispatch(closeModal())
 	}
 
+	const handleModalClose = () => {
+		navigate(-1)
+		dispatch(closeModal())
+	}
+
 	let ParamsModal
 	if (ingredient !== null) {
 		ParamsModal = {
@@ -63,11 +70,13 @@ function App() {
 	}
 	// End - Modal
 
+	const state = location.state as { backgroundLocation?: Location }
+	console.debug(state)
 	return (
 		<>
 			<AppHeader />
 			<main className={style.main}>
-				<Routes>
+				<Routes location={state?.backgroundLocation || location}>
 					{/* Главная страница, конструктор бургеров. */}
 					<Route path="/" element={<HomePage />} />
 
@@ -84,7 +93,7 @@ function App() {
 					<Route path="/reset-password" element={<ResetPasswordPage />} />
 
 					{/* Страница ингредиента. */}
-					<Route path="/ingredients/:id" element={<IngredientsPage />} />
+					<Route path="/ingredients/:id" element={<IngredientDetails item={ingredient} />} />
 
 					{/* Проверка безопасности */}
 					<Route element={<ProtectedRouteElement />}>
@@ -104,16 +113,22 @@ function App() {
 			</main>
 
 			{show && (
-				// <Routes>
-				// 	<Route
-				// 		path="/ingredients/:ingredientId"
-				// 		children={
 				<Modal {...ParamsModal} isOpen={show} onClose={handleClose} overlay={true}>
 					{ingredient !== null ? <IngredientDetails item={ingredient} /> : <OrderDetails sum={orderCode} />}
 				</Modal>
-				// 		}
-				// 	/>
-				// </Routes>
+			)}
+
+			{state?.backgroundLocation && (
+				<Routes>
+					<Route
+						path="/ingredients/:id"
+						element={
+							<Modal {...ParamsModal} isOpen={true} onClose={handleModalClose} overlay={false}>
+								Привет
+							</Modal>
+						}
+					/>
+				</Routes>
 			)}
 		</>
 	)

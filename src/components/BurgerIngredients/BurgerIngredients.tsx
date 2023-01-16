@@ -67,6 +67,10 @@ const BurgerIngredients = () => {
 	}
 	// End - Scroll
 
+	if (!items) {
+		return null
+	}
+
 	return (
 		<section className={`${style.BurgerIngredients} pr-10`}>
 			<div className="pt-10 pb-5">

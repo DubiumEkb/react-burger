@@ -10,7 +10,6 @@ export interface IngredientDetailsProps {
 
 export const IngredientDetails = ({ item }: IngredientDetailsProps) => {
 	if (item === null) return <></>
-
 	return (
 		<div className={`${style.IngredientsModal}`}>
 			<div className={style.IngredientsModalImage}>
