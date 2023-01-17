@@ -1,5 +1,5 @@
 // Import Library
-import { useEffect, useState, useRef } from "react"
+import { useState, useRef } from "react"
 import { Link, useLocation } from "react-router-dom"
 
 // Import Framework
