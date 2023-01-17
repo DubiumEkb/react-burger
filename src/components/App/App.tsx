@@ -126,12 +126,12 @@ function App() {
 				</Modal>
 			)}
 
-			{show.ingredient && background && (
-				<Routes>
+			{background && (
+				<Routes location={background && location}>
 					<Route
 						path="/ingredients/:id"
 						element={
-							<Modal {...ParamsModal} isOpen={show.ingredient} onClose={handleModalClose} overlay={true}>
+							<Modal {...ParamsModal} isOpen={true} onClose={handleModalClose} overlay={true}>
 								<IngredientDetails items={items} />
 							</Modal>
 						}

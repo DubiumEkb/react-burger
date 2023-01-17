@@ -1,5 +1,5 @@
 import { useState, useRef, FormEvent, ChangeEvent, FocusEvent, useEffect } from "react"
-import { NavLink, useLocation, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { Input, EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from "./ProfilePage.module.css"
 import { emailValue, nameValue, passwordValue, resetForm, postProfile } from "services/profile/profileSlice"
@@ -70,23 +70,23 @@ const ProfilePage = () => {
 		<div className={styles.profile}>
 			<div className={`${styles.profileLeft} mr-15`}>
 				<nav className={`${styles.nav} mb-20`}>
-					<NavLink
+					<Link
 						to="/profile"
 						className={`${styles.navLink} text_type_main-medium ${
 							pathname === "/profile" && styles.navLinkActive
 						}`}
 					>
 						Профиль
-					</NavLink>
+					</Link>
 
-					<NavLink
+					<Link
 						to="/profile/orders"
 						className={`${styles.navLink} text_type_main-medium ${
 							pathname === "/profile/orders" && styles.navLinkActive
 						}`}
 					>
 						История заказов
-					</NavLink>
+					</Link>
 
 					<button className={`${styles.navLink} text_type_main-medium`} onClick={handlerLogout}>
 						Выход
