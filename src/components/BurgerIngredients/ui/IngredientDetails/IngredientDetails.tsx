@@ -2,11 +2,11 @@
 import style from "./IngredientDetails.module.css"
 
 // Import Types
-import { dataType } from "utils/types/dataType"
+import { DataType } from "utils/types/dataType"
 import { useParams } from "react-router-dom"
 
 export interface IngredientDetailsProps {
-	items: dataType[] | null
+	items: DataType[] | null
 }
 
 export const IngredientDetails = ({ items }: IngredientDetailsProps) => {

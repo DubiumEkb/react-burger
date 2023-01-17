@@ -19,7 +19,7 @@ import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
 // Import Types
 import type { UIEvent } from "react"
-import { dataType } from "utils/types/dataType"
+import { DataType } from "utils/types/dataType"
 
 const BurgerIngredients = () => {
 	const location = useLocation()
@@ -116,7 +116,7 @@ const BurgerIngredients = () => {
 					<div className={style.BurgerIngredientsContentSectionRow}>
 						{pending && <div className="text text_type_main-large p-15">Загрузка...</div>}
 						{fulfilled &&
-							items.map((item: dataType) => {
+							items.map((item: DataType) => {
 								return item.type === "bun" ? (
 									<Link
 										to={`/ingredients/${item._id}`}
@@ -138,7 +138,7 @@ const BurgerIngredients = () => {
 					<div className={style.BurgerIngredientsContentSectionRow}>
 						{pending && <div className="text text_type_main-large p-15">Загрузка...</div>}
 						{fulfilled &&
-							items.map((item: dataType) => {
+							items.map((item: DataType) => {
 								return item.type === "sauce" ? (
 									<Link
 										to={`/ingredients/${item._id}`}
@@ -160,7 +160,7 @@ const BurgerIngredients = () => {
 					<div className={style.BurgerIngredientsContentSectionRow}>
 						{pending && <div className="text text_type_main-large p-15">Загрузка...</div>}
 						{fulfilled &&
-							items.map((item: dataType) => {
+							items.map((item: DataType) => {
 								return item.type === "main" ? (
 									<Link
 										to={`/ingredients/${item._id}`}

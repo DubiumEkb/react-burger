@@ -12,6 +12,7 @@ const ResetPasswordPage = () => {
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
 	const { password, token, success } = useAppSelector((state) => state.resetPassword)
+	const forgot = useAppSelector((state) => state.forgotPassword)
 
 	useEffect(() => {
 		if (success === true) {
@@ -19,7 +20,13 @@ const ResetPasswordPage = () => {
 				navigate("/")
 			}, 1000)
 		}
-	}, [success, navigate])
+
+		if (forgot.success === false) {
+			setTimeout(() => {
+				navigate("/forgot-password")
+			}, 0)
+		}
+	}, [success, navigate, forgot.success])
 
 	const onChangeToken = (event: ChangeEvent<HTMLInputElement>) => {
 		dispatch(tokenValue(event.target.value))

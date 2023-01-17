@@ -16,21 +16,17 @@ const initialState: InitialState = {
 }
 
 export const postLogout = createAsyncThunk("user/postLogout", async (_: void, { getState }: any) => {
-	try {
-		const response = await fetch(`${urlAPI}/auth/logout`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json;charset=utf-8",
-			},
-			body: JSON.stringify({
-				token: getState().logout.token,
-			}),
-		})
+	const response = await fetch(`${urlAPI}/auth/logout`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json;charset=utf-8",
+		},
+		body: JSON.stringify({
+			token: getState().logout.token,
+		}),
+	})
 
-		return response.json()
-	} catch (error) {
-		throw new Error(`Ошибка ${error}`)
-	}
+	return await response.json()
 })
 
 export const logoutSlice = createSlice({

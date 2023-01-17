@@ -15,21 +15,17 @@ const initialState: InitialState = {
 }
 
 export const postForgotPassword = createAsyncThunk("user/postForgotPassword", async (_: void, { getState }: any) => {
-	try {
-		const response = await fetch(`${urlAPI}/password-reset`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json;charset=utf-8",
-			},
-			body: JSON.stringify({
-				email: getState().forgotPassword.email,
-			}),
-		})
+	const response = await fetch(`${urlAPI}/password-reset`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json;charset=utf-8",
+		},
+		body: JSON.stringify({
+			email: getState().forgotPassword.email,
+		}),
+	})
 
-		return response.json()
-	} catch (error) {
-		throw new Error(`Ошибка ${error}`)
-	}
+	return await response.json()
 })
 
 export const forgotPasswordSlice = createSlice({

@@ -60,7 +60,6 @@ const ProfilePage = () => {
 	}
 
 	const handlerLogout = (event: React.MouseEvent<HTMLButtonElement>) => {
-		console.debug("qerty")
 		event.preventDefault()
 		dispatch(tokenValue(getCookie("refresh_token")))
 		dispatch(postLogout())

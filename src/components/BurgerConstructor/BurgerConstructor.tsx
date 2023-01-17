@@ -18,7 +18,7 @@ import { openModal } from "services/modal/modalSlice"
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
 // Import Types
-import { dataType } from "utils/types/dataType"
+import { DataType } from "utils/types/dataType"
 
 // Import Style
 import style from "./BurgerConstructor.module.css"
@@ -30,7 +30,7 @@ const BurgerConstructor = () => {
 	// Begin - Перенос из столбца ингредиентов
 	const [{ dragItem, canDrop }, drop] = useDrop({
 		accept: "ingredient",
-		drop(item: dataType) {
+		drop(item: DataType) {
 			if (item?.type === "bun") {
 				dispatch(addBunItem(item))
 			} else {
@@ -58,7 +58,7 @@ const BurgerConstructor = () => {
 	// End - Сортровка
 
 	// Begin - Modal
-	const handleShow = (item: dataType): void => {
+	const handleShow = (item: DataType): void => {
 		dispatch(openModal("order"))
 	}
 	// End - Modal

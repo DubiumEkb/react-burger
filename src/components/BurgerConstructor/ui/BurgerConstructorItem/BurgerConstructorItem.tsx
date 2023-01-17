@@ -19,10 +19,10 @@ import { useAppDispatch } from "utils/hooks/useAppStore"
 // Import Types
 import type { FC } from "react"
 import type { Identifier, XYCoord } from "dnd-core"
-import { dataType } from "utils/types/dataType"
+import { DataType } from "utils/types/dataType"
 
 type BurgerConstructorItemProps = {
-	item: dataType
+	item: DataType
 	index: number
 	moveCard: (dragIndex: number, hoverIndex: number) => void
 }
@@ -36,7 +36,7 @@ export const BurgerConstructorItem: FC<BurgerConstructorItemProps> = ({ item, in
 	const dispatch = useAppDispatch()
 	const ref = useRef<HTMLDivElement>(null)
 
-	const handlerDelete = (ingredient: dataType) => {
+	const handlerDelete = (ingredient: DataType) => {
 		dispatch(deleteItem(ingredient))
 	}
 
