@@ -6,13 +6,14 @@ import Modal from "components/Modal"
 import { IngredientDetails } from "components/BurgerIngredients/ui"
 import OrderDetails from "components/OrderDetails/OrderDetails"
 import ProtectedRouteElement from "components/ProtectedRouteElement/ProtectedRouteElement"
-
+import { FormContainer } from "components/FormContainer/FormContainer"
 import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom"
 
 // Import Store
 import { closeModal } from "services/modal/modalSlice"
 import { getProfile, tokenValue } from "services/profile/profileSlice"
 import { tokenValue as tokenUpdate, postToken } from "services/token/tokenSlice"
+import { getIngredients } from "services/ingredients/ingredientsSlice"
 
 // Import Style
 import style from "./App.module.css"
@@ -40,6 +41,7 @@ function App() {
 	const state = location.state && location.state.background
 
 	useEffect(() => {
+		dispatch(getIngredients())
 		dispatch(tokenValue(getCookie("access_token")))
 		dispatch(getProfile())
 	}, [dispatch])
@@ -53,12 +55,12 @@ function App() {
 
 	// Begin - Modal
 	const handleClose = () => {
-		dispatch(closeModal())
+		dispatch(closeModal("order"))
 	}
 
 	const handleModalClose = () => {
 		navigate(-1)
-		dispatch(closeModal())
+		dispatch(closeModal("ingredient"))
 	}
 
 	let ParamsModal
@@ -92,7 +94,14 @@ function App() {
 					<Route path="/reset-password" element={<ResetPasswordPage />} />
 
 					{/* Страница ингредиента. */}
-					<Route path="/ingredients/:id" element={<IngredientDetails items={items} />} />
+					<Route
+						path="/ingredients/:id"
+						element={
+							<FormContainer>
+								<IngredientDetails items={items} />
+							</FormContainer>
+						}
+					/>
 
 					{/* Проверка безопасности */}
 					<Route element={<ProtectedRouteElement />}>
@@ -111,18 +120,18 @@ function App() {
 				</Routes>
 			</main>
 
-			{show && items === null && (
-				<Modal {...ParamsModal} isOpen={show} onClose={handleClose} overlay={true}>
+			{show.order && (
+				<Modal isOpen={show.order} onClose={handleClose} overlay={true}>
 					<OrderDetails sum={orderCode} />
 				</Modal>
 			)}
 
-			{state && items !== null && (
+			{show.ingredient && (
 				<Routes>
 					<Route
 						path="/ingredients/:id"
 						element={
-							<Modal {...ParamsModal} isOpen={show} onClose={handleModalClose} overlay={true}>
+							<Modal {...ParamsModal} isOpen={show.ingredient} onClose={handleModalClose} overlay={true}>
 								<IngredientDetails items={items} />
 							</Modal>
 						}

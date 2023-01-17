@@ -6,13 +6,13 @@ import { dataType } from "utils/types/dataType"
 import { useParams } from "react-router-dom"
 
 export interface IngredientDetailsProps {
-	items: dataType[]
+	items: dataType[] | null
 }
 
 export const IngredientDetails = ({ items }: IngredientDetailsProps) => {
 	const { id } = useParams()
 
-	if (!items) return <></>
+	if (items === null) return <></>
 	const item = items.find((item) => item._id === id)
 
 	return (

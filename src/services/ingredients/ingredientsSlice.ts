@@ -8,14 +8,14 @@ import { urlAPI } from "utils/config"
 import { dataType } from "utils/types/dataType"
 
 type InitialState = {
-	items: dataType[]
+	items: dataType[] | null
 	pending: boolean
 	fulfilled: boolean
 	rejected: boolean
 }
 
 const initialState: InitialState = {
-	items: [],
+	items: null,
 	pending: false,
 	fulfilled: false,
 	rejected: false,

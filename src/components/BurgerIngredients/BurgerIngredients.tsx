@@ -9,7 +9,6 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components"
 import { BurgerIngredientsItem } from "./ui"
 
 // Import Store
-import { getIngredients } from "services/ingredients/ingredientsSlice"
 import { openModal } from "services/modal/modalSlice"
 
 // Import Style
@@ -29,13 +28,9 @@ const BurgerIngredients = () => {
 	const dispatch = useAppDispatch()
 	const { items, pending, fulfilled, rejected } = useAppSelector((state) => state.ingredients)
 
-	useEffect(() => {
-		dispatch(getIngredients())
-	}, [dispatch])
-
 	// Begin - Modal
 	const handleShow = (): void => {
-		dispatch(openModal())
+		dispatch(openModal("ingredient"))
 	}
 	// End - Modal
 
