@@ -2,13 +2,14 @@ import { ChangeEvent, FormEvent, useEffect } from "react"
 import { EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import { FormContainer } from "components/FormContainer/FormContainer"
 import styles from "./LoginPage.module.css"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { emailValue, passwordValue, postLogin } from "services/login/loginSlice"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
 const LoginPage = () => {
+	const location = useLocation()
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
 	const { user, success } = useAppSelector((state) => state.login)
@@ -35,6 +36,8 @@ const LoginPage = () => {
 			dispatch(postLogin())
 		}
 	}
+
+	console.debug(location)
 
 	return (
 		<FormContainer>
