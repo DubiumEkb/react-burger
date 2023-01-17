@@ -38,7 +38,7 @@ function App() {
 	const { items } = useAppSelector((state) => state.ingredients)
 	const { orderCode } = useAppSelector((state) => state.constSlice)
 	const { updateToken } = useAppSelector((state) => state.profile)
-	const state = location.state && location.state.background
+	const background = location.state && location.state.background
 
 	useEffect(() => {
 		dispatch(getIngredients())
@@ -77,7 +77,7 @@ function App() {
 		<>
 			<AppHeader />
 			<main className={style.main}>
-				<Routes location={state || location}>
+				<Routes location={background || location}>
 					{/* Главная страница, конструктор бургеров. */}
 					<Route path="/" element={<HomePage />} />
 
@@ -126,7 +126,7 @@ function App() {
 				</Modal>
 			)}
 
-			{show.ingredient && (
+			{show.ingredient && background && (
 				<Routes>
 					<Route
 						path="/ingredients/:id"
