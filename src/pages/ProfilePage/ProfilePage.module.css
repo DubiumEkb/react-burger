@@ -28,11 +28,7 @@
 }
 
 .profile .profileUpdate {
-	display: none;
+	display: flex;
 	align-items: center;
 	justify-content: flex-end;
-}
-
-.profile .profileUpdate .profileUpdateActive {
-	display: flex;
 }

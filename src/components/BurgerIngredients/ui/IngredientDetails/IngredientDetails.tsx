@@ -3,13 +3,18 @@ import style from "./IngredientDetails.module.css"
 
 // Import Types
 import { dataType } from "utils/types/dataType"
+import { useParams } from "react-router-dom"
 
 export interface IngredientDetailsProps {
-	item: dataType | null
+	items: dataType[]
 }
 
-export const IngredientDetails = ({ item }: IngredientDetailsProps) => {
-	if (item === null) return <></>
+export const IngredientDetails = ({ items }: IngredientDetailsProps) => {
+	const { id } = useParams()
+
+	if (!items) return <></>
+	const item = items.find((item) => item._id === id)
+
 	return (
 		<div className={`${style.IngredientsModal}`}>
 			<div className={style.IngredientsModalImage}>

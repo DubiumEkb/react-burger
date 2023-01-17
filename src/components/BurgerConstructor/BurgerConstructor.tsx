@@ -59,7 +59,7 @@ const BurgerConstructor = () => {
 
 	// Begin - Modal
 	const handleShow = (item: dataType): void => {
-		dispatch(openModal(null))
+		dispatch(openModal())
 	}
 	// End - Modal
 

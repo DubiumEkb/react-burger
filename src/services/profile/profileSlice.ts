@@ -11,6 +11,11 @@ type InitialState = {
 		password: string
 		token: string
 	}
+	origin: {
+		email: string
+		name: string
+		password: string
+	}
 	success: boolean
 	updateToken: boolean
 	status: boolean
@@ -23,18 +28,40 @@ const initialState: InitialState = {
 		password: "",
 		token: "",
 	},
+	origin: {
+		email: "",
+		name: "",
+		password: "",
+	},
 	success: false,
 	updateToken: false,
 	status: false,
 }
 
-export const getProfile = createAsyncThunk("user/profile", async (_: void, { getState }: any) => {
+export const getProfile = createAsyncThunk("user/profile/get", async (_: void, { getState }: any) => {
 	const response = await fetch(`${urlAPI}/auth/user`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
 			authorization: getState().profile.user.token,
 		},
+	})
+
+	return await response.json()
+})
+
+export const postProfile = createAsyncThunk("user/profile/patch", async (_: void, { getState }: any) => {
+	const response = await fetch(`${urlAPI}/auth/user`, {
+		method: "PATCH",
+		headers: {
+			"Content-Type": "application/json",
+			authorization: getState().profile.user.token,
+		},
+		body: JSON.stringify({
+			email: getState().profile.user.email,
+			password: getState().profile.user.password,
+			name: getState().profile.user.name,
+		}),
 	})
 
 	return await response.json()
@@ -56,6 +83,11 @@ export const profileSlice = createSlice({
 		tokenValue: (state, { payload }) => {
 			state.user.token = payload
 		},
+		resetForm: (state) => {
+			state.user.name = state.origin.name
+			state.user.email = state.origin.email
+			state.user.password = state.origin.password
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -75,6 +107,9 @@ export const profileSlice = createSlice({
 				if (payload.success) {
 					state.user.email = payload.user.email
 					state.user.name = payload.user.name
+
+					state.origin.email = payload.user.email
+					state.origin.name = payload.user.name
 				}
 
 				state.status = true
@@ -84,9 +119,39 @@ export const profileSlice = createSlice({
 				// console.error("rejected")
 				state.status = true
 			})
+
+		builder
+			.addCase(postProfile.pending, () => {
+				// Отправлен запрос
+				// console.log("pending")
+			})
+			.addCase(postProfile.fulfilled, (state, { payload }) => {
+				// Положительный запрос
+
+				if (payload.message === "jwt expired") {
+					state.updateToken = true
+				}
+
+				state.success = payload.success
+
+				if (payload.success) {
+					state.user.email = payload.user.email
+					state.user.name = payload.user.name
+
+					state.origin.email = payload.user.email
+					state.origin.name = payload.user.name
+				}
+
+				state.status = true
+			})
+			.addCase(postProfile.rejected, (state) => {
+				// Ошибка запроса
+				// console.error("rejected")
+				state.status = true
+			})
 	},
 })
 
-export const { emailValue, nameValue, passwordValue, tokenValue } = profileSlice.actions
+export const { emailValue, nameValue, passwordValue, tokenValue, resetForm } = profileSlice.actions
 
 export default profileSlice.reducer

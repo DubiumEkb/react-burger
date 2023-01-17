@@ -24,7 +24,6 @@ import RegisterPage from "pages/RegisterPage/RegisterPage"
 import ForgotPasswordPage from "pages/ForgotPasswordPage/ForgotPasswordPage"
 import ResetPasswordPage from "pages/ResetPasswordPage/ResetPasswordPage"
 import ProfilePage from "pages/ProfilePage/ProfilePage"
-import IngredientsPage from "pages/IngredientsPage/IngredientsPage"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
@@ -34,9 +33,11 @@ function App() {
 	const location = useLocation()
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
-	const { show, ingredient } = useAppSelector((state) => state.modalSlice)
+	const { show } = useAppSelector((state) => state.modalSlice)
+	const { items } = useAppSelector((state) => state.ingredients)
 	const { orderCode } = useAppSelector((state) => state.constSlice)
 	const { updateToken } = useAppSelector((state) => state.profile)
+	const state = location.state && location.state.background
 
 	useEffect(() => {
 		dispatch(tokenValue(getCookie("access_token")))
@@ -61,7 +62,7 @@ function App() {
 	}
 
 	let ParamsModal
-	if (ingredient !== null) {
+	if (items !== null) {
 		ParamsModal = {
 			title: "Детали ингредиента",
 			isOpen: show,
@@ -70,13 +71,11 @@ function App() {
 	}
 	// End - Modal
 
-	const state = location.state as { backgroundLocation?: Location }
-	console.debug(state)
 	return (
 		<>
 			<AppHeader />
 			<main className={style.main}>
-				<Routes location={state?.backgroundLocation || location}>
+				<Routes location={state || location}>
 					{/* Главная страница, конструктор бургеров. */}
 					<Route path="/" element={<HomePage />} />
 
@@ -93,7 +92,7 @@ function App() {
 					<Route path="/reset-password" element={<ResetPasswordPage />} />
 
 					{/* Страница ингредиента. */}
-					<Route path="/ingredients/:id" element={<IngredientDetails item={ingredient} />} />
+					<Route path="/ingredients/:id" element={<IngredientDetails items={items} />} />
 
 					{/* Проверка безопасности */}
 					<Route element={<ProtectedRouteElement />}>
@@ -112,19 +111,19 @@ function App() {
 				</Routes>
 			</main>
 
-			{show && (
+			{show && items === null && (
 				<Modal {...ParamsModal} isOpen={show} onClose={handleClose} overlay={true}>
-					{ingredient !== null ? <IngredientDetails item={ingredient} /> : <OrderDetails sum={orderCode} />}
+					<OrderDetails sum={orderCode} />
 				</Modal>
 			)}
 
-			{state?.backgroundLocation && (
+			{state && items !== null && (
 				<Routes>
 					<Route
 						path="/ingredients/:id"
 						element={
-							<Modal {...ParamsModal} isOpen={true} onClose={handleModalClose} overlay={false}>
-								Привет
+							<Modal {...ParamsModal} isOpen={show} onClose={handleModalClose} overlay={true}>
+								<IngredientDetails items={items} />
 							</Modal>
 						}
 					/>

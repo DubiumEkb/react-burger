@@ -2,7 +2,7 @@ import { useState, useRef, FormEvent, ChangeEvent, FocusEvent, useEffect } from 
 import { NavLink, useLocation, useNavigate } from "react-router-dom"
 import { Input, EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from "./ProfilePage.module.css"
-import { emailValue, nameValue, passwordValue } from "services/profile/profileSlice"
+import { emailValue, nameValue, passwordValue, resetForm, postProfile } from "services/profile/profileSlice"
 import { tokenValue, postLogout } from "services/logout/logoutSlice"
 
 // Import Hooks
@@ -13,7 +13,7 @@ const ProfilePage = () => {
 	const { pathname } = useLocation()
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
-	const { user } = useAppSelector((state) => state.profile)
+	const { user, origin } = useAppSelector((state) => state.profile)
 	const { success } = useAppSelector((state) => state.logout)
 
 	useEffect(() => {
@@ -26,8 +26,15 @@ const ProfilePage = () => {
 	const [fieldDisabled, setDisabled] = useState(true)
 
 	const inputNameRef = useRef<HTMLInputElement>(null)
-	const handlerForm = (event: FormEvent) => {
+
+	const handlerFormSubmit = (event: FormEvent) => {
 		event.preventDefault()
+		dispatch(postProfile())
+	}
+
+	const handlerFormReset = (event: FormEvent) => {
+		event.preventDefault()
+		dispatch(resetForm())
 	}
 
 	const onChangeName = (event: ChangeEvent<HTMLInputElement>) => {
@@ -93,7 +100,7 @@ const ProfilePage = () => {
 			</div>
 
 			<div className={`${styles.profileRight}`}>
-				<form onSubmit={handlerForm}>
+				<form onSubmit={handlerFormSubmit} onReset={handlerFormReset}>
 					<Input
 						onChange={onChangeName}
 						value={user.name}
@@ -106,6 +113,7 @@ const ProfilePage = () => {
 						ref={inputNameRef}
 						disabled={fieldDisabled}
 					/>
+
 					<EmailInput
 						onChange={onChangeEmail}
 						value={user.email}
@@ -114,6 +122,7 @@ const ProfilePage = () => {
 						isIcon={true}
 						extraClass="mb-6"
 					/>
+
 					<PasswordInput
 						onChange={onChangePassword}
 						value={user.password}
@@ -121,14 +130,17 @@ const ProfilePage = () => {
 						icon="EditIcon"
 						extraClass="mb-6"
 					/>
-					<div className={`${styles.profileUpdate} ${styles.profileUpdateActive}`}>
-						<Button htmlType="reset" type="secondary" size="medium">
-							Отмена
-						</Button>
-						<Button htmlType="submit" type="primary" size="medium">
-							Сохранить
-						</Button>
-					</div>
+
+					{user.email !== origin.email || user.name !== origin.name || user.password !== origin.password ? (
+						<div className={styles.profileUpdate}>
+							<Button htmlType="reset" type="secondary" size="medium">
+								Отмена
+							</Button>
+							<Button htmlType="submit" type="primary" size="medium">
+								Сохранить
+							</Button>
+						</div>
+					) : null}
 				</form>
 			</div>
 		</div>

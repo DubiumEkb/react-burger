@@ -7,27 +7,24 @@ import { dataType } from "utils/types/dataType"
 type InitialState = {
 	show: boolean
 	type: string
-	ingredient: dataType | null
 }
 
 const initialState: InitialState = {
 	show: false,
 	type: "",
-	ingredient: null,
 }
 
 export const modalSlice = createSlice({
 	name: "modal",
 	initialState,
 	reducers: {
-		openModal: (state, { payload }) => {
+		openModal: (state) => {
 			state.show = true
-			state.ingredient = payload
 		},
 		closeModal: (state) => {
 			state.show = false
 		},
-	}
+	},
 })
 
 export const { openModal, closeModal } = modalSlice.actions
