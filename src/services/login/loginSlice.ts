@@ -1,6 +1,9 @@
 // Import Library
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
+// Import Helpers
+import { request } from "utils/helpers/fetch"
+
 // Import Config
 import { urlAPI } from "utils/config"
 
@@ -23,7 +26,7 @@ const initialState: InitialState = {
 }
 
 export const postLogin = createAsyncThunk("user/postLogin", async (_: void, { getState }: any) => {
-	const response = await fetch(`${urlAPI}/auth/login`, {
+	return await request(`${urlAPI}/auth/login`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json;charset=utf-8",
@@ -33,8 +36,6 @@ export const postLogin = createAsyncThunk("user/postLogin", async (_: void, { ge
 			password: getState().login.user.password,
 		}),
 	})
-
-	return await response.json()
 })
 
 export const loginSlice = createSlice({

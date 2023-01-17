@@ -1,6 +1,9 @@
 // Import Library
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
+// Import Helpers
+import { request } from "utils/helpers/fetch"
+
 // Import Config
 import { urlAPI } from "utils/config"
 
@@ -39,19 +42,17 @@ const initialState: InitialState = {
 }
 
 export const getProfile = createAsyncThunk("user/profile/get", async (_: void, { getState }: any) => {
-	const response = await fetch(`${urlAPI}/auth/user`, {
+	return await request(`${urlAPI}/auth/user`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
 			authorization: getState().profile.user.token,
 		},
 	})
-
-	return await response.json()
 })
 
 export const postProfile = createAsyncThunk("user/profile/patch", async (_: void, { getState }: any) => {
-	const response = await fetch(`${urlAPI}/auth/user`, {
+	return await request(`${urlAPI}/auth/user`, {
 		method: "PATCH",
 		headers: {
 			"Content-Type": "application/json",
@@ -63,8 +64,6 @@ export const postProfile = createAsyncThunk("user/profile/patch", async (_: void
 			name: getState().profile.user.name,
 		}),
 	})
-
-	return await response.json()
 })
 
 export const profileSlice = createSlice({

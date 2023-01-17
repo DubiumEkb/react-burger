@@ -1,6 +1,9 @@
 // Import Library
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
+// Import Helpers
+import { request } from "utils/helpers/fetch"
+
 // Import Config
 import { urlAPI } from "utils/config"
 
@@ -15,7 +18,7 @@ const initialState: InitialState = {
 }
 
 export const postForgotPassword = createAsyncThunk("user/postForgotPassword", async (_: void, { getState }: any) => {
-	const response = await fetch(`${urlAPI}/password-reset`, {
+	return await request(`${urlAPI}/password-reset`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json;charset=utf-8",
@@ -24,8 +27,6 @@ export const postForgotPassword = createAsyncThunk("user/postForgotPassword", as
 			email: getState().forgotPassword.email,
 		}),
 	})
-
-	return await response.json()
 })
 
 export const forgotPasswordSlice = createSlice({

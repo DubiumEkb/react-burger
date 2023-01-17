@@ -1,6 +1,9 @@
 // Import Library
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
+// Import Helpers
+import { request } from "utils/helpers/fetch"
+
 // Import Config
 import { urlAPI } from "utils/config"
 import { setCookie } from "utils/cookie/setCookie"
@@ -24,7 +27,7 @@ const initialState: InitialState = {
 }
 
 export const postRegister = createAsyncThunk("user/postRegister", async (_: void, { getState }: any) => {
-	const response = await fetch(`${urlAPI}/auth/register`, {
+	return await request(`${urlAPI}/auth/register`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json;charset=utf-8",
@@ -35,8 +38,6 @@ export const postRegister = createAsyncThunk("user/postRegister", async (_: void
 			name: getState().register.user.name,
 		}),
 	})
-
-	return await response.json()
 })
 
 export const registerSlice = createSlice({

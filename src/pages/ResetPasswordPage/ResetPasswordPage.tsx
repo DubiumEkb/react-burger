@@ -22,9 +22,7 @@ const ResetPasswordPage = () => {
 		}
 
 		if (forgot.success === false) {
-			setTimeout(() => {
-				navigate("/forgot-password")
-			}, 0)
+			navigate("/forgot-password")
 		}
 	}, [success, navigate, forgot.success])
 

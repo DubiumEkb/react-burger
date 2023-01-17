@@ -1,6 +1,9 @@
 // Import Library
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
+// Import Helpers
+import { request } from "utils/helpers/fetch"
+
 // Import Config
 import { urlAPI } from "utils/config"
 import { deleteCookie } from "utils/cookie/deleteCookie"
@@ -16,7 +19,7 @@ const initialState: InitialState = {
 }
 
 export const postLogout = createAsyncThunk("user/postLogout", async (_: void, { getState }: any) => {
-	const response = await fetch(`${urlAPI}/auth/logout`, {
+	return await request(`${urlAPI}/auth/logout`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json;charset=utf-8",
@@ -25,8 +28,6 @@ export const postLogout = createAsyncThunk("user/postLogout", async (_: void, { 
 			token: getState().logout.token,
 		}),
 	})
-
-	return await response.json()
 })
 
 export const logoutSlice = createSlice({

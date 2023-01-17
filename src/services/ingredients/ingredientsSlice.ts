@@ -1,6 +1,9 @@
 // Import Library
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
+// Import Helpers
+import { request } from "utils/helpers/fetch"
+
 // Import Config
 import { urlAPI } from "utils/config"
 
@@ -22,8 +25,7 @@ const initialState: InitialState = {
 }
 
 export const getIngredients = createAsyncThunk("ingredients/getIngredients", async () => {
-	const response = await fetch(`${urlAPI}/ingredients`)
-	return await response.json()
+	return await request(`${urlAPI}/ingredients`)
 })
 
 export const ingredientsSlice = createSlice({
@@ -42,6 +44,7 @@ export const ingredientsSlice = createSlice({
 			.addCase(getIngredients.fulfilled, (state, { payload }) => {
 				// Положительный запрос
 				// console.dir("fulfilled")
+				console.debug(payload.data)
 				state.pending = false
 				state.fulfilled = true
 				state.rejected = false

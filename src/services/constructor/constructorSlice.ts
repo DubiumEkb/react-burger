@@ -2,6 +2,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { v4 as uuidv4 } from "uuid"
 
+// Import Helpers
+import { request } from "utils/helpers/fetch"
+
 // Import Config
 import { urlAPI } from "utils/config"
 
@@ -33,7 +36,7 @@ const initialState: InitialState = {
 }
 
 export const sendOrder = createAsyncThunk("constructor/orderCode", async (_: void, { getState }: any) => {
-	const response = await fetch(`${urlAPI}/orders`, {
+	return await request(`${urlAPI}/orders`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json;charset=utf-8",
@@ -42,8 +45,6 @@ export const sendOrder = createAsyncThunk("constructor/orderCode", async (_: voi
 			ingredients: getState().constSlice.list,
 		}),
 	})
-
-	return await response.json()
 })
 
 export const constructorSlice = createSlice({

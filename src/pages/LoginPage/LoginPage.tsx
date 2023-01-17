@@ -17,10 +17,14 @@ const LoginPage = () => {
 	useEffect(() => {
 		if (success === true) {
 			setTimeout(() => {
-				navigate("/")
+				if (location.state.form) {
+					navigate(location.state.from.pathname)
+				} else {
+					navigate("/")
+				}
 			}, 1000)
 		}
-	}, [success, navigate])
+	}, [success, navigate, location.state])
 
 	const onChangeEmail = (event: ChangeEvent<HTMLInputElement>): void => {
 		dispatch(emailValue(event.target.value))
@@ -37,7 +41,7 @@ const LoginPage = () => {
 		}
 	}
 
-	console.debug(location)
+	// console.debug(location.state.from.pathname)
 
 	return (
 		<FormContainer>
