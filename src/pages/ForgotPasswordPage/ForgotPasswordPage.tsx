@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect } from "react"
 import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import { FormContainer } from "components/FormContainer/FormContainer"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useLocation } from "react-router-dom"
 import styles from "./ForgotPasswordPage.module.css"
 import { postForgotPassword, emailValue } from "services/forgotPassword/forgotPasswordSlice"
 
@@ -10,16 +10,22 @@ import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
 const ForgotPasswordPage = () => {
 	const navigate = useNavigate()
+	const location = useLocation()
 	const dispatch = useAppDispatch()
 	const { email, success } = useAppSelector((state) => state.forgotPassword)
+	const profile = useAppSelector((state) => state.profile)
 
 	useEffect(() => {
+		if (profile.success) {
+			return navigate("/")
+		}
+
 		if (success === true) {
 			setTimeout(() => {
 				navigate("/reset-password")
 			}, 1000)
 		}
-	}, [success, navigate])
+	}, [success, navigate, location.state, profile.success])
 
 	const onChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
 		dispatch(emailValue(event.target.value))

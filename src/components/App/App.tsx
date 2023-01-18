@@ -5,15 +5,16 @@ import AppHeader from "components/AppHeader"
 import Modal from "components/Modal"
 import { IngredientDetails } from "components/BurgerIngredients/ui"
 import OrderDetails from "components/OrderDetails/OrderDetails"
+// import ProtectedRouteAuth from "components/ProtectedRouteAuth/ProtectedRouteAuth"
 import ProtectedRouteElement from "components/ProtectedRouteElement/ProtectedRouteElement"
 import { FormContainer } from "components/FormContainer/FormContainer"
 import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom"
 
 // Import Store
 import { closeModal } from "services/modal/modalSlice"
-import { getProfile, tokenValue } from "services/profile/profileSlice"
-import { tokenValue as tokenUpdate, postToken } from "services/token/tokenSlice"
-import { getIngredients } from "services/ingredients/ingredientsSlice"
+// import { getProfile, tokenValue } from "services/user/userSlice"
+// import { tokenValue as tokenUpdate, postToken } from "services/token/tokenSlice"
+// import { getIngredients } from "services/ingredients/ingredientsSlice"
 
 // Import Style
 import style from "./App.module.css"
@@ -37,21 +38,21 @@ function App() {
 	const { show } = useAppSelector((state) => state.modalSlice)
 	const { items } = useAppSelector((state) => state.ingredients)
 	const { orderCode } = useAppSelector((state) => state.constSlice)
-	const { updateToken } = useAppSelector((state) => state.profile)
+	// const { updateToken } = useAppSelector((state) => state.profile)
 	const background = location.state && location.state.background
 
-	useEffect(() => {
-		dispatch(getIngredients())
-		dispatch(tokenValue(getCookie("access_token")))
-		dispatch(getProfile())
-	}, [dispatch])
+	// useEffect(() => {
+	// 	dispatch(getIngredients())
+	// dispatch(tokenValue(getCookie("access_token")))
+	// dispatch(getProfile())
+	// }, [dispatch])
 
-	useEffect(() => {
-		if (updateToken) {
-			dispatch(tokenUpdate(getCookie("refresh_token")))
-			dispatch(postToken())
-		}
-	}, [dispatch, updateToken])
+	// useEffect(() => {
+	// 	if (updateToken) {
+	// 		dispatch(tokenUpdate(getCookie("refresh_token")))
+	// 		dispatch(postToken())
+	// 	}
+	// }, [dispatch, updateToken])
 
 	// Begin - Modal
 	const handleClose = () => {
@@ -81,6 +82,8 @@ function App() {
 					{/* Главная страница, конструктор бургеров. */}
 					<Route path="/" element={<HomePage />} />
 
+					{/* Проверка авторизации пользователя */}
+					{/* <Route element={<ProtectedRouteAuth />}> */}
 					{/* Страница авторизации. */}
 					<Route path="/login" element={<LoginPage />} />
 
@@ -92,6 +95,7 @@ function App() {
 
 					{/* Страница сброса пароля. */}
 					<Route path="/reset-password" element={<ResetPasswordPage />} />
+					{/* </Route> */}
 
 					{/* Страница ингредиента. */}
 					<Route

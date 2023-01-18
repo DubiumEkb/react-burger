@@ -13,14 +13,21 @@ const LoginPage = () => {
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
 	const { user, success } = useAppSelector((state) => state.login)
+	const profile = useAppSelector((state) => state.profile)
 
 	useEffect(() => {
+		// if (profile.success) {
+		// 	return navigate(location.state?.from.pathname || "/")
+		// }
+
 		if (success === true) {
 			setTimeout(() => {
-				if (location.state.form) {
-					navigate(location.state.from.pathname)
-				} else {
-					navigate("/")
+				if (location.state === null) {
+					return navigate("/")
+				}
+
+				if (location.state !== null) {
+					return navigate(location.state?.from.pathname)
 				}
 			}, 1000)
 		}
@@ -40,8 +47,6 @@ const LoginPage = () => {
 			dispatch(postLogin())
 		}
 	}
-
-	// console.debug(location.state.from.pathname)
 
 	return (
 		<FormContainer>

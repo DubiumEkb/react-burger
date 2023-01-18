@@ -2,8 +2,9 @@ import { useState, useRef, FormEvent, ChangeEvent, FocusEvent, useEffect } from 
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { Input, EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from "./ProfilePage.module.css"
-import { emailValue, nameValue, passwordValue, resetForm, postProfile } from "services/profile/profileSlice"
-import { tokenValue, postLogout } from "services/logout/logoutSlice"
+// import { emailValue, nameValue, passwordValue, resetForm, postProfile } from "services/user/userSlice"
+// import { tokenValue, postLogout } from "services/logout/logoutSlice"
+// import { getProfile, tokenValue as tokenRef } from "services/user/userSlice"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
@@ -13,14 +14,23 @@ const ProfilePage = () => {
 	const { pathname } = useLocation()
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
-	const { user, origin } = useAppSelector((state) => state.profile)
-	const { success } = useAppSelector((state) => state.logout)
+	// const { user, origin } = useAppSelector((state) => state.profile)
+	// const { success } = useAppSelector((state) => state.logout)
 
-	useEffect(() => {
-		if (success) {
-			navigate("/")
-		}
-	}, [navigate, success])
+	// console.debug(user)
+
+	// useEffect(() => {
+	// 	if (!success) {
+	// 		dispatch(tokenRef(getCookie("access_token")))
+	// 		dispatch(getProfile())
+	// 	}
+
+	// 	if (success) {
+	// 		dispatch(emailValue(""))
+	// 		dispatch(nameValue(""))
+	// 		navigate("/")
+	// 	}
+	// }, [dispatch, navigate, success])
 
 	// Begin - Input Name
 	const [fieldDisabled, setDisabled] = useState(true)
@@ -29,16 +39,16 @@ const ProfilePage = () => {
 
 	const handlerFormSubmit = (event: FormEvent) => {
 		event.preventDefault()
-		dispatch(postProfile())
+		// dispatch(postProfile())
 	}
 
 	const handlerFormReset = (event: FormEvent) => {
 		event.preventDefault()
-		dispatch(resetForm())
+		// dispatch(resetForm())
 	}
 
 	const onChangeName = (event: ChangeEvent<HTMLInputElement>) => {
-		dispatch(nameValue(event.target.value))
+		// dispatch(nameValue(event.target.value))
 	}
 
 	const onIconClickName = () => {
@@ -52,17 +62,17 @@ const ProfilePage = () => {
 	// End - Input Name
 
 	const onChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
-		dispatch(emailValue(event.target.value))
+		// dispatch(emailValue(event.target.value))
 	}
 
 	const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
-		dispatch(passwordValue(event.target.value))
+		// dispatch(passwordValue(event.target.value))
 	}
 
 	const handlerLogout = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault()
-		dispatch(tokenValue(getCookie("refresh_token")))
-		dispatch(postLogout())
+		// dispatch(tokenValue(getCookie("refresh_token")))
+		// dispatch(postLogout())
 	}
 
 	return (
@@ -100,7 +110,7 @@ const ProfilePage = () => {
 
 			<div className={`${styles.profileRight}`}>
 				<form onSubmit={handlerFormSubmit} onReset={handlerFormReset}>
-					<Input
+					{/* <Input
 						onChange={onChangeName}
 						value={user.name}
 						placeholder="Имя"
@@ -111,26 +121,26 @@ const ProfilePage = () => {
 						extraClass="mb-6"
 						ref={inputNameRef}
 						disabled={fieldDisabled}
-					/>
+					/> */}
 
-					<EmailInput
+					{/* <EmailInput
 						onChange={onChangeEmail}
 						value={user.email}
 						name={"email"}
 						placeholder="Логин"
 						isIcon={true}
 						extraClass="mb-6"
-					/>
+					/> */}
 
-					<PasswordInput
+					{/* <PasswordInput
 						onChange={onChangePassword}
 						value={user.password}
 						name={"password"}
 						icon="EditIcon"
 						extraClass="mb-6"
-					/>
+					/> */}
 
-					{user.email !== origin.email || user.name !== origin.name || user.password !== origin.password ? (
+					{/* {user.email !== origin.email || user.name !== origin.name || user.password !== origin.password ? (
 						<div className={styles.profileUpdate}>
 							<Button htmlType="reset" type="secondary" size="medium">
 								Отмена
@@ -139,7 +149,7 @@ const ProfilePage = () => {
 								Сохранить
 							</Button>
 						</div>
-					) : null}
+					) : null} */}
 				</form>
 			</div>
 		</div>

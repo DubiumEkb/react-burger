@@ -44,7 +44,6 @@ export const ingredientsSlice = createSlice({
 			.addCase(getIngredients.fulfilled, (state, { payload }) => {
 				// Положительный запрос
 				// console.dir("fulfilled")
-				console.debug(payload.data)
 				state.pending = false
 				state.fulfilled = true
 				state.rejected = false

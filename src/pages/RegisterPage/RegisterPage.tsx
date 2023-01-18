@@ -1,8 +1,8 @@
-import { FormEvent, ChangeEvent } from "react"
+import { FormEvent, ChangeEvent, useEffect } from "react"
 import { Input, EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import { FormContainer } from "components/FormContainer/FormContainer"
 import styles from "./RegisterPage.module.css"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { nameValue, emailValue, passwordValue, postRegister } from "services/register/registerSlice"
 
 // Import Hooks
@@ -10,8 +10,16 @@ import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
 const RegisterPage = () => {
 	const navigate = useNavigate()
+	const location = useLocation()
 	const dispatch = useAppDispatch()
 	const { user, success } = useAppSelector((state) => state.register)
+	const profile = useAppSelector((state) => state.profile)
+
+	useEffect(() => {
+		if (profile.success) {
+			return navigate(location.state?.from.pathname || "/")
+		}
+	}, [location.state, navigate, profile.success])
 
 	const onChangeName = (event: ChangeEvent<HTMLInputElement>): void => {
 		dispatch(nameValue(event.target.value))
@@ -35,6 +43,10 @@ const RegisterPage = () => {
 				}, 1000)
 			}
 		}
+	}
+
+	if (profile.success && !success) {
+		return null
 	}
 
 	return (
