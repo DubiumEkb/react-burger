@@ -155,16 +155,16 @@ export const userSlice = createSlice({
 	name: "profile",
 	initialState,
 	reducers: {
-		emailValue: (state, { payload }) => {
+		changeEmail: (state, { payload }) => {
 			state.user.email = payload
 		},
-		nameValue: (state, { payload }) => {
+		changeName: (state, { payload }) => {
 			state.user.name = payload
 		},
-		passwordValue: (state, { payload }) => {
+		changePassword: (state, { payload }) => {
 			state.user.password = payload
 		},
-		tokenValue: (state, { payload }) => {
+		checkToken: (state, { payload }) => {
 			state.user.token = payload
 		},
 		resetForm: (state) => {
@@ -355,7 +355,7 @@ export const userSlice = createSlice({
 				// Отправлен запрос
 				state.success.status = false
 			})
-			.addCase(postLogout.fulfilled, (state, { payload }) => {
+			.addCase(postLogout.fulfilled, (state) => {
 				// Положительный запрос
 
 				deleteCookie("access_token")
@@ -373,6 +373,6 @@ export const userSlice = createSlice({
 })
 // End - Slice
 
-export const { emailValue, nameValue, passwordValue, tokenValue, resetForm } = userSlice.actions
+export const { changeEmail, changeName, changePassword, checkToken, resetForm } = userSlice.actions
 
 export default userSlice.reducer

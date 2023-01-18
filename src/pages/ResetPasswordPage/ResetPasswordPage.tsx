@@ -1,42 +1,51 @@
+// Import Library
 import { ChangeEvent, FormEvent, useEffect } from "react"
+import { Link, useNavigate, useLocation } from "react-router-dom"
+
+// Import Framework
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
+
+// Import Components
 import { FormContainer } from "components/FormContainer/FormContainer"
+
+// Import Store
+import { checkToken, changePassword, postResetPassword } from "services/user/userSlice"
+
+// Import Style
 import styles from "./ResetPasswordPage.module.css"
-import { Link, useNavigate } from "react-router-dom"
-import { postResetPassword, passwordValue, tokenValue } from "services/resetPassword/resetPasswordSlice"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
+import { getCookie } from "utils/cookie/getCookie"
 
 const ResetPasswordPage = () => {
+	const location = useLocation()
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
-	const { password, token, success } = useAppSelector((state) => state.resetPassword)
-	const forgot = useAppSelector((state) => state.forgotPassword)
+
+	const { user, success } = useAppSelector((state) => state.user)
 
 	useEffect(() => {
-		if (success === true) {
-			setTimeout(() => {
-				navigate("/")
-			}, 1000)
+		if (!success.forgot) {
+			return navigate("/forgot-password")
 		}
 
-		if (forgot.success === false) {
-			navigate("/forgot-password")
+		if (getCookie("access_token") && getCookie("refresh_token")) {
+			return navigate(location.state?.from.pathname || "/")
 		}
-	}, [success, navigate, forgot.success])
+	}, [success.forgot, location.state, navigate])
 
 	const onChangeToken = (event: ChangeEvent<HTMLInputElement>) => {
-		dispatch(tokenValue(event.target.value))
+		dispatch(checkToken(event.target.value))
 	}
 
 	const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
-		dispatch(passwordValue(event.target.value))
+		dispatch(changePassword(event.target.value))
 	}
 
 	const handlerForm = (event: FormEvent) => {
 		event.preventDefault()
-		if (password !== "" && token !== "") {
+		if (user.password !== "" && user.token !== "") {
 			dispatch(postResetPassword())
 		}
 	}
@@ -48,7 +57,7 @@ const ResetPasswordPage = () => {
 				<PasswordInput
 					placeholder="Введите новый пароль"
 					onChange={onChangePassword}
-					value={password}
+					value={user.password}
 					name={"password"}
 					extraClass="mb-6"
 					required
@@ -57,7 +66,7 @@ const ResetPasswordPage = () => {
 					type={"text"}
 					placeholder={"Введите код из письма"}
 					onChange={onChangeToken}
-					value={token}
+					value={user.token}
 					name={"name"}
 					error={false}
 					errorText={"Неверный код"}

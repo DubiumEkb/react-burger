@@ -1,39 +1,47 @@
+// Import Library
 import { ChangeEvent, FormEvent, useEffect } from "react"
-import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
-import { FormContainer } from "components/FormContainer/FormContainer"
 import { Link, useNavigate, useLocation } from "react-router-dom"
+
+// Import Framework
+import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
+
+// Import Components
+import { FormContainer } from "components/FormContainer/FormContainer"
+
+// Import Store
+import { changeEmail, postForgotPassword } from "services/user/userSlice"
+
+// Import Style
 import styles from "./ForgotPasswordPage.module.css"
-import { postForgotPassword, emailValue } from "services/forgotPassword/forgotPasswordSlice"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
+import { getCookie } from "utils/cookie/getCookie"
 
 const ForgotPasswordPage = () => {
 	const navigate = useNavigate()
 	const location = useLocation()
 	const dispatch = useAppDispatch()
-	const { email, success } = useAppSelector((state) => state.forgotPassword)
-	const profile = useAppSelector((state) => state.profile)
+
+	const { user, success } = useAppSelector((state) => state.user)
 
 	useEffect(() => {
-		if (profile.success) {
-			return navigate("/")
+		if (success.forgot) {
+			return navigate("/reset-password")
 		}
 
-		if (success === true) {
-			setTimeout(() => {
-				navigate("/reset-password")
-			}, 1000)
+		if (getCookie("access_token") && getCookie("refresh_token")) {
+			return navigate(location.state?.from.pathname || "/")
 		}
-	}, [success, navigate, location.state, profile.success])
+	}, [success.forgot, navigate, location.state])
 
 	const onChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
-		dispatch(emailValue(event.target.value))
+		dispatch(changeEmail(event.target.value))
 	}
 
 	const handlerForm = (event: FormEvent) => {
 		event.preventDefault()
-		if (email !== "") {
+		if (user.email !== "") {
 			dispatch(postForgotPassword())
 		}
 	}
@@ -45,7 +53,7 @@ const ForgotPasswordPage = () => {
 				<EmailInput
 					placeholder={"Укажите e-mail"}
 					onChange={onChangeEmail}
-					value={email}
+					value={user.email}
 					name={"email"}
 					isIcon={false}
 					extraClass="mb-6"

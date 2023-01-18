@@ -1,27 +1,33 @@
+// Import Library
+// import { useEffect } from "react"
 import { Navigate, Outlet, useLocation } from "react-router-dom"
+
+// Import Framework
+
+// Import Components
+
+// Import Store
+
+// Import Style
 
 // Import Hooks
 import { useAppSelector } from "utils/hooks/useAppStore"
+import { getCookie } from "utils/cookie/getCookie"
 
 const ProtectedRoutes = () => {
 	const location = useLocation()
-	const { status, success } = useAppSelector((state) => state.profile)
-	const login = useAppSelector((state) => state.login)
-	const from = location.state?.from
 
-	console.debug(status, success, login.success)
+	// const from = location.state?.from
 
-	if (!status) {
-		return null
-	}
+	const { success } = useAppSelector((state) => state.user)
 
 	// Если требуется авторизация, а пользователь не авторизован...
-	// if (!success && !login.success) {
-	// 	return <Navigate to="/login" state={{ from: location }} />
-	// }
+	if (!success.user && !getCookie("access_token") && !getCookie("refresh_token")) {
+		return <Navigate to="/login" state={{ from: location }} />
+	}
 
 	// Если разрешен неавторизованный доступ, а пользователь авторизован...
-	// if (success && login.success) {
+	// if (success.user && getCookie("access_token") && getCookie("refresh_token")) {
 	// 	return <Navigate to={from} />
 	// }
 

@@ -1,52 +1,57 @@
+// Import Library
 import { FormEvent, ChangeEvent, useEffect } from "react"
-import { Input, EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
-import { FormContainer } from "components/FormContainer/FormContainer"
-import styles from "./RegisterPage.module.css"
 import { Link, useLocation, useNavigate } from "react-router-dom"
-import { nameValue, emailValue, passwordValue, postRegister } from "services/register/registerSlice"
+
+// Import Framework
+import { Input, EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
+
+// Import Components
+import { FormContainer } from "components/FormContainer/FormContainer"
+
+// Import Store
+import { changeName, changeEmail, changePassword, postRegister } from "services/user/userSlice"
+
+// Import Style
+import styles from "./RegisterPage.module.css"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
+import { getCookie } from "utils/cookie/getCookie"
 
 const RegisterPage = () => {
 	const navigate = useNavigate()
 	const location = useLocation()
 	const dispatch = useAppDispatch()
-	const { user, success } = useAppSelector((state) => state.register)
-	const profile = useAppSelector((state) => state.profile)
+
+	const { user, success } = useAppSelector((state) => state.user)
 
 	useEffect(() => {
-		if (profile.success) {
+		if (success.user) {
 			return navigate(location.state?.from.pathname || "/")
 		}
-	}, [location.state, navigate, profile.success])
+
+		if (getCookie("access_token") && getCookie("refresh_token")) {
+			return navigate(location.state?.from.pathname || "/")
+		}
+	}, [success.user, location.state, navigate])
 
 	const onChangeName = (event: ChangeEvent<HTMLInputElement>): void => {
-		dispatch(nameValue(event.target.value))
+		dispatch(changeName(event.target.value))
 	}
 
 	const onChangeEmail = (event: ChangeEvent<HTMLInputElement>): void => {
-		dispatch(emailValue(event.target.value))
+		dispatch(changeEmail(event.target.value))
 	}
 
 	const onChangePassword = (event: ChangeEvent<HTMLInputElement>): void => {
-		dispatch(passwordValue(event.target.value))
+		dispatch(changePassword(event.target.value))
 	}
 
 	const handlerForm = (event: FormEvent) => {
 		event.preventDefault()
 		if (user.name !== "" && user.email !== "" && user.password !== "") {
 			dispatch(postRegister())
-			if (success === true) {
-				setTimeout(() => {
-					navigate("/")
-				}, 1000)
-			}
 		}
-	}
-
-	if (profile.success && !success) {
-		return null
 	}
 
 	return (

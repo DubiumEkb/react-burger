@@ -1,58 +1,43 @@
-import { useEffect } from "react"
-
-// Import Components
-import AppHeader from "components/AppHeader"
-import Modal from "components/Modal"
-import { IngredientDetails } from "components/BurgerIngredients/ui"
-import OrderDetails from "components/OrderDetails/OrderDetails"
-// import ProtectedRouteAuth from "components/ProtectedRouteAuth/ProtectedRouteAuth"
-import ProtectedRouteElement from "components/ProtectedRouteElement/ProtectedRouteElement"
-import { FormContainer } from "components/FormContainer/FormContainer"
+// Import Library
 import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom"
 
-// Import Store
-import { closeModal } from "services/modal/modalSlice"
-// import { getProfile, tokenValue } from "services/user/userSlice"
-// import { tokenValue as tokenUpdate, postToken } from "services/token/tokenSlice"
-// import { getIngredients } from "services/ingredients/ingredientsSlice"
+// Import Framework
 
-// Import Style
-import style from "./App.module.css"
+// Import Components
+import Modal from "components/Modal"
+import AppHeader from "components/AppHeader"
+import { IngredientDetails } from "components/BurgerIngredients/ui"
+import OrderDetails from "components/OrderDetails/OrderDetails"
+import ProtectedRouteElement from "components/ProtectedRouteElement/ProtectedRouteElement"
 
 // Import Pages
 import HomePage from "pages/HomePage/HomePage"
+import IngredientPage from "pages/IngredientPage/IngredientPage"
 import LoginPage from "pages/LoginPage/LoginPage"
 import RegisterPage from "pages/RegisterPage/RegisterPage"
 import ForgotPasswordPage from "pages/ForgotPasswordPage/ForgotPasswordPage"
 import ResetPasswordPage from "pages/ResetPasswordPage/ResetPasswordPage"
 import ProfilePage from "pages/ProfilePage/ProfilePage"
 
+// Import Store
+import { closeModal } from "services/modal/modalSlice"
+
+// Import Style
+import style from "./App.module.css"
+
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
-import { getCookie } from "utils/cookie/getCookie"
 
 function App() {
 	const location = useLocation()
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
+
 	const { show } = useAppSelector((state) => state.modalSlice)
 	const { items } = useAppSelector((state) => state.ingredients)
 	const { orderCode } = useAppSelector((state) => state.constSlice)
-	// const { updateToken } = useAppSelector((state) => state.profile)
+
 	const background = location.state && location.state.background
-
-	// useEffect(() => {
-	// 	dispatch(getIngredients())
-	// dispatch(tokenValue(getCookie("access_token")))
-	// dispatch(getProfile())
-	// }, [dispatch])
-
-	// useEffect(() => {
-	// 	if (updateToken) {
-	// 		dispatch(tokenUpdate(getCookie("refresh_token")))
-	// 		dispatch(postToken())
-	// 	}
-	// }, [dispatch, updateToken])
 
 	// Begin - Modal
 	const handleClose = () => {
@@ -82,8 +67,16 @@ function App() {
 					{/* Главная страница, конструктор бургеров. */}
 					<Route path="/" element={<HomePage />} />
 
-					{/* Проверка авторизации пользователя */}
-					{/* <Route element={<ProtectedRouteAuth />}> */}
+					{/* Страница ингредиента. */}
+					<Route
+						path="/ingredients/:id"
+						element={
+							<IngredientPage>
+								<IngredientDetails items={items} />
+							</IngredientPage>
+						}
+					/>
+
 					{/* Страница авторизации. */}
 					<Route path="/login" element={<LoginPage />} />
 
@@ -95,17 +88,6 @@ function App() {
 
 					{/* Страница сброса пароля. */}
 					<Route path="/reset-password" element={<ResetPasswordPage />} />
-					{/* </Route> */}
-
-					{/* Страница ингредиента. */}
-					<Route
-						path="/ingredients/:id"
-						element={
-							<FormContainer>
-								<IngredientDetails items={items} />
-							</FormContainer>
-						}
-					/>
 
 					{/* Проверка безопасности */}
 					<Route element={<ProtectedRouteElement />}>

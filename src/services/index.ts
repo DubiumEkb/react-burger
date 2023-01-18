@@ -5,12 +5,6 @@ import { configureStore } from "@reduxjs/toolkit"
 import ingredientsSlice from "./ingredients/ingredientsSlice"
 import constructorSlice from "./constructor/constructorSlice"
 import modalSlice from "./modal/modalSlice"
-// import forgotPasswordSlice from "./forgotPassword/forgotPasswordSlice"
-// import resetPasswordSlice from "./resetPassword/resetPasswordSlice"
-// import loginSlice from "./login/loginSlice"
-// import registerSlice from "./register/registerSlice"
-// import logoutSlice from "./logout/logoutSlice"
-// import tokenSlice from "./token/tokenSlice"
 import userSlice from "./user/userSlice"
 
 export const store = configureStore({
@@ -19,12 +13,6 @@ export const store = configureStore({
 		ingredients: ingredientsSlice,
 		constSlice: constructorSlice,
 		modalSlice: modalSlice,
-		// forgotPassword: forgotPasswordSlice,
-		// resetPassword: resetPasswordSlice,
-		// login: loginSlice,
-		// register: registerSlice,
-		// logout: logoutSlice,
-		// token: tokenSlice,
 		user: userSlice,
 	},
 })

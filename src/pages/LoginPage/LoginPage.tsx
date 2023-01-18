@@ -1,44 +1,48 @@
+// Import Library
 import { ChangeEvent, FormEvent, useEffect } from "react"
-import { EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
-import { FormContainer } from "components/FormContainer/FormContainer"
-import styles from "./LoginPage.module.css"
 import { Link, useLocation, useNavigate } from "react-router-dom"
-import { emailValue, passwordValue, postLogin } from "services/login/loginSlice"
+
+// Import Framework
+import { EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
+
+// Import Components
+import { FormContainer } from "components/FormContainer/FormContainer"
+
+// Import Store
+import { changeEmail, changePassword, postLogin } from "services/user/userSlice"
+
+// Import Style
+import styles from "./LoginPage.module.css"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
+import { getCookie } from "utils/cookie/getCookie"
+
+// Import Hooks
 
 const LoginPage = () => {
 	const location = useLocation()
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
-	const { user, success } = useAppSelector((state) => state.login)
-	const profile = useAppSelector((state) => state.profile)
+
+	const { user, success } = useAppSelector((state) => state.user)
 
 	useEffect(() => {
-		// if (profile.success) {
-		// 	return navigate(location.state?.from.pathname || "/")
-		// }
-
-		if (success === true) {
-			setTimeout(() => {
-				if (location.state === null) {
-					return navigate("/")
-				}
-
-				if (location.state !== null) {
-					return navigate(location.state?.from.pathname)
-				}
-			}, 1000)
+		if (success.user) {
+			return navigate(location.state?.from.pathname || "/")
 		}
-	}, [success, navigate, location.state])
+
+		if (getCookie("access_token") && getCookie("refresh_token")) {
+			return navigate(location.state?.from.pathname || "/")
+		}
+	}, [success.user, location.state, navigate])
 
 	const onChangeEmail = (event: ChangeEvent<HTMLInputElement>): void => {
-		dispatch(emailValue(event.target.value))
+		dispatch(changeEmail(event.target.value))
 	}
 
 	const onChangePassword = (event: ChangeEvent<HTMLInputElement>): void => {
-		dispatch(passwordValue(event.target.value))
+		dispatch(changePassword(event.target.value))
 	}
 
 	const handlerForm = (event: FormEvent) => {
