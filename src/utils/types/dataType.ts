@@ -1,4 +1,4 @@
-export interface dataType {
+export interface DataType {
 	filter(arg0: (item: any) => void): unknown
 	_id: string
 	name: string

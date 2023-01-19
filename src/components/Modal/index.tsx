@@ -1,5 +1,5 @@
 // Import Components
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 import ReactDOM from "react-dom"
 import ModalOverlay from "../ModalOverlay/ModalOverlay"
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
@@ -10,7 +10,8 @@ import style from "./Modal.module.css"
 // Types
 import { modalType } from "utils/types/modalType"
 
-const Modal = ({ children, title, isOpen, onClose, overlay = false }: modalType) => {
+const Modal = ({ children, title, isOpen, onClose, overlay }: modalType) => {
+	overlay = overlay || false
 	const containerModal = document.getElementById("react-modals")
 
 	useEffect(() => {

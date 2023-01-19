@@ -5,6 +5,7 @@ import { configureStore } from "@reduxjs/toolkit"
 import ingredientsSlice from "./ingredients/ingredientsSlice"
 import constructorSlice from "./constructor/constructorSlice"
 import modalSlice from "./modal/modalSlice"
+import userSlice from "./user/userSlice"
 
 export const store = configureStore({
 	reducer: {
@@ -12,10 +13,9 @@ export const store = configureStore({
 		ingredients: ingredientsSlice,
 		constSlice: constructorSlice,
 		modalSlice: modalSlice,
+		user: userSlice,
 	},
 })
-
-// Типы для корретной работы hook'ов
 
 // Нужен для Hook useAppSelector
 export type RootState = ReturnType<typeof store.getState>

@@ -5,10 +5,10 @@ import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burg
 import style from "./BurgerConstructorItem.module.css"
 
 // Import Props
-import { dataType } from "../../../../utils/dataType" // В будущем заменю "../" на алиасы
+import { DataType } from "utils/types/dataType"
 
 export interface BurgerConstructorItemProps {
-	data: dataType[]
+	data: DataType[]
 	type?: string
 }
 

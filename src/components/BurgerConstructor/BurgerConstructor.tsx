@@ -1,6 +1,7 @@
 // Import Library
 import { useCallback } from "react"
 import { useDrop } from "react-dnd"
+import { useNavigate } from "react-router-dom"
 
 // Import Framework
 import { ConstructorElement, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components"
@@ -16,21 +17,24 @@ import { openModal } from "services/modal/modalSlice"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
+import { getCookie } from "utils/cookie/getCookie"
 
 // Import Types
-import { dataType } from "utils/types/dataType"
+import { DataType } from "utils/types/dataType"
 
 // Import Style
 import style from "./BurgerConstructor.module.css"
 
 const BurgerConstructor = () => {
 	const dispatch = useAppDispatch()
+	const navigate = useNavigate()
 	const { mainList, bunItem, totalPrice } = useAppSelector((state) => state.constSlice)
+	const { success } = useAppSelector((state) => state.user)
 
 	// Begin - Перенос из столбца ингредиентов
 	const [{ dragItem, canDrop }, drop] = useDrop({
 		accept: "ingredient",
-		drop(item: dataType) {
+		drop(item: DataType) {
 			if (item?.type === "bun") {
 				dispatch(addBunItem(item))
 			} else {
@@ -58,8 +62,14 @@ const BurgerConstructor = () => {
 	// End - Сортровка
 
 	// Begin - Modal
-	const handleShow = (item: dataType): void => {
-		dispatch(openModal(null))
+	const handleShow = (item: DataType): void => {
+		if (!success.user && !getCookie("access_token") && !getCookie("refresh_token")) {
+			return navigate("/login")
+		}
+
+		if (getCookie("access_token") && getCookie("refresh_token")) {
+			dispatch(openModal("order"))
+		}
 	}
 	// End - Modal
 

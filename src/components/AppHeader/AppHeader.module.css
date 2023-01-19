@@ -51,6 +51,20 @@
 	display: inline-flex;
 	align-items: center;
 	cursor: pointer;
+
+}
+
+.header .headerNavLeft .headerNavLeftItem,
+.header .headerNavRight .headerNavRightItem {
+	text-decoration: none;
+}
+
+.header .headerNavLeft .headerNavLeftItem.headerNavLeftItemActive svg,
+.header .headerNavLeft .headerNavLeftItem.headerNavLeftItemActive span,
+.header .headerNavRight .headerNavRightItem.headerNavLeftItemActive svg,
+.header .headerNavRight .headerNavRightItem.headerNavLeftItemActive span {
+	fill: #F2F2F3;
+	color: #F2F2F3;
 }
 
 .header .headerNavLeft .headerNavLeftItem svg,
@@ -58,14 +72,15 @@
 .header .headerNavRight .headerNavRightItem svg,
 .header .headerNavRight .headerNavRightItem span {
 	transition: all 0.3s linear;
-}
 
-.header .headerNavLeft .headerNavLeftItem:hover svg,
-.header .headerNavRight .headerNavRightItem:hover svg {
 	fill: #8585AD;
+	color: #8585AD;
 }
 
 .header .headerNavLeft .headerNavLeftItem:hover span,
+.header .headerNavLeft .headerNavLeftItem:hover svg,
+.header .headerNavRight .headerNavRightItem:hover svg,
 .header .headerNavRight .headerNavRightItem:hover span {
-	color: #8585AD;
+	fill: #F2F2F3;
+	color: #F2F2F3;
 }

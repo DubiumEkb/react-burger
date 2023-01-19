@@ -2,18 +2,21 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { v4 as uuidv4 } from "uuid"
 
+// Import Helpers
+import { request } from "utils/helpers/fetch"
+
 // Import Config
 import { urlAPI } from "utils/config"
 
 // Import Types
-import { dataType } from "utils/types/dataType"
+import { DataType } from "utils/types/dataType"
 
 type InitialState = {
-	mainList: dataType[]
-	bunItem: dataType | null
+	mainList: DataType[]
+	bunItem: DataType | null
 	totalPrice: number
 	orderCode: number
-	list: dataType[]
+	list: DataType[]
 	status: boolean
 	pending: boolean
 	fulfilled: boolean
@@ -33,21 +36,15 @@ const initialState: InitialState = {
 }
 
 export const sendOrder = createAsyncThunk("constructor/orderCode", async (_: void, { getState }: any) => {
-	try {
-		const response = await fetch(`${urlAPI}/orders`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json;charset=utf-8",
-			},
-			body: JSON.stringify({
-				ingredients: getState().constSlice.list,
-			}),
-		})
-
-		return response.json()
-	} catch (error) {
-		throw new Error(`Ошибка ${error}`)
-	}
+	return await request(`${urlAPI}/orders`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json;charset=utf-8",
+		},
+		body: JSON.stringify({
+			ingredients: getState().constSlice.list,
+		}),
+	})
 })
 
 export const constructorSlice = createSlice({
@@ -73,7 +70,7 @@ export const constructorSlice = createSlice({
 				state.list.push(state.bunItem, state.bunItem)
 			}
 
-			state.list?.map((item: dataType) => item._id)
+			state.list?.map((item: DataType) => item._id)
 
 			state.status = true
 		},
@@ -102,7 +99,6 @@ export const constructorSlice = createSlice({
 			})
 			.addCase(sendOrder.fulfilled, (state, { payload }) => {
 				// Положительный запрос
-				// console.dir("fulfilled")
 				state.pending = false
 				state.fulfilled = true
 				state.rejected = false

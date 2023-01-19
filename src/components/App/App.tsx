@@ -1,16 +1,23 @@
 // Import Library
-import { DndProvider } from "react-dnd"
-import { HTML5Backend } from "react-dnd-html5-backend"
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom"
 
 // Import Framework
 
 // Import Components
-import AppHeader from "components/AppHeader"
-import BurgerIngredients from "components/BurgerIngredients/BurgerIngredients"
-import BurgerConstructor from "components/BurgerConstructor/BurgerConstructor"
 import Modal from "components/Modal"
+import AppHeader from "components/AppHeader"
 import { IngredientDetails } from "components/BurgerIngredients/ui"
 import OrderDetails from "components/OrderDetails/OrderDetails"
+import ProtectedRouteElement from "components/ProtectedRouteElement/ProtectedRouteElement"
+
+// Import Pages
+import HomePage from "pages/HomePage/HomePage"
+import IngredientPage from "pages/IngredientPage/IngredientPage"
+import LoginPage from "pages/LoginPage/LoginPage"
+import RegisterPage from "pages/RegisterPage/RegisterPage"
+import ForgotPasswordPage from "pages/ForgotPasswordPage/ForgotPasswordPage"
+import ResetPasswordPage from "pages/ResetPasswordPage/ResetPasswordPage"
+import ProfilePage from "pages/ProfilePage/ProfilePage"
 
 // Import Store
 import { closeModal } from "services/modal/modalSlice"
@@ -22,17 +29,28 @@ import style from "./App.module.css"
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
 function App() {
+	const location = useLocation()
+	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
-	const { show, ingredient } = useAppSelector((state) => state.modalSlice)
+
+	const { show } = useAppSelector((state) => state.modalSlice)
+	const { items } = useAppSelector((state) => state.ingredients)
 	const { orderCode } = useAppSelector((state) => state.constSlice)
+
+	const background = location.state && location.state.background
 
 	// Begin - Modal
 	const handleClose = () => {
-		dispatch(closeModal())
+		dispatch(closeModal("order"))
+	}
+
+	const handleModalClose = () => {
+		navigate(-1)
+		dispatch(closeModal("ingredient"))
 	}
 
 	let ParamsModal
-	if (ingredient !== null) {
+	if (items !== null) {
 		ParamsModal = {
 			title: "Детали ингредиента",
 			isOpen: show,
@@ -45,15 +63,66 @@ function App() {
 		<>
 			<AppHeader />
 			<main className={style.main}>
-				<DndProvider backend={HTML5Backend}>
-					<BurgerIngredients />
-					<BurgerConstructor />
-				</DndProvider>
+				<Routes location={background || location}>
+					{/* Главная страница, конструктор бургеров. */}
+					<Route path="/" element={<HomePage />} />
+
+					{/* Страница ингредиента. */}
+					<Route
+						path="/ingredients/:id"
+						element={
+							<IngredientPage>
+								<IngredientDetails items={items} />
+							</IngredientPage>
+						}
+					/>
+
+					{/* Страница авторизации. */}
+					<Route path="/login" element={<LoginPage />} />
+
+					{/* Страница регистрации. */}
+					<Route path="/register" element={<RegisterPage />} />
+
+					{/* Страница восстановления пароля. */}
+					<Route path="/forgot-password" element={<ForgotPasswordPage />} />
+
+					{/* Страница сброса пароля. */}
+					<Route path="/reset-password" element={<ResetPasswordPage />} />
+
+					{/* Проверка безопасности */}
+					<Route element={<ProtectedRouteElement />}>
+						{/* Страница с настройками профиля пользователя. */}
+						<Route path="/profile" element={<ProfilePage />} />
+
+						{/* Страница с историей заказов. */}
+						<Route path="/profile/orders" element={<ProfilePage />} />
+
+						{/* Страница с историей заказа. */}
+						<Route path="/profile/orders/:id" element={<ProfilePage />} />
+					</Route>
+
+					{/* Редирект. */}
+					<Route path="*" element={<Navigate to="/" replace />} />
+				</Routes>
 			</main>
-			{show && (
-				<Modal {...ParamsModal} isOpen={show} onClose={handleClose} overlay={true}>
-					{ingredient !== null ? <IngredientDetails item={ingredient} /> : <OrderDetails sum={orderCode} />}
+
+			{show.order && (
+				<Modal isOpen={show.order} onClose={handleClose} overlay={true}>
+					<OrderDetails sum={orderCode} />
 				</Modal>
+			)}
+
+			{background && (
+				<Routes location={background && location}>
+					<Route
+						path="/ingredients/:id"
+						element={
+							<Modal {...ParamsModal} isOpen={true} onClose={handleModalClose} overlay={true}>
+								<IngredientDetails items={items} />
+							</Modal>
+						}
+					/>
+				</Routes>
 			)}
 		</>
 	)

@@ -1,5 +1,6 @@
 // Import Library
-import { useEffect, useState, useRef } from "react"
+import { useState, useRef } from "react"
+import { Link, useLocation } from "react-router-dom"
 
 // Import Framework
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components"
@@ -8,7 +9,6 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components"
 import { BurgerIngredientsItem } from "./ui"
 
 // Import Store
-import { getIngredients } from "services/ingredients/ingredientsSlice"
 import { openModal } from "services/modal/modalSlice"
 
 // Import Style
@@ -19,21 +19,18 @@ import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
 // Import Types
 import type { UIEvent } from "react"
-import { dataType } from "utils/types/dataType"
+import { DataType } from "utils/types/dataType"
 
 const BurgerIngredients = () => {
+	const location = useLocation()
 	const [current, setCurrent] = useState<string>("buns")
 
 	const dispatch = useAppDispatch()
 	const { items, pending, fulfilled, rejected } = useAppSelector((state) => state.ingredients)
 
-	useEffect(() => {
-		dispatch(getIngredients())
-	}, [dispatch])
-
 	// Begin - Modal
-	const handleShow = (item: dataType): void => {
-		dispatch(openModal(item))
+	const handleShow = (): void => {
+		dispatch(openModal("ingredient"))
 	}
 	// End - Modal
 
@@ -67,6 +64,10 @@ const BurgerIngredients = () => {
 	}
 	// End - Scroll
 
+	if (!items) {
+		return null
+	}
+
 	return (
 		<section className={`${style.BurgerIngredients} pr-10`}>
 			<div className="pt-10 pb-5">
@@ -74,8 +75,6 @@ const BurgerIngredients = () => {
 			</div>
 
 			<nav className={style.BurgerIngredientsTab}>
-				{/* @ts-ignore */}
-
 				<Tab
 					value="buns"
 					active={current === "buns"}
@@ -87,7 +86,6 @@ const BurgerIngredients = () => {
 					Булки
 				</Tab>
 
-				{/* @ts-ignore */}
 				<Tab
 					value="sauces"
 					active={current === "sauces"}
@@ -99,7 +97,6 @@ const BurgerIngredients = () => {
 					Соусы
 				</Tab>
 
-				{/* @ts-ignore */}
 				<Tab
 					value="stuffing"
 					active={current === "stuffing"}
@@ -119,15 +116,17 @@ const BurgerIngredients = () => {
 					<div className={style.BurgerIngredientsContentSectionRow}>
 						{pending && <div className="text text_type_main-large p-15">Загрузка...</div>}
 						{fulfilled &&
-							items.map((item: dataType) => {
+							items.map((item: DataType) => {
 								return item.type === "bun" ? (
-									<button
+									<Link
+										to={`/ingredients/${item._id}`}
+										state={{ background: location }}
 										className={style.BurgerIngredientsBtn}
 										key={item._id}
-										onClick={() => handleShow(item)}
+										onClick={() => handleShow()}
 									>
 										<BurgerIngredientsItem ingredient={item} classname="pb-10" />
-									</button>
+									</Link>
 								) : null
 							})}
 						{rejected && <div className="text text_type_main-large p-15">Ошибка!</div>}
@@ -139,15 +138,17 @@ const BurgerIngredients = () => {
 					<div className={style.BurgerIngredientsContentSectionRow}>
 						{pending && <div className="text text_type_main-large p-15">Загрузка...</div>}
 						{fulfilled &&
-							items.map((item: dataType) => {
+							items.map((item: DataType) => {
 								return item.type === "sauce" ? (
-									<button
+									<Link
+										to={`/ingredients/${item._id}`}
+										state={{ background: location }}
 										className={style.BurgerIngredientsBtn}
 										key={item._id}
-										onClick={() => handleShow(item)}
+										onClick={() => handleShow()}
 									>
 										<BurgerIngredientsItem ingredient={item} classname="pb-8" />
-									</button>
+									</Link>
 								) : null
 							})}
 						{rejected && <div className="text text_type_main-large p-15">Ошибка!</div>}
@@ -159,15 +160,17 @@ const BurgerIngredients = () => {
 					<div className={style.BurgerIngredientsContentSectionRow}>
 						{pending && <div className="text text_type_main-large p-15">Загрузка...</div>}
 						{fulfilled &&
-							items.map((item: dataType) => {
+							items.map((item: DataType) => {
 								return item.type === "main" ? (
-									<button
+									<Link
+										to={`/ingredients/${item._id}`}
+										state={{ background: location }}
 										className={style.BurgerIngredientsBtn}
 										key={item._id}
-										onClick={() => handleShow(item)}
+										onClick={() => handleShow()}
 									>
 										<BurgerIngredientsItem ingredient={item} classname="pb-8" />
-									</button>
+									</Link>
 								) : null
 							})}
 						{rejected && <div className="text text_type_main-large p-15">Ошибка!</div>}

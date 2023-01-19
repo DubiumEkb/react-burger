@@ -1,33 +1,31 @@
 // Import Library
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
+// Import Helpers
+import { request } from "utils/helpers/fetch"
+
 // Import Config
 import { urlAPI } from "utils/config"
 
 // Import Types
-import { dataType } from "utils/types/dataType"
+import { DataType } from "utils/types/dataType"
 
 type InitialState = {
-	items: dataType[]
+	items: DataType[] | null
 	pending: boolean
 	fulfilled: boolean
 	rejected: boolean
 }
 
 const initialState: InitialState = {
-	items: [],
+	items: null,
 	pending: false,
 	fulfilled: false,
 	rejected: false,
 }
 
 export const getIngredients = createAsyncThunk("ingredients/getIngredients", async () => {
-	try {
-		const res = await fetch(`${urlAPI}/ingredients`).then((data) => data.json())
-		return res
-	} catch (error) {
-		throw new Error(`Ошибка ${error}`)
-	}
+	return await request(`${urlAPI}/ingredients`)
 })
 
 export const ingredientsSlice = createSlice({

@@ -1,4 +1,5 @@
-import { Logo, BurgerIcon,ListIcon ,ProfileIcon} from "@ya.praktikum/react-developer-burger-ui-components"
+import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components"
+import { Link } from "react-router-dom"
 import style from "./AppHeader.module.css"
 
 const AppHeader = () => {
@@ -6,26 +7,29 @@ const AppHeader = () => {
 		<header className={`${style.header} pt-4 pb-4`}>
 			<div className={style.headerContainer}>
 				<nav className={style.headerNavLeft}>
-					<div className={`${style.headerNavLeftItem} p-5`}>
+					<Link to="/" className={`${style.headerNavLeftItem} ${style.headerNavLeftItemActive} p-5`}>
 						{/* @ts-ignore */}
 						<BurgerIcon />
 						<span className="text text_type_main-default pl-2">Конструктор</span>
-					</div>
-					<div className={`${style.headerNavLeftItem} p-5`}>
+					</Link>
+
+					<Link to="/feed" className={`${style.headerNavLeftItem} p-5`}>
 						{/* @ts-ignore */}
 						<ListIcon />
 						<span className="text text_type_main-default pl-2">Лента заказов</span>
-					</div>
+					</Link>
 				</nav>
 
-				<a href="/" className={style.headerLogo}><Logo /></a>
+				<Link to="/" className={style.headerLogo}>
+					<Logo />
+				</Link>
 
 				<nav className={style.headerNavRight}>
-					<div className={`${style.headerNavRightItem} p-5`}>
+					<Link to="/profile" className={`${style.headerNavRightItem} p-5`}>
 						{/* @ts-ignore */}
 						<ProfileIcon />
 						<span className="text text_type_main-default pl-2">Личный кабинет</span>
-					</div>
+					</Link>
 				</nav>
 			</div>
 		</header>

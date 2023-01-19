@@ -2,18 +2,21 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 // Import Types
-import { dataType } from "utils/types/dataType"
 
 type InitialState = {
-	show: boolean
+	show: {
+		order: boolean
+		ingredient: boolean
+	}
 	type: string
-	ingredient: dataType | null
 }
 
 const initialState: InitialState = {
-	show: false,
+	show: {
+		order: false,
+		ingredient: false,
+	},
 	type: "",
-	ingredient: null,
 }
 
 export const modalSlice = createSlice({
@@ -21,13 +24,24 @@ export const modalSlice = createSlice({
 	initialState,
 	reducers: {
 		openModal: (state, { payload }) => {
-			state.show = true
-			state.ingredient = payload
+			if (payload === "order") {
+				state.show.order = true
+			}
+
+			if (payload === "ingredient") {
+				state.show.ingredient = true
+			}
 		},
-		closeModal: (state) => {
-			state.show = false
+		closeModal: (state, { payload }) => {
+			if (payload === "order") {
+				state.show.order = false
+			}
+
+			if (payload === "ingredient") {
+				state.show.ingredient = false
+			}
 		},
-	}
+	},
 })
 
 export const { openModal, closeModal } = modalSlice.actions
