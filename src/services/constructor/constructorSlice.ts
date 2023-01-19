@@ -99,7 +99,6 @@ export const constructorSlice = createSlice({
 			})
 			.addCase(sendOrder.fulfilled, (state, { payload }) => {
 				// Положительный запрос
-				// console.dir("fulfilled")
 				state.pending = false
 				state.fulfilled = true
 				state.rejected = false

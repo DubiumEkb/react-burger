@@ -89,10 +89,6 @@ const ProfilePage = () => {
 		dispatch(resetForm())
 	}
 
-	// if (!success.user) {
-	// 	return null
-	// }
-
 	return (
 		<div className={styles.profile}>
 			<div className={`${styles.profileLeft} mr-15`}>
