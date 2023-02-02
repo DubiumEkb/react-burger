@@ -5,8 +5,6 @@ import { useDrop, useDrag } from "react-dnd"
 // Import Framework
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 
-// Import Components
-
 // Import Store
 import { deleteItem } from "services/constructor/constructorSlice"
 

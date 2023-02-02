@@ -13,19 +13,18 @@ import { BurgerConstructorItem } from "./ui"
 import { addBunItem, createMainList, addMainList } from "services/constructor/constructorSlice"
 import { openModal } from "services/modal/modalSlice"
 
-// Import Style
-
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 import { getCookie } from "utils/cookie/getCookie"
 
 // Import Types
+import type { FC } from "react"
 import { DataType } from "utils/types/dataType"
 
 // Import Style
 import style from "./BurgerConstructor.module.css"
 
-const BurgerConstructor = () => {
+const BurgerConstructor: FC = () => {
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
 	const { mainList, bunItem, totalPrice } = useAppSelector((state) => state.constSlice)

@@ -1,10 +1,6 @@
 // Import Library
 import { useEffect } from "react"
 
-// Import Framework
-
-// Import Components
-
 // Import Store
 import { orderNumber, sendOrder } from "services/constructor/constructorSlice"
 
@@ -14,7 +10,13 @@ import style from "./OrderDetails.module.css"
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
-const OrderDetails = ({ sum }: any) => {
+// Import Types
+import type { FC } from "react"
+type OrderType = {
+	sum: number
+}
+
+const OrderDetails: FC<OrderType> = ({ sum }) => {
 	const dispatch = useAppDispatch()
 
 	const { status, pending, fulfilled, rejected } = useAppSelector((state) => state.constSlice)

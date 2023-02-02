@@ -5,8 +5,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom"
 // Import Framework
 import { Input, EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 
-// Import Components
-
 // Import Store
 import {
 	changeEmail,
@@ -22,22 +20,18 @@ import {
 // Import Style
 import styles from "./ProfilePage.module.css"
 
+// Import Types
+import type { FC } from "react"
+
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 import { getCookie } from "utils/cookie/getCookie"
 
-const ProfilePage = () => {
+const ProfilePage: FC = () => {
 	const { pathname } = useLocation()
-	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
 
-	const { user, origin, success } = useAppSelector((state) => state.user)
-
-	useEffect(() => {
-		if (!getCookie("access_token") && !getCookie("refresh_token") && !success.user) {
-			return navigate("/")
-		}
-	}, [success.user, navigate])
+	const { user, origin } = useAppSelector((state) => state.user)
 
 	useEffect(() => {
 		if (getCookie("access_token") && getCookie("refresh_token")) {

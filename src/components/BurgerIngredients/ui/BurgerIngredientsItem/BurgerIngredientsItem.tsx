@@ -4,10 +4,6 @@ import { useDrag } from "react-dnd"
 // Import Framework
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components"
 
-// Import Components
-
-// Import Store
-
 // Import Style
 import style from "./BurgerIngredientsItem.module.css"
 
@@ -15,6 +11,7 @@ import style from "./BurgerIngredientsItem.module.css"
 import { useAppSelector } from "utils/hooks/useAppStore"
 
 // Import Types
+import type { FC } from "react"
 import { DataType } from "utils/types/dataType"
 
 type BurgerIngredientsProps = {
@@ -22,7 +19,7 @@ type BurgerIngredientsProps = {
 	classname: string
 }
 
-export const BurgerIngredientsItem = ({ ingredient, classname }: BurgerIngredientsProps) => {
+export const BurgerIngredientsItem: FC<BurgerIngredientsProps> = ({ ingredient, classname }) => {
 	const { mainList, bunItem } = useAppSelector((state) => state.constSlice)
 	const count = mainList?.filter((item: DataType) => item._id === ingredient?._id).length
 

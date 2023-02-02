@@ -18,10 +18,10 @@ import style from "./BurgerIngredients.module.css"
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
 // Import Types
-import type { UIEvent } from "react"
+import type { FC, UIEvent } from "react"
 import { DataType } from "utils/types/dataType"
 
-const BurgerIngredients = () => {
+const BurgerIngredients: FC = () => {
 	const location = useLocation()
 	const [current, setCurrent] = useState<string>("buns")
 
