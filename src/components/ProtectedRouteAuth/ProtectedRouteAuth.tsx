@@ -17,7 +17,6 @@ const ProtectedRouteAuth: FC = () => {
 	// }
 
 	// Если требуется авторизация, а пользователь авторизован...
-	// if (success.user && getCookie("access_token") && getCookie("refresh_token")) {
 	if (getCookie("access_token") && getCookie("refresh_token")) {
 		return <Navigate to="/" />
 	}
