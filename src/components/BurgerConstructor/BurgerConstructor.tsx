@@ -61,7 +61,7 @@ const BurgerConstructor: FC = () => {
 	// End - Сортровка
 
 	// Begin - Modal
-	const handleShow = (item: DataType): void => {
+	const handleShow = () => {
 		if (!success.user && !getCookie("access_token") && !getCookie("refresh_token")) {
 			return navigate("/login")
 		}
@@ -120,7 +120,6 @@ const BurgerConstructor: FC = () => {
 					<CurrencyIcon type="primary" />
 				</div>
 
-				{/* @ts-ignore */}
 				<Button type="primary" size="large" onClick={handleShow} htmlType="button">
 					Оформить заказ
 				</Button>
