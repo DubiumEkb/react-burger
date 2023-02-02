@@ -11,16 +11,16 @@ import { FormContainer } from "components/FormContainer/FormContainer"
 // Import Store
 import { changeEmail, changePassword, postLogin } from "services/user/userSlice"
 
+// Import Types
+import type { FC } from "react"
+
 // Import Style
 import styles from "./LoginPage.module.css"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
-import { getCookie } from "utils/cookie/getCookie"
 
-// Import Hooks
-
-const LoginPage = () => {
+const LoginPage: FC = () => {
 	const location = useLocation()
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
@@ -29,10 +29,6 @@ const LoginPage = () => {
 
 	useEffect(() => {
 		if (success.user) {
-			return navigate(location.state?.from.pathname || "/")
-		}
-
-		if (getCookie("access_token") && getCookie("refresh_token")) {
 			return navigate(location.state?.from.pathname || "/")
 		}
 	}, [success.user, location.state, navigate])

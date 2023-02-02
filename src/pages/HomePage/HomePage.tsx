@@ -3,8 +3,6 @@ import { useEffect } from "react"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
 
-// Import Framework
-
 // Import Components
 import BurgerIngredients from "components/BurgerIngredients/BurgerIngredients"
 import BurgerConstructor from "components/BurgerConstructor/BurgerConstructor"
@@ -12,12 +10,13 @@ import BurgerConstructor from "components/BurgerConstructor/BurgerConstructor"
 // Import Store
 import { getIngredients } from "services/ingredients/ingredientsSlice"
 
-// Import Style
+// Import Types
+import type { FC } from "react"
 
 // Import Hooks
 import { useAppDispatch } from "utils/hooks/useAppStore"
 
-const HomePage = () => {
+const HomePage: FC = () => {
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {

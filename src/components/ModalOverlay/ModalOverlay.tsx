@@ -1,13 +1,14 @@
 // Imporrt Style
 import style from "./ModalOverlay.module.css"
 
-// Types
+// Import Types
+import type { FC } from "react"
 type Props = {
 	isOpen: Boolean
 	closeModal: () => void
 }
 
-const ModalOverlay = ({ isOpen, closeModal }: Props) => {
+const ModalOverlay: FC<Props> = ({ isOpen, closeModal }) => {
 	return <div className={`${style.Overlay} ${isOpen === true && style.OverlayActive}`} onClick={closeModal}></div>
 }
 

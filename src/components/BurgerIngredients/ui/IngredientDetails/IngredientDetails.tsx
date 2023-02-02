@@ -1,15 +1,18 @@
+// Import Library
+import { useParams } from "react-router-dom"
+
 // Import Style
 import style from "./IngredientDetails.module.css"
 
 // Import Types
+import type { FC } from "react"
 import { DataType } from "utils/types/dataType"
-import { useParams } from "react-router-dom"
 
 export interface IngredientDetailsProps {
 	items: DataType[] | null
 }
 
-export const IngredientDetails = ({ items }: IngredientDetailsProps) => {
+export const IngredientDetails: FC<IngredientDetailsProps> = ({ items }) => {
 	const { id } = useParams()
 
 	if (items === null) return <></>

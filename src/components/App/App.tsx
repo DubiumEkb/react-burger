@@ -1,14 +1,13 @@
 // Import Library
 import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom"
 
-// Import Framework
-
 // Import Components
 import Modal from "components/Modal"
 import AppHeader from "components/AppHeader"
 import { IngredientDetails } from "components/BurgerIngredients/ui"
 import OrderDetails from "components/OrderDetails/OrderDetails"
-import ProtectedRouteElement from "components/ProtectedRouteElement/ProtectedRouteElement"
+import ProtectedRouteAuth from "components/ProtectedRouteAuth/ProtectedRouteAuth"
+import ProtectedRoutePrivate from "components/ProtectedRoutePrivate/ProtectedRoutePrivate"
 
 // Import Pages
 import HomePage from "pages/HomePage/HomePage"
@@ -25,10 +24,13 @@ import { closeModal } from "services/modal/modalSlice"
 // Import Style
 import style from "./App.module.css"
 
+// Import Types
+import type { FC } from "react"
+
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
-function App() {
+const App: FC = () => {
 	const location = useLocation()
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
@@ -67,30 +69,33 @@ function App() {
 					{/* Главная страница, конструктор бургеров. */}
 					<Route path="/" element={<HomePage />} />
 
-					{/* Страница ингредиента. */}
-					<Route
-						path="/ingredients/:id"
-						element={
-							<IngredientPage>
-								<IngredientDetails items={items} />
-							</IngredientPage>
-						}
-					/>
+					{/* Проверка на не авторизованного пользователя */}
+					<Route element={<ProtectedRouteAuth />}>
+						{/* Страница ингредиента. */}
+						<Route
+							path="/ingredients/:id"
+							element={
+								<IngredientPage>
+									<IngredientDetails items={items} />
+								</IngredientPage>
+							}
+						/>
 
-					{/* Страница авторизации. */}
-					<Route path="/login" element={<LoginPage />} />
+						{/* Страница авторизации. */}
+						<Route path="/login" element={<LoginPage />} />
 
-					{/* Страница регистрации. */}
-					<Route path="/register" element={<RegisterPage />} />
+						{/* Страница регистрации. */}
+						<Route path="/register" element={<RegisterPage />} />
 
-					{/* Страница восстановления пароля. */}
-					<Route path="/forgot-password" element={<ForgotPasswordPage />} />
+						{/* Страница восстановления пароля. */}
+						<Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
-					{/* Страница сброса пароля. */}
-					<Route path="/reset-password" element={<ResetPasswordPage />} />
+						{/* Страница сброса пароля. */}
+						<Route path="/reset-password" element={<ResetPasswordPage />} />
+					</Route>
 
-					{/* Проверка безопасности */}
-					<Route element={<ProtectedRouteElement />}>
+					{/* Проверка на авторизованного пользователя */}
+					<Route element={<ProtectedRoutePrivate />}>
 						{/* Страница с настройками профиля пользователя. */}
 						<Route path="/profile" element={<ProfilePage />} />
 

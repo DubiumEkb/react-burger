@@ -7,10 +7,11 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 // Import Style
 import style from "./Modal.module.css"
 
-// Types
-import { modalType } from "utils/types/modalType"
+// Import Types
+import type { FC } from "react"
+import { ModalType } from "utils/types/modalType"
 
-const Modal = ({ children, title, isOpen, onClose, overlay }: modalType) => {
+const Modal: FC<ModalType> = ({ children, title, isOpen, onClose, overlay }) => {
 	overlay = overlay || false
 	const containerModal = document.getElementById("react-modals")
 

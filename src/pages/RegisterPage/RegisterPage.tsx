@@ -11,14 +11,16 @@ import { FormContainer } from "components/FormContainer/FormContainer"
 // Import Store
 import { changeName, changeEmail, changePassword, postRegister } from "services/user/userSlice"
 
+// Import Types
+import type { FC } from "react"
+
 // Import Style
 import styles from "./RegisterPage.module.css"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
-import { getCookie } from "utils/cookie/getCookie"
 
-const RegisterPage = () => {
+const RegisterPage: FC = () => {
 	const navigate = useNavigate()
 	const location = useLocation()
 	const dispatch = useAppDispatch()
@@ -27,10 +29,6 @@ const RegisterPage = () => {
 
 	useEffect(() => {
 		if (success.user) {
-			return navigate(location.state?.from.pathname || "/")
-		}
-
-		if (getCookie("access_token") && getCookie("refresh_token")) {
 			return navigate(location.state?.from.pathname || "/")
 		}
 	}, [success.user, location.state, navigate])

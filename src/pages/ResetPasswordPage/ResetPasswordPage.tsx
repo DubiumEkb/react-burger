@@ -11,14 +11,16 @@ import { FormContainer } from "components/FormContainer/FormContainer"
 // Import Store
 import { checkToken, changePassword, postResetPassword } from "services/user/userSlice"
 
+// Import Types
+import type { FC } from "react"
+
 // Import Style
 import styles from "./ResetPasswordPage.module.css"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
-import { getCookie } from "utils/cookie/getCookie"
 
-const ResetPasswordPage = () => {
+const ResetPasswordPage: FC = () => {
 	const location = useLocation()
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
@@ -28,10 +30,6 @@ const ResetPasswordPage = () => {
 	useEffect(() => {
 		if (!success.forgot) {
 			return navigate("/forgot-password")
-		}
-
-		if (getCookie("access_token") && getCookie("refresh_token")) {
-			return navigate(location.state?.from.pathname || "/")
 		}
 	}, [success.forgot, location.state, navigate])
 

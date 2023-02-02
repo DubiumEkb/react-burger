@@ -13,19 +13,18 @@ import { BurgerConstructorItem } from "./ui"
 import { addBunItem, createMainList, addMainList } from "services/constructor/constructorSlice"
 import { openModal } from "services/modal/modalSlice"
 
-// Import Style
-
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 import { getCookie } from "utils/cookie/getCookie"
 
 // Import Types
+import type { FC } from "react"
 import { DataType } from "utils/types/dataType"
 
 // Import Style
 import style from "./BurgerConstructor.module.css"
 
-const BurgerConstructor = () => {
+const BurgerConstructor: FC = () => {
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
 	const { mainList, bunItem, totalPrice } = useAppSelector((state) => state.constSlice)
@@ -62,7 +61,7 @@ const BurgerConstructor = () => {
 	// End - Сортровка
 
 	// Begin - Modal
-	const handleShow = (item: DataType): void => {
+	const handleShow = () => {
 		if (!success.user && !getCookie("access_token") && !getCookie("refresh_token")) {
 			return navigate("/login")
 		}
@@ -121,7 +120,6 @@ const BurgerConstructor = () => {
 					<CurrencyIcon type="primary" />
 				</div>
 
-				{/* @ts-ignore */}
 				<Button type="primary" size="large" onClick={handleShow} htmlType="button">
 					Оформить заказ
 				</Button>
