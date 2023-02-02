@@ -1,3 +1,14 @@
+// type TypeGetCookie = {
+// 	name: string
+// 	value: string
+// 	props: {
+// 		path?: string
+// 		expires?: Date | string | number
+// 		[propName: string]: any
+// 	}
+// }
+
+// export const setCookie: TypeGetCookie = (name, value, props): void => {
 export const setCookie = (name: string, value: string, props?: any) => {
 	props = props || {}
 	let exp = props.expires
