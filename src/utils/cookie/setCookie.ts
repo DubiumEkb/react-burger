@@ -1,15 +1,10 @@
-// type TypeGetCookie = {
-// 	name: string
-// 	value: string
-// 	props: {
-// 		path?: string
-// 		expires?: Date | string | number
-// 		[propName: string]: any
-// 	}
-// }
+type TCookieParams = {
+	path?: string
+	expires?: Date | string | number
+	[propName: string]: any
+}
 
-// export const setCookie: TypeGetCookie = (name, value, props): void => {
-export const setCookie = (name: string, value: string, props?: any) => {
+export const setCookie = (name: string, value: string, props?: TCookieParams) => {
 	props = props || {}
 	let exp = props.expires
 	if (typeof exp == "number" && exp) {
@@ -17,7 +12,7 @@ export const setCookie = (name: string, value: string, props?: any) => {
 		d.setTime(d.getTime() + exp * 1000)
 		exp = props.expires = d
 	}
-	if (exp && exp.toUTCString) {
+	if (exp && exp instanceof Date) {
 		props.expires = exp.toUTCString()
 	}
 	value = encodeURIComponent(value)
