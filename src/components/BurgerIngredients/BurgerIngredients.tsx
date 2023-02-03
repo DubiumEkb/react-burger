@@ -4,31 +4,16 @@ import { Link, useLocation } from "react-router-dom"
 
 // Import Framework
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components"
-<<<<<<< HEAD
-import BurgerIngredientsItem from "./ui/BurgerIngredientsItem"
-=======
 
 // Import Components
 import { BurgerIngredientsItem } from "./ui"
 
 // Import Store
 import { openModal } from "services/modal/modalSlice"
->>>>>>> 1ba2c6b30a86975e0f44e2880fbf4390ffa36935
 
 // Import Style
 import style from "./BurgerIngredients.module.css"
 
-<<<<<<< HEAD
-// Import Props
-import {dataType} from "../../utils/dataType"
-
-export interface BurgerIngredientsProps {
-  data: dataType[]
-}
-
-const BurgerIngredients = ({data}:BurgerIngredientsProps) => {
-	const [current, setCurrent] = useState('one')
-=======
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
@@ -82,7 +67,6 @@ const BurgerIngredients: FC = () => {
 	if (!items) {
 		return null
 	}
->>>>>>> 1ba2c6b30a86975e0f44e2880fbf4390ffa36935
 
 	return (
 		<section className={`${style.BurgerIngredients} pr-10`}>
@@ -102,16 +86,6 @@ const BurgerIngredients: FC = () => {
 					Булки
 				</Tab>
 
-<<<<<<< HEAD
-				{/* @ts-ignore */}
-				<Tab value="two" active={current === 'two'} onClick={setCurrent}>
-					<span>Соусы</span>
-				</Tab>
-
-				{/* @ts-ignore */}
-				<Tab value="three" active={current === 'three'} onClick={setCurrent}>
-					<span>Начинки</span>
-=======
 				<Tab
 					value="sauces"
 					active={current === "sauces"}
@@ -132,7 +106,6 @@ const BurgerIngredients: FC = () => {
 					}}
 				>
 					Начинки
->>>>>>> 1ba2c6b30a86975e0f44e2880fbf4390ffa36935
 				</Tab>
 			</nav>
 
@@ -141,13 +114,6 @@ const BurgerIngredients: FC = () => {
 					<h2 className="text text_type_main-medium pb-6">Булки</h2>
 
 					<div className={style.BurgerIngredientsContentSectionRow}>
-<<<<<<< HEAD
-						{data.map((item) => {
-							return item.type === "bun" ? (
-								<BurgerIngredientsItem key={item._id} item={item} classname="pb-10" />
-							) : null
-						})}
-=======
 						{pending && <div className="text text_type_main-large p-15">Загрузка...</div>}
 						{fulfilled &&
 							items.map((item: DataType) => {
@@ -164,20 +130,12 @@ const BurgerIngredients: FC = () => {
 								) : null
 							})}
 						{rejected && <div className="text text_type_main-large p-15">Ошибка!</div>}
->>>>>>> 1ba2c6b30a86975e0f44e2880fbf4390ffa36935
 					</div>
 				</section>
 
 				<section className={style.BurgerIngredientsContentSection} ref={refSauces}>
 					<h2 className="text text_type_main-medium pb-6">Соусы</h2>
 					<div className={style.BurgerIngredientsContentSectionRow}>
-<<<<<<< HEAD
-						{data.map((item) => {
-							return item.type === "sauce" ? (
-								<BurgerIngredientsItem key={item._id} item={item} classname="pb-8" />
-							) : null
-						})}
-=======
 						{pending && <div className="text text_type_main-large p-15">Загрузка...</div>}
 						{fulfilled &&
 							items.map((item: DataType) => {
@@ -194,20 +152,12 @@ const BurgerIngredients: FC = () => {
 								) : null
 							})}
 						{rejected && <div className="text text_type_main-large p-15">Ошибка!</div>}
->>>>>>> 1ba2c6b30a86975e0f44e2880fbf4390ffa36935
 					</div>
 				</section>
 
 				<section className={style.BurgerIngredientsContentSection} ref={refStuffing}>
 					<h2 className="text text_type_main-medium pb-6">Начинки</h2>
 					<div className={style.BurgerIngredientsContentSectionRow}>
-<<<<<<< HEAD
-						{data.map((item) => {
-							return item.type === "main" ? (
-								<BurgerIngredientsItem key={item._id} item={item} classname="pb-8" />
-							) : null
-						})}
-=======
 						{pending && <div className="text text_type_main-large p-15">Загрузка...</div>}
 						{fulfilled &&
 							items.map((item: DataType) => {
@@ -224,7 +174,6 @@ const BurgerIngredients: FC = () => {
 								) : null
 							})}
 						{rejected && <div className="text text_type_main-large p-15">Ошибка!</div>}
->>>>>>> 1ba2c6b30a86975e0f44e2880fbf4390ffa36935
 					</div>
 				</section>
 			</div>

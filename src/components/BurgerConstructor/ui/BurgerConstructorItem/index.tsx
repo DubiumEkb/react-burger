@@ -5,6 +5,7 @@ import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burg
 import style from "./BurgerConstructorItem.module.css"
 
 // Import Props
+import type {FC} from "react"
 import { DataType } from "utils/types/dataType"
 
 export interface BurgerConstructorItemProps {
@@ -12,7 +13,7 @@ export interface BurgerConstructorItemProps {
 	type?: string
 }
 
-const BurgerConstructorItem = ({ data, type }: BurgerConstructorItemProps) => {
+const BurgerConstructorItem:FC<BurgerConstructorItemProps> = ({ data, type }) => {
 	return (
 		<>
 			{data.map((item, index) => {

@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-// Imporrt Components
-import {CurrencyIcon, Button} from "@ya.praktikum/react-developer-burger-ui-components"
-import BurgerConstructorItem from "./ui/BurgerConstructorItem"
-=======
 // Import Library
 import { useCallback } from "react"
 import { useDrop } from "react-dnd"
@@ -25,21 +20,10 @@ import { getCookie } from "utils/cookie/getCookie"
 // Import Types
 import type { FC } from "react"
 import { DataType } from "utils/types/dataType"
->>>>>>> 1ba2c6b30a86975e0f44e2880fbf4390ffa36935
 
 // Import Style
 import style from "./BurgerConstructor.module.css"
 
-<<<<<<< HEAD
-// Import Props
-import {dataType} from "../../utils/dataType"
-
-export interface BurgerConstructorProps {
-  data: dataType[]
-}
-
-const BurgerConstructor = ({data}:BurgerConstructorProps) => {
-=======
 const BurgerConstructor: FC = () => {
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
@@ -91,7 +75,6 @@ const BurgerConstructor: FC = () => {
 	const dragBuns = canDrop && dragItem && dragItem.type === "bun"
 	const dragIngredients = canDrop && dragItem && dragItem.type !== "bun"
 
->>>>>>> 1ba2c6b30a86975e0f44e2880fbf4390ffa36935
 	return (
 		<section className={`${style.BurgerConstructor} pt-25`}>
 			<div ref={drop} className={`${style.BurgerConstructorItems}`}>
@@ -137,12 +120,7 @@ const BurgerConstructor: FC = () => {
 					<CurrencyIcon type="primary" />
 				</div>
 
-<<<<<<< HEAD
-				{/* @ts-ignore */}
-				<Button type="primary" size="large">
-=======
 				<Button type="primary" size="large" onClick={handleShow} htmlType="button">
->>>>>>> 1ba2c6b30a86975e0f44e2880fbf4390ffa36935
 					Оформить заказ
 				</Button>
 			</div>

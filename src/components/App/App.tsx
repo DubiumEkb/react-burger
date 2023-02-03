@@ -24,26 +24,6 @@ import { closeModal } from "services/modal/modalSlice"
 // Import Style
 import style from "./App.module.css"
 
-<<<<<<< HEAD
-// Import Data
-import data from "../../utils/data"
-
-// Import Components
-import AppHeader from "../AppHeader/AppHeader"
-import BurgerIngredients from "../BurgerIngredients/BurgerIngredients"
-import BurgerConstructor from "../BurgerConstructor/BurgerConstructor"
-
-function App() {
-  return (
-    <>
-      <AppHeader />
-      <main className={style.main}>
-        <BurgerIngredients data={data} />
-        <BurgerConstructor data={data} />
-      </main>
-    </>
-  );
-=======
 // Import Types
 import type { FC } from "react"
 
@@ -151,7 +131,6 @@ const App: FC = () => {
 			)}
 		</>
 	)
->>>>>>> 1ba2c6b30a86975e0f44e2880fbf4390ffa36935
 }
 
 export default App;

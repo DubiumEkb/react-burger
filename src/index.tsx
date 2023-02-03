@@ -13,12 +13,6 @@ import { store } from "services"
 const root = createRoot(document.getElementById("root") as HTMLElement)
 
 root.render(
-<<<<<<< HEAD
-  <React.StrictMode>
-<App />
-  </React.StrictMode>
-);
-=======
 	<React.StrictMode>
 		<Provider store={store}>
 			<BrowserRouter>
@@ -27,7 +21,6 @@ root.render(
 		</Provider>
 	</React.StrictMode>,
 )
->>>>>>> 1ba2c6b30a86975e0f44e2880fbf4390ffa36935
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
