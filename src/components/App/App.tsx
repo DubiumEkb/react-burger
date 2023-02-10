@@ -2,8 +2,8 @@
 import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom"
 
 // Import Components
-import Modal from "components/Modal"
-import AppHeader from "components/AppHeader"
+import Modal from "components/Modal/Modal"
+import AppHeader from "components/AppHeader/AppHeader"
 import { IngredientDetails } from "components/BurgerIngredients/ui"
 import OrderDetails from "components/OrderDetails/OrderDetails"
 import ProtectedRouteAuth from "components/ProtectedRouteAuth/ProtectedRouteAuth"
@@ -16,19 +16,25 @@ import LoginPage from "pages/LoginPage/LoginPage"
 import RegisterPage from "pages/RegisterPage/RegisterPage"
 import ForgotPasswordPage from "pages/ForgotPasswordPage/ForgotPasswordPage"
 import ResetPasswordPage from "pages/ResetPasswordPage/ResetPasswordPage"
+import FeedPage from "pages/FeedPage/FeedPage"
+import FeedDetailPage from "pages/FeedDetailPage/FeedDetailPage"
+import OrdersPage from "pages/OrdersPage/OrdersPage"
+import OrdersDetailPage from "pages/OrdersDetailPage/OrdersDetailPage"
 import ProfilePage from "pages/ProfilePage/ProfilePage"
 
 // Import Store
 import { closeModal } from "services/modal/modalSlice"
+import { postToken, checkToken } from "services/user/userSlice"
 
 // Import Style
 import style from "./App.module.css"
 
 // Import Types
-import type { FC } from "react"
+import { FC, useEffect } from "react"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
+import { getCookie } from "utils/cookie/getCookie"
 
 const App: FC = () => {
 	const location = useLocation()
@@ -38,6 +44,7 @@ const App: FC = () => {
 	const { show } = useAppSelector((state) => state.modalSlice)
 	const { items } = useAppSelector((state) => state.ingredients)
 	const { orderCode } = useAppSelector((state) => state.constSlice)
+	const { success } = useAppSelector((state) => state.user)
 
 	const background = location.state && location.state.background
 
@@ -61,6 +68,17 @@ const App: FC = () => {
 	}
 	// End - Modal
 
+	useEffect(() => {
+		if (success.updateToken) {
+			dispatch(checkToken(getCookie("access_token")))
+			dispatch(postToken())
+		}
+
+		if (success.logout) {
+			window.location.href = "/login"
+		}
+	}, [dispatch, success.updateToken, success.logout])
+
 	return (
 		<>
 			<AppHeader />
@@ -68,6 +86,12 @@ const App: FC = () => {
 				<Routes location={background || location}>
 					{/* Главная страница, конструктор бургеров. */}
 					<Route path="/" element={<HomePage />} />
+
+					{/* Страница ленты заказов. Доступен всем пользователям. */}
+					<Route path="/feed" element={<FeedPage />} />
+
+					{/* Страница заказа в ленте. Доступен всем пользователям. */}
+					<Route path="/feed/:id" element={<FeedDetailPage />} />
 
 					{/* Проверка на не авторизованного пользователя */}
 					<Route element={<ProtectedRouteAuth />}>
@@ -99,11 +123,11 @@ const App: FC = () => {
 						{/* Страница с настройками профиля пользователя. */}
 						<Route path="/profile" element={<ProfilePage />} />
 
-						{/* Страница с историей заказов. */}
-						<Route path="/profile/orders" element={<ProfilePage />} />
+						{/* Страница истории заказов пользователя. */}
+						<Route path="/profile/orders" element={<OrdersPage />} />
 
-						{/* Страница с историей заказа. */}
-						<Route path="/profile/orders/:id" element={<ProfilePage />} />
+						{/* Страница заказа в истории заказов. */}
+						<Route path="/profile/orders/:id" element={<OrdersDetailPage />} />
 					</Route>
 
 					{/* Редирект. */}
@@ -133,4 +157,4 @@ const App: FC = () => {
 	)
 }
 
-export default App;
+export default App

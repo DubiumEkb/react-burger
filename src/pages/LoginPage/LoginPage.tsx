@@ -19,6 +19,7 @@ import styles from "./LoginPage.module.css"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
+import classNames from "classnames"
 
 const LoginPage: FC = () => {
 	const location = useLocation()
@@ -51,15 +52,21 @@ const LoginPage: FC = () => {
 	return (
 		<FormContainer>
 			<p className="text text_type_main-medium">Вход</p>
-			<form className={`${styles.form} pt-6 pb-20`} onSubmit={handlerForm}>
-				<EmailInput onChange={onChangeEmail} value={user.email} name={"email"} isIcon={false} extraClass="mb-6" />
+			<form className={classNames(styles.form, "pt-6", "pb-20")} onSubmit={handlerForm}>
+				<EmailInput
+					onChange={onChangeEmail}
+					value={user.email}
+					name={"email"}
+					isIcon={false}
+					extraClass="mb-6"
+				/>
 				<PasswordInput onChange={onChangePassword} value={user.password} name={"password"} extraClass="mb-6" />
 				<Button htmlType="submit" type="primary" size="medium">
 					Войти
 				</Button>
 			</form>
 			<div className={styles.links}>
-				<div className={`${styles.linksItem} pb-4`}>
+				<div className={classNames(styles.linksItem, "pb-4")}>
 					<p className="text text_type_main-default text_color_inactive">Вы — новый пользователь?</p>
 					<Link to="/register" className="text text_type_main-default">
 						Вы — новый пользователь?

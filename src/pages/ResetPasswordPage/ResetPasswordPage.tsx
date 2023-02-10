@@ -19,6 +19,7 @@ import styles from "./ResetPasswordPage.module.css"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
+import classNames from "classnames"
 
 const ResetPasswordPage: FC = () => {
 	const location = useLocation()
@@ -51,7 +52,7 @@ const ResetPasswordPage: FC = () => {
 	return (
 		<FormContainer>
 			<p className="text text_type_main-medium">Восстановление пароля</p>
-			<form className={`${styles.form} pt-6 pb-20`} onSubmit={handlerForm}>
+			<form className={classNames(styles.form, "pt-6", "pb-20")} onSubmit={handlerForm}>
 				<PasswordInput
 					placeholder="Введите новый пароль"
 					onChange={onChangePassword}
@@ -76,7 +77,7 @@ const ResetPasswordPage: FC = () => {
 				</Button>
 			</form>
 			<div className={styles.links}>
-				<div className={`${styles.linksItem} pb-4`}>
+				<div className={classNames(styles.linksItem, "pb-4")}>
 					<p className="text text_type_main-default text_color_inactive">Вспомнили пароль?</p>
 					<Link to="/login" className="text text_type_main-default">
 						Войти

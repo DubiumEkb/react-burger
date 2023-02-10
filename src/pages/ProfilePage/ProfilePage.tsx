@@ -1,6 +1,6 @@
 // Import Library
 import { useState, useRef, FormEvent, ChangeEvent, FocusEvent, useEffect } from "react"
-import { Link, useLocation, useNavigate } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 // Import Framework
 import { Input, EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
@@ -26,6 +26,7 @@ import type { FC } from "react"
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 import { getCookie } from "utils/cookie/getCookie"
+import classNames from "classnames"
 
 const ProfilePage: FC = () => {
 	const { pathname } = useLocation()
@@ -85,27 +86,27 @@ const ProfilePage: FC = () => {
 
 	return (
 		<div className={styles.profile}>
-			<div className={`${styles.profileLeft} mr-15`}>
-				<nav className={`${styles.nav} mb-20`}>
+			<div className={classNames(styles.profileLeft, "mr-15")}>
+				<nav className={classNames(styles.nav, "mb-20")}>
 					<Link
 						to="/profile"
-						className={`${styles.navLink} text_type_main-medium ${
-							pathname === "/profile" && styles.navLinkActive
-						}`}
+						className={classNames(styles.navLink, "text_type_main-medium", {
+							[styles.navLinkActive]: pathname === "/profile",
+						})}
 					>
 						Профиль
 					</Link>
 
 					<Link
 						to="/profile/orders"
-						className={`${styles.navLink} text_type_main-medium ${
-							pathname === "/profile/orders" && styles.navLinkActive
-						}`}
+						className={classNames(styles.navLink, "text_type_main-medium", {
+							[styles.navLinkActive]: pathname === "/profile/orders",
+						})}
 					>
 						История заказов
 					</Link>
 
-					<button className={`${styles.navLink} text_type_main-medium`} onClick={handlerLogout}>
+					<button className={classNames(styles.navLink, "text_type_main-medium")} onClick={handlerLogout}>
 						Выход
 					</button>
 				</nav>
@@ -116,7 +117,7 @@ const ProfilePage: FC = () => {
 				</p>
 			</div>
 
-			<div className={`${styles.profileRight}`}>
+			<div className={styles.profileRight}>
 				<form onSubmit={handlerFormSubmit} onReset={handlerFormReset}>
 					<Input
 						onChange={onChangeName}
@@ -148,7 +149,7 @@ const ProfilePage: FC = () => {
 						extraClass="mb-6"
 					/>
 
-					{user.email !== origin.email || user.name !== origin.name || user.password !== origin.password ? (
+					{user.password !== origin.password || user.email !== origin.email || user.name !== origin.name ? (
 						<div className={styles.profileUpdate}>
 							<Button htmlType="reset" type="secondary" size="medium">
 								Отмена

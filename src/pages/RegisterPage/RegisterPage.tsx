@@ -19,6 +19,7 @@ import styles from "./RegisterPage.module.css"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
+import classNames from "classnames"
 
 const RegisterPage: FC = () => {
 	const navigate = useNavigate()
@@ -55,7 +56,7 @@ const RegisterPage: FC = () => {
 	return (
 		<FormContainer>
 			<p className="text text_type_main-medium">Регистрация</p>
-			<form className={`${styles.form} pt-6 pb-20`} onSubmit={handlerForm}>
+			<form className={classNames(styles.form, "pt-6", "pb-20")} onSubmit={handlerForm}>
 				<Input
 					type={"text"}
 					placeholder={"Имя"}
@@ -65,15 +66,19 @@ const RegisterPage: FC = () => {
 					errorText={"Укажите имя"}
 					extraClass="mb-6"
 				/>
+
 				<EmailInput onChange={onChangeEmail} value={user.email} extraClass="mb-6" />
+
 				<PasswordInput onChange={onChangePassword} value={user.password} extraClass="mb-6" />
+
 				<Button htmlType="submit" type="primary" size="medium">
 					Зарегистрироваться
 				</Button>
 			</form>
 			<div className={styles.links}>
-				<div className={`${styles.linksItem} pb-4`}>
+				<div className={classNames(styles.linksItem, "pb-4")}>
 					<p className="text text_type_main-default text_color_inactive">Уже зарегистрированы?</p>
+
 					<Link to="/login" className="text text_type_main-default">
 						Войти
 					</Link>
