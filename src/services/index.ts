@@ -6,6 +6,10 @@ import ingredientsSlice from "./ingredients/ingredientsSlice"
 import constructorSlice from "./constructor/constructorSlice"
 import modalSlice from "./modal/modalSlice"
 import userSlice from "./user/userSlice"
+import feedSlice from "./feed/feedSlice"
+
+// Import Helpers
+import { websocketMiddleware } from "utils/helpers/middleware"
 
 export const store = configureStore({
 	reducer: {
@@ -14,7 +18,9 @@ export const store = configureStore({
 		constSlice: constructorSlice,
 		modalSlice: modalSlice,
 		user: userSlice,
+		feed: feedSlice,
 	},
+	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(websocketMiddleware),
 })
 
 // Нужен для Hook useAppSelector
