@@ -3,24 +3,26 @@ import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-
 
 // Import Components
 import Modal from "components/Modal/Modal"
-import AppHeader from "components/AppHeader/AppHeader"
+import { Header } from "components/Header/Header"
 import { IngredientDetails } from "components/BurgerIngredients/ui"
 import OrderDetails from "components/OrderDetails/OrderDetails"
 import ProtectedRouteAuth from "components/ProtectedRouteAuth/ProtectedRouteAuth"
 import ProtectedRoutePrivate from "components/ProtectedRoutePrivate/ProtectedRoutePrivate"
 
 // Import Pages
-import HomePage from "pages/HomePage/HomePage"
-import IngredientPage from "pages/IngredientPage/IngredientPage"
-import LoginPage from "pages/LoginPage/LoginPage"
-import RegisterPage from "pages/RegisterPage/RegisterPage"
-import ForgotPasswordPage from "pages/ForgotPasswordPage/ForgotPasswordPage"
-import ResetPasswordPage from "pages/ResetPasswordPage/ResetPasswordPage"
-import FeedPage from "pages/FeedPage/FeedPage"
-import FeedDetailPage from "pages/FeedDetailPage/FeedDetailPage"
-import OrdersPage from "pages/OrdersPage/OrdersPage"
-import OrdersDetailPage from "pages/OrdersDetailPage/OrdersDetailPage"
-import ProfilePage from "pages/ProfilePage/ProfilePage"
+import {
+	HomePage,
+	FeedPage,
+	FeedDetailPage,
+	IngredientPage,
+	LoginPage,
+	RegisterPage,
+	ForgotPasswordPage,
+	ResetPasswordPage,
+	OrdersPage,
+	OrdersDetailPage,
+	ProfilePage,
+} from "pages"
 
 // Import Store
 import { closeModal } from "services/modal/modalSlice"
@@ -35,6 +37,7 @@ import { FC, useEffect } from "react"
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 import { getCookie } from "utils/cookie/getCookie"
+import { FeedDetails } from "components/FeedDetails/FeedDetails"
 
 const App: FC = () => {
 	const location = useLocation()
@@ -81,7 +84,7 @@ const App: FC = () => {
 
 	return (
 		<>
-			<AppHeader />
+			<Header />
 			<main className={style.main}>
 				<Routes location={background || location}>
 					{/* Главная страница, конструктор бургеров. */}
@@ -91,7 +94,14 @@ const App: FC = () => {
 					<Route path="/feed" element={<FeedPage />} />
 
 					{/* Страница заказа в ленте. Доступен всем пользователям. */}
-					<Route path="/feed/:id" element={<FeedDetailPage />} />
+					<Route
+						path="/feed/:id"
+						element={
+							<FeedDetailPage>
+								<FeedDetails items={items} />
+							</FeedDetailPage>
+						}
+					/>
 
 					{/* Проверка на не авторизованного пользователя */}
 					<Route element={<ProtectedRouteAuth />}>
@@ -127,7 +137,14 @@ const App: FC = () => {
 						<Route path="/profile/orders" element={<OrdersPage />} />
 
 						{/* Страница заказа в истории заказов. */}
-						<Route path="/profile/orders/:id" element={<OrdersDetailPage />} />
+						<Route
+							path="/profile/orders/:id"
+							element={
+								<OrdersDetailPage>
+									<FeedDetails items={items} />
+								</OrdersDetailPage>
+							}
+						/>
 					</Route>
 
 					{/* Редирект. */}

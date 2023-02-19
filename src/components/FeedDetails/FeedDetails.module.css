@@ -1,0 +1,59 @@
+.detail {
+	width: 100%;
+}
+
+.detail.detailModal .detailNumber {
+	text-align: left;
+}
+
+.detailNumber {
+	text-align: center;
+}
+
+.detailList {
+	padding-top: 2px;
+	max-height: 326px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.detailList.detailListPadding {
+	padding-right: calc(var(--offset-base-size) * 6);
+}
+
+.detailList::-webkit-scrollbar {
+	width: 8px;
+	height: 100%;
+	max-height: 100%;
+}
+
+.detailList::-webkit-scrollbar-track {
+	background: #2f2f37;
+}
+
+.detailList::-webkit-scrollbar-thumb,
+.detailList::-webkit-scrollbar-thumb:hover,
+.detailList::-webkit-scrollbar-thumb:active {
+	background: #8585ad;
+}
+
+.detailList > div:not(:last-child) {
+	margin-bottom: calc(var(--offset-base-size) * 4);
+}
+
+.detailFooter {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.detailFooter .detailFooterDate {
+	display: flex;
+	align-items: center;
+}
+
+.detailFooter .detailFooterPrice {
+	display: flex;
+	align-items: center;
+	column-gap: 9px;
+}

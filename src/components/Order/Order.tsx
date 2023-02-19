@@ -15,36 +15,63 @@ import { Link } from "react-router-dom"
 
 // Import Types
 import type { FC } from "react"
-import { OrderType } from "utils/types/orderType"
+import { DataType, OrderType } from "utils/types/dataType"
+import { ImageIngredient } from "components/ImageIngredient/ImageIngredient"
+import { Price } from "components/Price/Price"
 
 type Props = {
-	item: OrderType
+	order: OrderType
 }
 
-export const Order: FC<Props> = ({ item }) => {
-	// console.debug(item)
+export const Order: FC<Props> = ({ order }) => {
+	if (!order) {
+		return null
+	}
+
+	const totalPrice = order?.ingredients?.reduce((acc, item) => {
+		const dataTypeItem = item as DataType
+		if (dataTypeItem.type === "bun") {
+			return acc + dataTypeItem.price * 2
+		} else {
+			return acc + dataTypeItem.price
+		}
+	}, 0)
+
+	const IngredientList = order?.ingredients?.slice(0, 5) as DataType[]
+	const IngredientCount = order?.ingredients ? (order.ingredients.length >= 5 ? order.ingredients.length - 5 : 0) : 0
 
 	return (
-		<Link to={`/feed/${item._id}`} className={classNames(styles.order, "p-6")}>
+		<Link to={`/feed/${order._id}`} className={classNames(styles.order, "p-6")}>
 			<div className={styles.orderHeader}>
-				<div className="text text_type_digits-default">
-					#{item.number} - {item.status}
-				</div>
+				<div className="text text_type_digits-default">#{order.number}</div>
 
 				<div className={styles.orderHeaderTime}>
-					<FormattedDate date={new Date(item.createdAt)} />
-					<FormattedDate date={new Date(item.updatedAt)} />
+					<FormattedDate date={new Date(order.updatedAt)} />
 				</div>
 			</div>
 
 			<div className={styles.orderBody}>
-				<p className="text text_type_main-medium">{item.name}</p>
+				<p className="text text_type_main-medium">{order.name}</p>
 			</div>
 
 			<div className={styles.orderFooter}>
-				<div className={classNames(styles.orderFooterComponents, "pr-6")}></div>
+				<div className={classNames(styles.orderFooterComponents, "pr-6")}>
+					{IngredientList?.map((item) => {
+						return <ImageIngredient key={item._id} item={item} />
+					})}
+
+					{IngredientCount > 0 && order?.ingredients?.[6] && (
+						<ImageIngredient
+							key={(order.ingredients[6] as DataType)._id}
+							item={order.ingredients[6] as DataType}
+							num={IngredientCount}
+						/>
+					)}
+				</div>
 				<div className={styles.orderFooterAmount}>
-					<p className="text text_type_digits-default">480</p>
+					<p className="text text_type_digits-default">
+						<Price>{totalPrice}</Price>
+					</p>
 					<CurrencyIcon type="primary" />
 				</div>
 			</div>

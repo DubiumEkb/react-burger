@@ -28,7 +28,7 @@ import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 import { getCookie } from "utils/cookie/getCookie"
 import classNames from "classnames"
 
-const ProfilePage: FC = () => {
+export const ProfilePage: FC = () => {
 	const { pathname } = useLocation()
 	const dispatch = useAppDispatch()
 
@@ -113,7 +113,7 @@ const ProfilePage: FC = () => {
 
 				<p className="text text_type_main-default text_color_inactive">
 					В этом разделе вы можете
-					<br /> изменить свои персональные данные
+					<br /> просмотреть свою историю заказов
 				</p>
 			</div>
 
@@ -164,5 +164,3 @@ const ProfilePage: FC = () => {
 		</div>
 	)
 }
-
-export default ProfilePage

@@ -1,9 +1,13 @@
+import { FormContainer } from "components/FormContainer/FormContainer"
 import styles from "./OrdersDetailPage.module.css"
 
-const OrdersDetailPage = () => {
-	return (
-		<></>
-	)
+// Import Types
+import { FC } from "react"
+
+type Props = {
+	children: React.ReactNode
 }
 
-export default OrdersDetailPage
+export const OrdersDetailPage: FC<Props> = ({ children }) => {
+	return <FormContainer extraClass={styles.detail}>{children}</FormContainer>
+}

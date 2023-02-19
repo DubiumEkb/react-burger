@@ -8,9 +8,9 @@ import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-dev
 import type { FC } from "react"
 
 // Import Style
-import style from "./AppHeader.module.css"
+import style from "./Header.module.css"
 
-const AppHeader: FC = () => {
+export const Header: FC = () => {
 	const location = useLocation()
 
 	return (
@@ -63,5 +63,3 @@ const AppHeader: FC = () => {
 		</header>
 	)
 }
-
-export default AppHeader

@@ -1,26 +1,21 @@
 // Import Library
 import classNames from "classnames"
-import { useEffect } from "react"
-// Import Framework
-
-// Import Components
 import { Order } from "components/Order/Order"
-// Import Store
+import { Price } from "components/Price/Price"
+import { useEffect } from "react"
+import { getIngredients } from "services/ingredients/ingredientsSlice"
+import { urlWS } from "utils/config"
+import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
+import { OrderType } from "utils/types/dataType"
 
-// Import Style
 import styles from "./FeedPage.module.css"
 
-// Import Hooks
-
-// Import Types
 import type { FC } from "react"
-import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
-import { urlWS } from "utils/config"
-import { OrderType } from "utils/types/orderType"
 
-const FeedPage: FC = () => {
+export const FeedPage: FC = () => {
 	const dispatch = useAppDispatch()
 	const { data } = useAppSelector((state) => state.feed)
+	const { items } = useAppSelector((state) => state.ingredients)
 
 	useEffect(() => {
 		dispatch({ type: "websocket/connect", payload: { url: `${urlWS}/orders/all` } })
@@ -29,12 +24,26 @@ const FeedPage: FC = () => {
 		}
 	}, [dispatch])
 
-	if (!data) {
+	useEffect(() => {
+		if (data?.success) {
+			dispatch(getIngredients())
+		}
+	}, [data?.success, dispatch])
+
+	if (!data && !items) {
 		return null
 	}
 
-	const doneArray = data.orders.filter((item) => item.status === "done")
-	const pendingArray = data.orders.filter((item) => item.status === "pending")
+	const doneArray = data?.orders?.filter((item) => item.status === "done")
+	const pendingArray = data?.orders?.filter((item) => item.status === "pending")
+
+	const orderItems = data?.orders?.map((order) => {
+		const ingredients = items?.filter((product) => order?.ingredients?.includes(product._id))
+		return {
+			...order,
+			ingredients,
+		} as OrderType
+	})
 
 	return (
 		<>
@@ -43,8 +52,8 @@ const FeedPage: FC = () => {
 					<h1 className="text text_type_main-large">Лента заказов</h1>
 				</div>
 				<div className={classNames(styles.feedListOrders, "pr-2")}>
-					{data.orders.map((item) => {
-						return <Order key={item._id} item={item} />
+					{orderItems?.map((item) => {
+						return <Order key={item._id} order={item} />
 					})}
 				</div>
 			</section>
@@ -55,7 +64,7 @@ const FeedPage: FC = () => {
 					</div>
 
 					<div className={styles.feedItemReadyList}>
-						{doneArray.slice(0, 20).map((item: OrderType) => {
+						{doneArray?.slice(0, 20).map((item: OrderType) => {
 							return (
 								<div
 									key={item._id}
@@ -78,7 +87,7 @@ const FeedPage: FC = () => {
 					</div>
 
 					<div className={styles.feedItemWorkList}>
-						{pendingArray.slice(0, 20).map((item: OrderType) => {
+						{pendingArray?.slice(0, 20).map((item: OrderType) => {
 							return (
 								<div
 									key={item._id}
@@ -97,16 +106,18 @@ const FeedPage: FC = () => {
 
 				<div className={classNames(styles.feedItemDoneAllTime, "mt-15")}>
 					<div className="text text_type_main-medium">Выполнено за все время:</div>
-					<div className="text text_type_digits-large">{data.total.toLocaleString("ru-RU")}</div>
+					<div className="text text_type_digits-large shadow">
+						<Price>{data?.total}</Price>
+					</div>
 				</div>
 
 				<div className={classNames(styles.feedItemDoneToday, "mt-15")}>
 					<div className="text text_type_main-medium">Выполнено за сегодня:</div>
-					<div className="text text_type_digits-large">{data.totalToday}</div>
+					<div className="text text_type_digits-large shadow">
+						<Price>{data?.totalToday}</Price>
+					</div>
 				</div>
 			</section>
 		</>
 	)
 }
-
-export default FeedPage

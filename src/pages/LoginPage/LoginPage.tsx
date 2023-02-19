@@ -21,7 +21,7 @@ import styles from "./LoginPage.module.css"
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 import classNames from "classnames"
 
-const LoginPage: FC = () => {
+export const LoginPage: FC = () => {
 	const location = useLocation()
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
@@ -82,5 +82,3 @@ const LoginPage: FC = () => {
 		</FormContainer>
 	)
 }
-
-export default LoginPage

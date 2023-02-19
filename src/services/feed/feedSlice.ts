@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import type { OrderType } from "utils/types/orderType"
+import type { OrderType } from "utils/types/dataType"
 
 type Data = {
 	success: boolean

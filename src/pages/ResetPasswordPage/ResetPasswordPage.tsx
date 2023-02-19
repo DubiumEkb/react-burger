@@ -21,7 +21,7 @@ import styles from "./ResetPasswordPage.module.css"
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 import classNames from "classnames"
 
-const ResetPasswordPage: FC = () => {
+export const ResetPasswordPage: FC = () => {
 	const location = useLocation()
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
@@ -87,5 +87,3 @@ const ResetPasswordPage: FC = () => {
 		</FormContainer>
 	)
 }
-
-export default ResetPasswordPage

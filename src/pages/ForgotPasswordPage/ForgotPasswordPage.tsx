@@ -22,7 +22,7 @@ import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 import classNames from "classnames"
 // import { getCookie } from "utils/cookie/getCookie"
 
-const ForgotPasswordPage: FC = () => {
+export const ForgotPasswordPage: FC = () => {
 	const navigate = useNavigate()
 	const location = useLocation()
 	const dispatch = useAppDispatch()
@@ -78,5 +78,3 @@ const ForgotPasswordPage: FC = () => {
 		</FormContainer>
 	)
 }
-
-export default ForgotPasswordPage

@@ -16,7 +16,7 @@ import type { FC } from "react"
 // Import Hooks
 import { useAppDispatch } from "utils/hooks/useAppStore"
 
-const HomePage: FC = () => {
+export const HomePage: FC = () => {
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
@@ -30,5 +30,3 @@ const HomePage: FC = () => {
 		</DndProvider>
 	)
 }
-
-export default HomePage

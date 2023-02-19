@@ -21,7 +21,7 @@ import styles from "./RegisterPage.module.css"
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 import classNames from "classnames"
 
-const RegisterPage: FC = () => {
+export const RegisterPage: FC = () => {
 	const navigate = useNavigate()
 	const location = useLocation()
 	const dispatch = useAppDispatch()
@@ -87,5 +87,3 @@ const RegisterPage: FC = () => {
 		</FormContainer>
 	)
 }
-
-export default RegisterPage

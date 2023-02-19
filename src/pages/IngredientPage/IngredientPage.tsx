@@ -16,7 +16,7 @@ type TypeProps = {
 	children: React.ReactNode
 }
 
-const IngredientPage: FC<TypeProps> = ({ children }) => {
+export const IngredientPage: FC<TypeProps> = ({ children }) => {
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
@@ -25,5 +25,3 @@ const IngredientPage: FC<TypeProps> = ({ children }) => {
 
 	return <FormContainer>{children}</FormContainer>
 }
-
-export default IngredientPage

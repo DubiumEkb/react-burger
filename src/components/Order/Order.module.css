@@ -5,7 +5,7 @@
 
 	gap: 24px;
 
-	background-color: #1C1C21;
+	background-color: #1c1c21;
 
 	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
 	border-radius: 40px;
@@ -23,7 +23,7 @@
 }
 
 .order .orderHeader .orderHeaderTime {
-	color: #8585AD;
+	color: #8585ad;
 }
 
 .order .orderFooter {
@@ -35,6 +35,9 @@
 }
 
 .order .orderFooter .orderFooterComponents {
+	display: flex;
+	align-items: center;
+
 	flex: 1 0;
 }
 

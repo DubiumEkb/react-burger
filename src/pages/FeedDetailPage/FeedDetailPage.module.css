@@ -1,15 +1,4 @@
-/* .detail */
-
-.detailNumber {}
-
-.detailTitle {}
-
-.detailStatus {}
-
-.detailComponent {}
-
-.detailList {}
-
-.detailList>div:not(:last-child) {
-	margin-bottom: calc(var(--offset-base-size) * 4);
+.detail {
+	width: 640px;
+	margin: 0 auto;
 }

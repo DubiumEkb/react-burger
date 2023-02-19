@@ -29,7 +29,6 @@
 	background: #8585ad;
 }
 
-
 .feedItem {
 	width: 580px;
 
@@ -58,7 +57,7 @@
 }
 
 .feedItem .feedItemReady .feedItemReadyListItem {
-	color: #00CCCC;
+	color: #00cccc;
 
 	flex: 0 0 50%;
 	margin-bottom: calc(var(--offset-base-size) * 2);
@@ -86,7 +85,6 @@
 	flex: 0 0 50%;
 	margin-bottom: calc(var(--offset-base-size) * 2);
 }
-
 
 .feedItem .feedItemDoneAllTime {
 	display: flex;
