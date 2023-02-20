@@ -1,9 +1,16 @@
+// Import Assets
+
 // Import Library
+import classNames from "classnames"
 import { useState, useRef, FormEvent, ChangeEvent, FocusEvent, useEffect } from "react"
 import { Link, useLocation } from "react-router-dom"
 
 // Import Framework
 import { Input, EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
+
+// Import Components
+
+// Import Pages
 
 // Import Store
 import {
@@ -16,17 +23,17 @@ import {
 	resetForm,
 	patchUser,
 } from "services/user/userSlice"
-
 // Import Style
 import styles from "./ProfilePage.module.css"
-
-// Import Types
-import type { FC } from "react"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 import { getCookie } from "utils/cookie/getCookie"
-import classNames from "classnames"
+
+// Import Utils
+
+// Import Types
+import type { FC } from "react"
 
 export const ProfilePage: FC = () => {
 	const { pathname } = useLocation()
@@ -113,7 +120,7 @@ export const ProfilePage: FC = () => {
 
 				<p className="text text_type_main-default text_color_inactive">
 					В этом разделе вы можете
-					<br /> просмотреть свою историю заказов
+					<br /> изменить свои персональные данные
 				</p>
 			</div>
 

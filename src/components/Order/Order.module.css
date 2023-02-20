@@ -26,6 +26,10 @@
 	color: #8585ad;
 }
 
+.order .orderBody {
+	width: 100%;
+}
+
 .order .orderFooter {
 	display: flex;
 	align-items: center;

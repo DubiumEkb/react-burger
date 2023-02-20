@@ -1,29 +1,26 @@
+// Import Assets
+
 // Import Library
 import { useCallback } from "react"
 import { useDrop } from "react-dnd"
 import { useNavigate } from "react-router-dom"
 import classNames from "classnames"
-
 // Import Framework
 import { ConstructorElement, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components"
-
 // Import Components
 import { BurgerConstructorItem } from "./ui"
 
 // Import Store
 import { addBunItem, createMainList, addMainList } from "services/constructor/constructorSlice"
 import { openModal } from "services/modal/modalSlice"
-
+// Import Style
+import style from "./BurgerConstructor.module.css"
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 import { getCookie } from "utils/cookie/getCookie"
-
 // Import Types
 import type { FC } from "react"
 import { DataType } from "utils/types/dataType"
-
-// Import Style
-import style from "./BurgerConstructor.module.css"
 
 const BurgerConstructor: FC = () => {
 	const dispatch = useAppDispatch()

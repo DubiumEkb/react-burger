@@ -1,31 +1,28 @@
+// Import Assets
+
 // Import Library
 import { useRef } from "react"
 import { useDrop, useDrag } from "react-dnd"
-
 // Import Framework
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components"
+// Import Components
 
 // Import Store
 import { deleteItem } from "services/constructor/constructorSlice"
-
 // Import Style
 import style from "./BurgerConstructorItem.module.css"
-
 // Import Hooks
 import { useAppDispatch } from "utils/hooks/useAppStore"
-
 // Import Types
 import type { FC } from "react"
 import type { Identifier, XYCoord } from "dnd-core"
 import { DataType } from "utils/types/dataType"
-
 type BurgerConstructorItemProps = {
 	item: DataType
 	index: number
 	moveCard: (dragIndex: number, hoverIndex: number) => void
 }
-
-interface DragItem {
+type DragItem = {
 	index: number
 	id: string
 }

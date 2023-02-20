@@ -1,4 +1,7 @@
+// Import Assets
+
 // Import Library
+import classNames from "classnames"
 import { ChangeEvent, FormEvent, useEffect } from "react"
 import { Link, useNavigate, useLocation } from "react-router-dom"
 
@@ -8,19 +11,21 @@ import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-comp
 // Import Components
 import { FormContainer } from "components/FormContainer/FormContainer"
 
+// Import Pages
+
 // Import Store
 import { changeEmail, postForgotPassword } from "services/user/userSlice"
-
-// Import Types
-import type { FC } from "react"
 
 // Import Style
 import styles from "./ForgotPasswordPage.module.css"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
-import classNames from "classnames"
-// import { getCookie } from "utils/cookie/getCookie"
+
+// Import Utils
+
+// Import Types
+import type { FC } from "react"
 
 export const ForgotPasswordPage: FC = () => {
 	const navigate = useNavigate()

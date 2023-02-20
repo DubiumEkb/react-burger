@@ -10,11 +10,11 @@ import BurgerConstructor from "components/BurgerConstructor/BurgerConstructor"
 // Import Store
 import { getIngredients } from "services/ingredients/ingredientsSlice"
 
-// Import Types
-import type { FC } from "react"
-
 // Import Hooks
 import { useAppDispatch } from "utils/hooks/useAppStore"
+
+// Import Types
+import type { FC } from "react"
 
 export const HomePage: FC = () => {
 	const dispatch = useAppDispatch()

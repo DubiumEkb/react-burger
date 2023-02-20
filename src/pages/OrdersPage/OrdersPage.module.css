@@ -1,6 +1,6 @@
 .order {
 	margin-top: 120px;
-
+	width: 100%;
 	display: flex;
 }
 
@@ -25,4 +25,30 @@
 
 .order .navLink.navLinkActive {
 	color: #fff;
+}
+
+.order .orderRight {
+	display: flex;
+	flex-direction: column;
+	row-gap: calc(var(--offset-base-size) * 4);
+
+	max-height: 870px;
+	width: 100%;
+	height: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.order .orderRight::-webkit-scrollbar {
+	width: 8px;
+	height: 80%;
+	max-height: 80%;
+}
+.order .orderRight::-webkit-scrollbar-track {
+	background: #2f2f37;
+}
+.order .orderRight::-webkit-scrollbar-thumb,
+.order .orderRight::-webkit-scrollbar-thumb:hover,
+.order .orderRight::-webkit-scrollbar-thumb:active {
+	background: #8585ad;
 }

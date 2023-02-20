@@ -1,24 +1,43 @@
-import { useState, useRef, FormEvent, ChangeEvent, FocusEvent, useEffect } from "react"
+// Import Assets
+
+// Import Library
+import classNames from "classnames"
+import { useEffect } from "react"
 import { Link, useLocation } from "react-router-dom"
 
-import { Input, EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
+// Import Framework
+
+// Import Components
+import { Order } from "components/Order/Order"
+
+// Import Pages
 
 // Import Store
-import { getUser, checkToken, postLogout, resetForm, patchUser } from "services/user/userSlice"
+import { getUser, checkToken, postLogout } from "services/user/userSlice"
+import { getIngredients } from "services/ingredients/ingredientsSlice"
 
+// Import Style
 import styles from "./OrdersPage.module.css"
 
+// Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 import { getCookie } from "utils/cookie/getCookie"
-import classNames from "classnames"
 
+// Import Utils
+import { urlWS } from "utils/config"
+
+// Import Types
 import type { FC } from "react"
+import { DataType, OrderType } from "utils/types/dataType"
+type Props = {
+	items: DataType[] | null
+}
 
-export const OrdersPage: FC = () => {
+export const OrdersPage: FC<Props> = ({ items }) => {
 	const { pathname } = useLocation()
 	const dispatch = useAppDispatch()
 
-	const { user, origin } = useAppSelector((state) => state.user)
+	const { data } = useAppSelector((state) => state.feed)
 
 	useEffect(() => {
 		if (getCookie("access_token") && getCookie("refresh_token")) {
@@ -27,10 +46,43 @@ export const OrdersPage: FC = () => {
 		}
 	}, [dispatch])
 
+	useEffect(() => {
+		dispatch({ type: "websocket/disconnect" })
+		let token = getCookie("access_token")
+		if (token && typeof token === "string") {
+			token = token.replace("Bearer ", "")
+			dispatch({
+				type: "websocket/connect",
+				payload: { url: `${urlWS}/orders?token=${token}` },
+			})
+			return () => {
+				dispatch({ type: "websocket/disconnect" })
+			}
+		}
+	}, [dispatch])
+
+	useEffect(() => {
+		if (data?.success) {
+			dispatch(getIngredients())
+		}
+	}, [data?.success, dispatch])
+
 	const handlerLogout = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault()
 		dispatch(checkToken(getCookie("refresh_token")))
 		dispatch(postLogout())
+	}
+
+	const orderItems = data?.orders?.map((order) => {
+		const ingredients = items?.filter((product) => order?.ingredients?.includes(product._id))
+		return {
+			...order,
+			ingredients,
+		} as OrderType
+	})
+
+	if (!orderItems) {
+		return null
 	}
 
 	return (
@@ -62,11 +114,15 @@ export const OrdersPage: FC = () => {
 
 				<p className="text text_type_main-default text_color_inactive">
 					В этом разделе вы можете
-					<br /> изменить свои персональные данные
+					<br /> просмотреть свою историю заказов
 				</p>
 			</div>
 
-			<div className={styles.orderRight}></div>
+			<div className={styles.orderRight}>
+				{orderItems?.map((item) => {
+					return <Order key={item._id} order={item} all />
+				})}
+			</div>
 		</div>
 	)
 }

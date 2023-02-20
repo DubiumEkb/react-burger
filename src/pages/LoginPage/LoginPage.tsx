@@ -1,4 +1,5 @@
 // Import Library
+import classNames from "classnames"
 import { ChangeEvent, FormEvent, useEffect } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 
@@ -11,15 +12,14 @@ import { FormContainer } from "components/FormContainer/FormContainer"
 // Import Store
 import { changeEmail, changePassword, postLogin } from "services/user/userSlice"
 
-// Import Types
-import type { FC } from "react"
-
 // Import Style
 import styles from "./LoginPage.module.css"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
-import classNames from "classnames"
+
+// Import Types
+import type { FC } from "react"
 
 export const LoginPage: FC = () => {
 	const location = useLocation()

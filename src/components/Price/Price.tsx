@@ -1,5 +1,5 @@
+// Import Types
 import type { FC } from "react"
-
 type Props = {
 	children?: number | string
 }

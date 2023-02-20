@@ -9,4 +9,3 @@ export { ResetPasswordPage } from "./ResetPasswordPage/ResetPasswordPage"
 export { OrdersPage } from "./OrdersPage/OrdersPage"
 export { OrdersDetailPage } from "./OrdersDetailPage/OrdersDetailPage"
 export { ProfilePage } from "./ProfilePage/ProfilePage"
-// ProfilePage,

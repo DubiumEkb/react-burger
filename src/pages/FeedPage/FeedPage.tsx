@@ -1,23 +1,42 @@
+// Import Assets
+
 // Import Library
+import { useEffect } from "react"
 import classNames from "classnames"
+
+// Import Framework
+
+// Import Components
 import { Order } from "components/Order/Order"
 import { Price } from "components/Price/Price"
-import { useEffect } from "react"
-import { getIngredients } from "services/ingredients/ingredientsSlice"
-import { urlWS } from "utils/config"
-import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
-import { OrderType } from "utils/types/dataType"
 
+// Import Pages
+
+// Import Store
+import { getIngredients } from "services/ingredients/ingredientsSlice"
+
+// Import Style
 import styles from "./FeedPage.module.css"
 
-import type { FC } from "react"
+// Import Hooks
+import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
-export const FeedPage: FC = () => {
+// Import Utils
+import { urlWS } from "utils/config"
+
+// Import Types
+import { DataType, OrderType } from "utils/types/dataType"
+import type { FC } from "react"
+type Props = {
+	items: DataType[] | null
+}
+
+export const FeedPage: FC<Props> = ({ items }) => {
 	const dispatch = useAppDispatch()
 	const { data } = useAppSelector((state) => state.feed)
-	const { items } = useAppSelector((state) => state.ingredients)
 
 	useEffect(() => {
+		dispatch({ type: "websocket/disconnect" })
 		dispatch({ type: "websocket/connect", payload: { url: `${urlWS}/orders/all` } })
 		return () => {
 			dispatch({ type: "websocket/disconnect" })

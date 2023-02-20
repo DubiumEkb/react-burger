@@ -36,13 +36,16 @@ const initialState: InitialState = {
 }
 
 export const sendOrder = createAsyncThunk("constructor/orderCode", async (_: void, { getState }: any) => {
+	const list = getState().constSlice.list.map((item: DataType) => item._id)
+
 	return await request(`${urlAPI}/orders`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json;charset=utf-8",
+			authorization: getState().user.user.token,
 		},
 		body: JSON.stringify({
-			ingredients: getState().constSlice.list,
+			ingredients: list,
 		}),
 	})
 })
@@ -70,8 +73,6 @@ export const constructorSlice = createSlice({
 				state.list.push(state.bunItem, state.bunItem)
 			}
 
-			state.list?.map((item: DataType) => item._id)
-
 			state.status = true
 		},
 		addMainList: (state, { payload }) => {
@@ -92,7 +93,6 @@ export const constructorSlice = createSlice({
 		builder
 			.addCase(sendOrder.pending, (state) => {
 				// Отправлен запрос
-				// console.log("pending")
 				state.pending = true
 				state.fulfilled = false
 				state.rejected = false
@@ -111,7 +111,6 @@ export const constructorSlice = createSlice({
 			})
 			.addCase(sendOrder.rejected, (state) => {
 				// Ошибка запроса
-				// console.error("rejected")
 				state.pending = false
 				state.fulfilled = false
 				state.rejected = true

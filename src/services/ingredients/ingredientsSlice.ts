@@ -36,14 +36,12 @@ export const ingredientsSlice = createSlice({
 		builder
 			.addCase(getIngredients.pending, (state) => {
 				// Отправлен запрос
-				// console.log("pending")
 				state.pending = true
 				state.fulfilled = false
 				state.rejected = false
 			})
 			.addCase(getIngredients.fulfilled, (state, { payload }) => {
 				// Положительный запрос
-				// console.dir("fulfilled")
 				state.pending = false
 				state.fulfilled = true
 				state.rejected = false
@@ -51,7 +49,6 @@ export const ingredientsSlice = createSlice({
 			})
 			.addCase(getIngredients.rejected, (state) => {
 				// Ошибка запроса
-				// console.error("rejected")
 				state.pending = false
 				state.fulfilled = false
 				state.rejected = true

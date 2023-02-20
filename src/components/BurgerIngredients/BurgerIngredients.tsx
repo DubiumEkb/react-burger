@@ -1,13 +1,16 @@
+// Import Assets
+
 // Import Library
 import { useState, useRef } from "react"
 import { Link, useLocation } from "react-router-dom"
 import classNames from "classnames"
-
 // Import Framework
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components"
 
 // Import Components
 import { BurgerIngredientsItem } from "./ui"
+
+// Import Pages
 
 // Import Store
 import { openModal } from "services/modal/modalSlice"

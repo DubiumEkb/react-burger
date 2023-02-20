@@ -9,6 +9,7 @@ import { urlAPI } from "utils/config"
 import { setCookie } from "utils/cookie/setCookie"
 import { deleteCookie } from "utils/cookie/deleteCookie"
 
+// Import Types
 type InitialState = {
 	user: {
 		email: string

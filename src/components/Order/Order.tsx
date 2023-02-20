@@ -1,29 +1,41 @@
+// Import Assets
+
 // Import Library
 import classNames from "classnames"
+import { Link, useLocation } from "react-router-dom"
 
 // Import Framework
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components"
 
 // Import Components
+import { ImageIngredient } from "components/ImageIngredient/ImageIngredient"
+import { Price } from "components/Price/Price"
+
+// Import Pages
 
 // Import Store
+import { useAppDispatch } from "utils/hooks/useAppStore"
+import { openModal } from "services/modal/modalSlice"
 
 // Import Style
 import styles from "./Order.module.css"
-import { Link } from "react-router-dom"
+
 // Import Hooks
+
+// Import Utils
 
 // Import Types
 import type { FC } from "react"
 import { DataType, OrderType } from "utils/types/dataType"
-import { ImageIngredient } from "components/ImageIngredient/ImageIngredient"
-import { Price } from "components/Price/Price"
-
 type Props = {
 	order: OrderType
+	all?: boolean
 }
 
-export const Order: FC<Props> = ({ order }) => {
+export const Order: FC<Props> = ({ order, all }) => {
+	const location = useLocation()
+	const dispatch = useAppDispatch()
+
 	if (!order) {
 		return null
 	}
@@ -40,8 +52,38 @@ export const Order: FC<Props> = ({ order }) => {
 	const IngredientList = order?.ingredients?.slice(0, 5) as DataType[]
 	const IngredientCount = order?.ingredients ? (order.ingredients.length >= 5 ? order.ingredients.length - 5 : 0) : 0
 
+	let statusText
+	switch (order?.status) {
+		case "done":
+			statusText = (
+				<span className={classNames("text", "text_type_main-default", "text_color_inactive")}>Выполнен</span>
+			)
+			break
+		case "pending":
+			statusText = <span className={classNames("text", "text_type_main-default")}>Готовится</span>
+			break
+		case "created":
+			statusText = <span className={classNames("text", "text_type_main-default")}>Создан</span>
+			break
+		default:
+			statusText = <span className={classNames("text", "text_type_main-default")}>Статус неизвестен</span>
+	}
+
+	const link = all ? `/profile/orders/${order._id}` : `/feed/${order._id}`
+
+	// Begin - Modal
+	const handleShow = (name: string) => {
+		dispatch(openModal(name))
+	}
+	// End - Modal
+
 	return (
-		<Link to={`/feed/${order._id}`} className={classNames(styles.order, "p-6")}>
+		<Link
+			to={link}
+			state={{ background: location }}
+			className={classNames(styles.order, "p-6")}
+			onClick={() => handleShow(all ? "profileOrder" : "feed")}
+		>
 			<div className={styles.orderHeader}>
 				<div className="text text_type_digits-default">#{order.number}</div>
 
@@ -52,6 +94,7 @@ export const Order: FC<Props> = ({ order }) => {
 
 			<div className={styles.orderBody}>
 				<p className="text text_type_main-medium">{order.name}</p>
+				{all && <div className={classNames(styles.orderStatus, "mt-2")}>{statusText}</div>}
 			</div>
 
 			<div className={styles.orderFooter}>

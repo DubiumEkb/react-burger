@@ -1,6 +1,9 @@
+// Import Assets
+
 // Import Library
 import { ChangeEvent, FormEvent, useEffect } from "react"
 import { Link, useNavigate, useLocation } from "react-router-dom"
+import classNames from "classnames"
 
 // Import Framework
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
@@ -8,18 +11,21 @@ import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burg
 // Import Components
 import { FormContainer } from "components/FormContainer/FormContainer"
 
+// Import Pages
+
 // Import Store
 import { checkToken, changePassword, postResetPassword } from "services/user/userSlice"
-
-// Import Types
-import type { FC } from "react"
 
 // Import Style
 import styles from "./ResetPasswordPage.module.css"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
-import classNames from "classnames"
+
+// Import Utils
+
+// Import Types
+import type { FC } from "react"
 
 export const ResetPasswordPage: FC = () => {
 	const location = useLocation()

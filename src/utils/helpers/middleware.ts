@@ -13,23 +13,23 @@ export const websocketMiddleware: ThunkMiddleware<{}, WebSocketAction, Store> = 
 	let ws: WebSocket | null = null
 
 	const onOpen = () => {
-		console.debug("WebSocket Connected")
+		// console.debug("WebSocket Connected")
 		dispatch(setConnect(true))
 	}
 
 	const onError = (event: Event) => {
-		console.debug("WebSocket Error:", event)
+		// console.debug("WebSocket Error:", event)
 		dispatch(setConnect(false))
 	}
 
 	const onClose = (event: CloseEvent) => {
-		console.debug("WebSocket Disconnected:", event.code)
+		// console.debug("WebSocket Disconnected:", event.code)
 		dispatch(setConnect(false))
 	}
 
 	const onMessage = (event: MessageEvent) => {
 		const data = JSON.parse(event.data)
-		console.debug("WebSocket Data:", data)
+		// console.debug("WebSocket Data:", data)
 		dispatch(setData(data))
 	}
 

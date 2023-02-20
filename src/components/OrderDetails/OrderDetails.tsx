@@ -4,6 +4,13 @@ import { ReactComponent as Success } from "assets/images/success.svg"
 // Import Library
 import { useEffect } from "react"
 
+// Import Framework
+import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
+
+// Import Components
+
+// Import Pages
+
 // Import Store
 import { orderNumber, sendOrder } from "services/constructor/constructorSlice"
 
@@ -13,14 +20,17 @@ import style from "./OrderDetails.module.css"
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
+// Import Utils
+
 // Import Types
 import type { FC } from "react"
 import classNames from "classnames"
 type OrderType = {
 	sum: number
+	onClose: () => void
 }
 
-const OrderDetails: FC<OrderType> = ({ sum }) => {
+const OrderDetails: FC<OrderType> = ({ sum, onClose }) => {
 	const dispatch = useAppDispatch()
 
 	const { status, pending, fulfilled, rejected } = useAppSelector((state) => state.constSlice)
@@ -34,6 +44,12 @@ const OrderDetails: FC<OrderType> = ({ sum }) => {
 
 	return (
 		<div className={classNames(style.OrderDetails, "pt-30", "pb-30")}>
+			<div className={classNames(style.OrderDetailsClose)}>
+				<button className={style.OrderDetailsCloseIcon} type="button" onClick={onClose}>
+					<CloseIcon type="primary" />
+				</button>
+			</div>
+
 			{pending && (
 				<div className={classNames(style.OrderDetailsNumber, "text", "text_type_main-medium", "pb-8")}>
 					Загрузка...

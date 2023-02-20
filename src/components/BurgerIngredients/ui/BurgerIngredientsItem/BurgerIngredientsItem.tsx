@@ -1,20 +1,23 @@
-// Import Library
-import { useDrag } from "react-dnd"
+// Import Assets
 
+// Import Library
+import classNames from "classnames"
+import { useDrag } from "react-dnd"
 // Import Framework
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components"
+// Import Components
+
+// Import Pages
+
+// Import Store
 
 // Import Style
 import style from "./BurgerIngredientsItem.module.css"
-
 // Import Hooks
 import { useAppSelector } from "utils/hooks/useAppStore"
-
 // Import Types
 import type { FC } from "react"
 import { DataType } from "utils/types/dataType"
-import classNames from "classnames"
-
 type BurgerIngredientsProps = {
 	ingredient: DataType
 	classname: string

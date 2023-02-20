@@ -1,13 +1,49 @@
 .detail {
+	width: 640px;
+}
+
+.detail.detailModal {
+	padding: calc(var(--offset-base-size) * 10);
+}
+
+.detail .detailHeader .detailHeaderClose {
+	display: none;
+}
+
+.detailHeader {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
 	width: 100%;
 }
 
-.detail.detailModal .detailNumber {
-	text-align: left;
+.detail.detailModal .detailHeader {
+	justify-content: space-between;
 }
 
-.detailNumber {
-	text-align: center;
+.detail.detailModal .detailHeader .detailHeaderClose {
+	margin: 0;
+	padding: 3px;
+
+	border: none;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	cursor: pointer;
+
+	width: 30px;
+	height: 30px;
+
+	background-color: transparent;
+}
+
+.detail.detailModal .detailHeader .detailHeaderClose svg {
+	display: block;
+	width: 100%;
+	height: 100%;
 }
 
 .detailList {

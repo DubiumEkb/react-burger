@@ -1,14 +1,26 @@
+// Import Assets
+
 // Import Library
 import classNames from "classnames"
 import { Link, useLocation } from "react-router-dom"
+
 // Import Framework
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 
-// Import Types
-import type { FC } from "react"
+// Import Components
+
+// Import Pages
+
+// Import Store
 
 // Import Style
 import style from "./Header.module.css"
+// Import Hooks
+
+// Import Utils
+
+// Import Types
+import type { FC } from "react"
 
 export const Header: FC = () => {
 	const location = useLocation()

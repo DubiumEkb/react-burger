@@ -1,8 +1,21 @@
-import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components"
-import style from "./BurgerIngredientsItem.module.css"
+// Import Assets
 
-import type { FC } from "react"
+// Import Library
 import classNames from "classnames"
+// Import Framework
+import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components"
+// Import Components
+
+// Import Pages
+
+// Import Store
+
+// Import Style
+import style from "./BurgerIngredientsItem.module.css"
+// Import Hooks
+
+// Import Types
+import type { FC } from "react"
 
 const BurgerIngredientsItem: FC = ({ item, classname }: any) => {
 	return (

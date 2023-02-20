@@ -1,4 +1,4 @@
-.Modal {
+.modal {
 	position: fixed;
 	top: 50%;
 	left: 50%;
@@ -13,7 +13,7 @@
 	width: 100%;
 }
 
-.ModalActive {
+.modalActive {
 	display: block;
 
 	background-color: #1c1c21;
@@ -25,26 +25,44 @@
 	border-radius: 40px;
 }
 
-.ModalActive .ModalHeader {
+.modalActive .modalHeader {
 	display: flex;
 	align-items: flex-start;
 	justify-content: space-between;
 }
 
-.ModalActive .ModalHeader .ModalHeaderClose {
+.modalActive .modalHeader .modalHeaderClose {
 	background-color: transparent;
 	border: none;
 	cursor: pointer;
 }
 
-.ModalActive .ModalHeaderNotTitle {
+.modalActive .modalHeaderNotTitle {
 	position: absolute;
 	top: 0;
 	right: 0;
 }
 
-.ModalActive .ModalHeaderNotTitle .ModalHeaderNotTitleClose {
+.modalActive .modalHeaderNotTitle .modalHeaderNotTitleClose {
 	background-color: transparent;
 	border: none;
 	cursor: pointer;
+}
+
+.overlay {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1010;
+
+	background-color: #000;
+	opacity: 0.6;
+	overflow: hidden;
+}
+
+.overlay.overlayActive {
+	display: block;
 }

@@ -1,4 +1,7 @@
+// Import Assets
+
 // Import Library
+import classNames from "classnames"
 import { FormEvent, ChangeEvent, useEffect } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 
@@ -8,18 +11,21 @@ import { Input, EmailInput, PasswordInput, Button } from "@ya.praktikum/react-de
 // Import Components
 import { FormContainer } from "components/FormContainer/FormContainer"
 
+// Import Pages
+
 // Import Store
 import { changeName, changeEmail, changePassword, postRegister } from "services/user/userSlice"
-
-// Import Types
-import type { FC } from "react"
 
 // Import Style
 import styles from "./RegisterPage.module.css"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
-import classNames from "classnames"
+
+// Import Utils
+
+// Import Types
+import type { FC } from "react"
 
 export const RegisterPage: FC = () => {
 	const navigate = useNavigate()

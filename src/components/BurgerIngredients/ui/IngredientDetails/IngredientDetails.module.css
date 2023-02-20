@@ -4,6 +4,40 @@
 	align-items: center;
 }
 
+.IngredientsModal .IngredientsModalTitle {
+	width: 580px;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	column-gap: 36px;
+}
+
+.IngredientsModal .IngredientsModalTitle .IngredientsModalTitleClose {
+	margin: 0;
+	padding: 3px;
+
+	border: none;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	cursor: pointer;
+
+	width: 30px;
+	height: 30px;
+
+	background-color: transparent;
+}
+
+.IngredientsModal .IngredientsModalTitle .IngredientsModalTitleClose svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
 .IngredientsModal .IngredientsModalFooter {
 	display: flex;
 	align-items: center;

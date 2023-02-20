@@ -1,19 +1,29 @@
-// Imporrt Components
+// Import Assets
+
+// Import Library
+
+// Import Framework
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components"
+
+// Import Components
+
+// Import Pages
+
+// Import Store
 
 // Import Style
 import style from "./BurgerConstructorItem.module.css"
+// Import Hooks
 
-// Import Props
-import type {FC} from "react"
+// Import Types
+import type { FC } from "react"
 import { DataType } from "utils/types/dataType"
-
 export interface BurgerConstructorItemProps {
 	data: DataType[]
 	type?: string
 }
 
-const BurgerConstructorItem:FC<BurgerConstructorItemProps> = ({ data, type }) => {
+const BurgerConstructorItem: FC<BurgerConstructorItemProps> = ({ data, type }) => {
 	return (
 		<>
 			{data.map((item, index) => {

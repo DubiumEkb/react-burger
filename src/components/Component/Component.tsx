@@ -1,11 +1,23 @@
+// Import Assets
+
+// Import Library
 import classNames from "classnames"
-import styles from "./Component.module.css"
+// Import Framework
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
-import type { FC } from "react"
-import { DataType } from "utils/types/dataType"
+// Import Components
 import { ImageIngredient } from "components/ImageIngredient/ImageIngredient"
 import { Price } from "components/Price/Price"
+// Import Pages
 
+// Import Store
+
+// Import Style
+import styles from "./Component.module.css"
+// Import Hooks
+
+// Import Types
+import type { FC } from "react"
+import { DataType } from "utils/types/dataType"
 type Props = {
 	item: DataType
 }

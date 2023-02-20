@@ -1,5 +1,8 @@
+// Import Library
 import { createSlice } from "@reduxjs/toolkit"
-import type { OrderType } from "utils/types/dataType"
+
+// Import Types
+import { OrderType } from "utils/types/dataType"
 
 type Data = {
 	success: boolean
