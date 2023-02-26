@@ -2,7 +2,7 @@
 
 // Import Library
 import classNames from "classnames"
-import { Link, useLocation } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 
 // Import Framework
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components"
@@ -23,53 +23,60 @@ import style from "./Header.module.css"
 import type { FC } from "react"
 
 export const Header: FC = () => {
-	const location = useLocation()
-
 	return (
 		<header className={classNames(style.header, "pt-4", "pb-4")}>
 			<div className={style.headerContainer}>
 				<nav className={style.headerNavLeft}>
-					<Link
+					<NavLink
 						to="/"
-						className={classNames(style.headerNavLeftItem, "p-5", {
-							[style.headerNavLeftItemActive]: location.pathname === "/",
-						})}
+						className={({ isActive }) =>
+							[style.headerNavLeftItem, "p-5", isActive ? style.headerNavLeftItemActive : null]
+								.filter(Boolean)
+								.join(" ")
+						}
 					>
-						{/* @ts-ignore */}
-						<BurgerIcon />
-						<span className="text text_type_main-default pl-2">Конструктор</span>
-					</Link>
+						<>
+							{/* @ts-ignore */}
+							<BurgerIcon />
+							<span className="text text_type_main-default pl-2">Конструктор</span>
+						</>
+					</NavLink>
 
-					<Link
+					<NavLink
 						to="/feed"
-						className={classNames(style.headerNavLeftItem, "p-5", {
-							[style.headerNavLeftItemActive]: location.pathname === "/feed",
-						})}
+						className={({ isActive }) =>
+							[style.headerNavLeftItem, "p-5", isActive ? style.headerNavLeftItemActive : null]
+								.filter(Boolean)
+								.join(" ")
+						}
 					>
-						{/* @ts-ignore */}
-						<ListIcon />
-						<span className="text text_type_main-default pl-2">Лента заказов</span>
-					</Link>
+						<>
+							{/* @ts-ignore */}
+							<ListIcon />
+							<span className="text text_type_main-default pl-2">Лента заказов</span>
+						</>
+					</NavLink>
 				</nav>
 
-				<Link to="/" className={style.headerLogo}>
+				<NavLink to="/" className={style.headerLogo}>
 					<Logo />
-				</Link>
+				</NavLink>
 
 				<nav className={style.headerNavRight}>
-					<Link
+					<NavLink
 						to="/profile"
-						// className={`${headerLinkClass} ${
-						// 	location.pathname === "/profile" && style.headerNavLeftItemActive
-						// }`}
-						className={classNames(style.headerNavRightItem, "p-5", {
-							[style.headerNavRightItemActive]: location.pathname === "/profile",
-						})}
+						className={({ isActive }) =>
+							[style.headerNavRightItem, "p-5", isActive ? style.headerNavRightItemActive : null]
+								.filter(Boolean)
+								.join(" ")
+						}
 					>
-						{/* @ts-ignore */}
-						<ProfileIcon />
-						<span className="text text_type_main-default pl-2">Личный кабинет</span>
-					</Link>
+						<>
+							{/* @ts-ignore */}
+							<ProfileIcon />
+							<span className="text text_type_main-default pl-2">Личный кабинет</span>
+						</>
+					</NavLink>
 				</nav>
 			</div>
 		</header>

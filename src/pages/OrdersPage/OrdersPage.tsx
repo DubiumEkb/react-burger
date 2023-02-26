@@ -2,7 +2,7 @@
 
 // Import Library
 import classNames from "classnames"
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
 import { Link, useLocation } from "react-router-dom"
 
 // Import Framework
@@ -15,6 +15,7 @@ import { Order } from "components/Order/Order"
 // Import Store
 import { getUser, checkToken, postLogout } from "services/user/userSlice"
 import { getIngredients } from "services/ingredients/ingredientsSlice"
+import { connect, disconnect, setSocketUrl } from "services/socket/socket"
 
 // Import Style
 import styles from "./OrdersPage.module.css"
@@ -23,7 +24,6 @@ import styles from "./OrdersPage.module.css"
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 import { getCookie } from "utils/cookie/getCookie"
 
-// Import Utils
 import { urlWS } from "utils/config"
 
 // Import Types
@@ -37,7 +37,7 @@ export const OrdersPage: FC<Props> = ({ items }) => {
 	const { pathname } = useLocation()
 	const dispatch = useAppDispatch()
 
-	const { data } = useAppSelector((state) => state.feed)
+	const { data } = useAppSelector((state) => state.websockets)
 
 	useEffect(() => {
 		if (getCookie("access_token") && getCookie("refresh_token")) {
@@ -47,16 +47,17 @@ export const OrdersPage: FC<Props> = ({ items }) => {
 	}, [dispatch])
 
 	useEffect(() => {
-		dispatch({ type: "websocket/disconnect" })
-		let token = getCookie("access_token")
-		if (token && typeof token === "string") {
-			token = token.replace("Bearer ", "")
-			dispatch({
-				type: "websocket/connect",
-				payload: { url: `${urlWS}/orders?token=${token}` },
-			})
-			return () => {
-				dispatch({ type: "websocket/disconnect" })
+		dispatch(disconnect())
+		if (getCookie("access_token") && getCookie("refresh_token")) {
+			let token = getCookie("access_token")
+			if (token) {
+				token = token.replace("Bearer ", "")
+				dispatch(setSocketUrl(`${urlWS}/orders?token=${token}`))
+				dispatch(connect())
+
+				return () => {
+					dispatch(disconnect())
+				}
 			}
 		}
 	}, [dispatch])
@@ -73,13 +74,15 @@ export const OrdersPage: FC<Props> = ({ items }) => {
 		dispatch(postLogout())
 	}
 
-	const orderItems = data?.orders?.map((order) => {
-		const ingredients = items?.filter((product) => order?.ingredients?.includes(product._id))
-		return {
-			...order,
-			ingredients,
-		} as OrderType
-	})
+	const orderItems = useMemo(() => {
+		return data?.orders?.map((order) => {
+			const ingredients = items?.filter((product) => order?.ingredients?.includes(product._id))
+			return {
+				...order,
+				ingredients,
+			} as OrderType
+		})
+	}, [data?.orders, items])
 
 	if (!orderItems) {
 		return null

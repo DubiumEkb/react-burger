@@ -1,15 +1,16 @@
 // Import Library
-import { configureStore } from "@reduxjs/toolkit"
+import { Action } from "redux"
+import { configureStore, ThunkAction } from "@reduxjs/toolkit"
 
 // Import Slices
 import ingredientsSlice from "./ingredients/ingredientsSlice"
 import constructorSlice from "./constructor/constructorSlice"
 import modalSlice from "./modal/modalSlice"
 import userSlice from "./user/userSlice"
-import feedSlice from "./feed/feedSlice"
+import websocketsSlice from "./socket/socket"
 
 // Import Helpers
-import { websocketMiddleware } from "utils/helpers/middleware"
+// import { websocketMiddleware } from "utils/helpers/middleware"
 
 export const store = configureStore({
 	reducer: {
@@ -18,12 +19,13 @@ export const store = configureStore({
 		constSlice: constructorSlice,
 		modalSlice: modalSlice,
 		user: userSlice,
-		feed: feedSlice,
+		websockets: websocketsSlice,
 	},
-	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(websocketMiddleware),
 })
 
 // Нужен для Hook useAppSelector
 export type RootState = ReturnType<typeof store.getState>
 // Нужен для Hook useAppDispatch
 export type AppDispatch = typeof store.dispatch
+
+export type AppThunk = ThunkAction<void, RootState, null, Action<string>>

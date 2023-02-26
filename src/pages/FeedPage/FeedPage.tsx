@@ -1,7 +1,7 @@
 // Import Assets
 
 // Import Library
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
 import classNames from "classnames"
 
 // Import Framework
@@ -14,6 +14,8 @@ import { Price } from "components/Price/Price"
 
 // Import Store
 import { getIngredients } from "services/ingredients/ingredientsSlice"
+// import { connectOrdersAllSocket, disconnectOrdersAllSocket } from "services/socket/socket"
+import { setSocketUrl, connect, disconnect } from "services/socket/socket"
 
 // Import Style
 import styles from "./FeedPage.module.css"
@@ -21,25 +23,25 @@ import styles from "./FeedPage.module.css"
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
-// Import Utils
-import { urlWS } from "utils/config"
-
 // Import Types
 import { DataType, OrderType } from "utils/types/dataType"
 import type { FC } from "react"
+import { urlWS } from "utils/config"
 type Props = {
 	items: DataType[] | null
 }
 
 export const FeedPage: FC<Props> = ({ items }) => {
 	const dispatch = useAppDispatch()
-	const { data } = useAppSelector((state) => state.feed)
+	const { data } = useAppSelector((state) => state.websockets)
 
 	useEffect(() => {
-		dispatch({ type: "websocket/disconnect" })
-		dispatch({ type: "websocket/connect", payload: { url: `${urlWS}/orders/all` } })
+		dispatch(disconnect())
+		dispatch(setSocketUrl(`${urlWS}/orders/all`))
+		dispatch(connect())
+
 		return () => {
-			dispatch({ type: "websocket/disconnect" })
+			dispatch(disconnect())
 		}
 	}, [dispatch])
 
@@ -49,20 +51,22 @@ export const FeedPage: FC<Props> = ({ items }) => {
 		}
 	}, [data?.success, dispatch])
 
-	if (!data && !items) {
+	const doneArray = useMemo(() => data?.orders?.filter((item) => item.status === "done"), [data?.orders])
+	const pendingArray = useMemo(() => data?.orders?.filter((item) => item.status === "pending"), [data?.orders])
+
+	const orderItems = useMemo(() => {
+		return data?.orders?.map((order) => {
+			const ingredients = items?.filter((product) => order?.ingredients?.includes(product._id))
+			return {
+				...order,
+				ingredients,
+			} as OrderType
+		})
+	}, [data?.orders, items])
+
+	if (!orderItems) {
 		return null
 	}
-
-	const doneArray = data?.orders?.filter((item) => item.status === "done")
-	const pendingArray = data?.orders?.filter((item) => item.status === "pending")
-
-	const orderItems = data?.orders?.map((order) => {
-		const ingredients = items?.filter((product) => order?.ingredients?.includes(product._id))
-		return {
-			...order,
-			ingredients,
-		} as OrderType
-	})
 
 	return (
 		<>
