@@ -1,4 +1,5 @@
 // Import Library
+import classNames from "classnames"
 import { ChangeEvent, FormEvent, useEffect } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 
@@ -11,16 +12,16 @@ import { FormContainer } from "components/FormContainer/FormContainer"
 // Import Store
 import { changeEmail, changePassword, postLogin } from "services/user/userSlice"
 
-// Import Types
-import type { FC } from "react"
-
 // Import Style
 import styles from "./LoginPage.module.css"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
-const LoginPage: FC = () => {
+// Import Types
+import type { FC } from "react"
+
+export const LoginPage: FC = () => {
 	const location = useLocation()
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
@@ -51,15 +52,21 @@ const LoginPage: FC = () => {
 	return (
 		<FormContainer>
 			<p className="text text_type_main-medium">Вход</p>
-			<form className={`${styles.form} pt-6 pb-20`} onSubmit={handlerForm}>
-				<EmailInput onChange={onChangeEmail} value={user.email} name={"email"} isIcon={false} extraClass="mb-6" />
+			<form className={classNames(styles.form, "pt-6", "pb-20")} onSubmit={handlerForm}>
+				<EmailInput
+					onChange={onChangeEmail}
+					value={user.email}
+					name={"email"}
+					isIcon={false}
+					extraClass="mb-6"
+				/>
 				<PasswordInput onChange={onChangePassword} value={user.password} name={"password"} extraClass="mb-6" />
 				<Button htmlType="submit" type="primary" size="medium">
 					Войти
 				</Button>
 			</form>
 			<div className={styles.links}>
-				<div className={`${styles.linksItem} pb-4`}>
+				<div className={classNames(styles.linksItem, "pb-4")}>
 					<p className="text text_type_main-default text_color_inactive">Вы — новый пользователь?</p>
 					<Link to="/register" className="text text_type_main-default">
 						Вы — новый пользователь?
@@ -75,5 +82,3 @@ const LoginPage: FC = () => {
 		</FormContainer>
 	)
 }
-
-export default LoginPage

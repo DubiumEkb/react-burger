@@ -9,6 +9,7 @@ import { urlAPI } from "utils/config"
 import { setCookie } from "utils/cookie/setCookie"
 import { deleteCookie } from "utils/cookie/deleteCookie"
 
+// Import Types
 type InitialState = {
 	user: {
 		email: string
@@ -25,7 +26,8 @@ type InitialState = {
 		user: boolean
 		status: boolean
 		updateToken: boolean
-		forgot: false
+		forgot: boolean
+		logout: boolean
 	}
 }
 
@@ -46,6 +48,7 @@ const initialState: InitialState = {
 		status: false,
 		updateToken: false,
 		forgot: false,
+		logout: false,
 	},
 }
 
@@ -182,7 +185,6 @@ export const userSlice = createSlice({
 			})
 			.addCase(getUser.fulfilled, (state, { payload }) => {
 				// Положительный запрос
-
 				if (payload.message === "jwt expired") {
 					state.success.updateToken = true
 				}
@@ -198,8 +200,11 @@ export const userSlice = createSlice({
 				state.success.status = true
 				state.success.user = payload.success
 			})
-			.addCase(getUser.rejected, (state) => {
+			.addCase(getUser.rejected, (state, { error }) => {
 				// Ошибка запроса
+				if (error.message === "Ошибка Error: Ошибка 403") {
+					state.success.updateToken = true
+				}
 				state.success.status = false
 			})
 		// End - getUser
@@ -211,7 +216,6 @@ export const userSlice = createSlice({
 			})
 			.addCase(patchUser.fulfilled, (state, { payload }) => {
 				// Положительный запрос
-
 				if (payload.message === "jwt expired") {
 					state.success.updateToken = true
 				}
@@ -227,8 +231,12 @@ export const userSlice = createSlice({
 				state.success.status = true
 				state.success.user = payload.success
 			})
-			.addCase(patchUser.rejected, (state) => {
+			.addCase(patchUser.rejected, (state, { error }) => {
 				// Ошибка запроса
+				if (error.message === "Ошибка Error: Ошибка 403") {
+					state.success.updateToken = true
+					// state.success.logout = true
+				}
 				state.success.status = false
 			})
 		// End - patchUser
@@ -246,8 +254,13 @@ export const userSlice = createSlice({
 				state.success.status = true
 				state.success.user = payload.success
 			})
-			.addCase(postToken.rejected, (state) => {
+			.addCase(postToken.rejected, (state, { error }) => {
 				// Ошибка запроса
+				if (error.message === "Ошибка Error: Ошибка 401") {
+					deleteCookie("access_token")
+					deleteCookie("refresh_token")
+					state.success.logout = true
+				}
 				state.success.status = false
 			})
 		// End - postToken
@@ -361,8 +374,26 @@ export const userSlice = createSlice({
 				deleteCookie("access_token")
 				deleteCookie("refresh_token")
 
-				state.success.status = true
-				state.success.user = false
+				state.user = {
+					email: "",
+					name: "",
+					password: "",
+					token: "",
+				}
+
+				state.origin = {
+					email: "",
+					name: "",
+					password: "",
+				}
+
+				state.success = {
+					user: false,
+					status: true,
+					updateToken: false,
+					forgot: false,
+					logout: true,
+				}
 			})
 			.addCase(postLogout.rejected, (state) => {
 				// Ошибка запроса

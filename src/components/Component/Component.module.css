@@ -1,0 +1,32 @@
+.card {
+	display: flex;
+	align-items: center;
+
+	width: 100%;
+}
+
+.card .cardImg {
+	width: 65px;
+}
+
+.card .cardName {
+	flex: 1 0;
+}
+
+.card .cardPrice {
+	display: flex;
+	align-items: center;
+}
+
+.card .cardPrice .cardPriceNumber {
+	display: flex;
+	align-items: center;
+}
+
+.card .cardPrice .cardPriceNumber .cardPriceNumberX {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.card .cardPrice .cardPriceNumber .cardPriceNumberPrice {
+	margin-right: 9px;
+}

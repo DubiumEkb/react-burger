@@ -10,13 +10,13 @@ import BurgerConstructor from "components/BurgerConstructor/BurgerConstructor"
 // Import Store
 import { getIngredients } from "services/ingredients/ingredientsSlice"
 
-// Import Types
-import type { FC } from "react"
-
 // Import Hooks
 import { useAppDispatch } from "utils/hooks/useAppStore"
 
-const HomePage: FC = () => {
+// Import Types
+import type { FC } from "react"
+
+export const HomePage: FC = () => {
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
@@ -30,5 +30,3 @@ const HomePage: FC = () => {
 		</DndProvider>
 	)
 }
-
-export default HomePage

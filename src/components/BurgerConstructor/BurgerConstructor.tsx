@@ -1,28 +1,26 @@
+// Import Assets
+
 // Import Library
 import { useCallback } from "react"
 import { useDrop } from "react-dnd"
 import { useNavigate } from "react-router-dom"
-
+import classNames from "classnames"
 // Import Framework
 import { ConstructorElement, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components"
-
 // Import Components
 import { BurgerConstructorItem } from "./ui"
 
 // Import Store
 import { addBunItem, createMainList, addMainList } from "services/constructor/constructorSlice"
 import { openModal } from "services/modal/modalSlice"
-
+// Import Style
+import style from "./BurgerConstructor.module.css"
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 import { getCookie } from "utils/cookie/getCookie"
-
 // Import Types
 import type { FC } from "react"
 import { DataType } from "utils/types/dataType"
-
-// Import Style
-import style from "./BurgerConstructor.module.css"
 
 const BurgerConstructor: FC = () => {
 	const dispatch = useAppDispatch()
@@ -76,9 +74,13 @@ const BurgerConstructor: FC = () => {
 	const dragIngredients = canDrop && dragItem && dragItem.type !== "bun"
 
 	return (
-		<section className={`${style.BurgerConstructor} pt-25`}>
-			<div ref={drop} className={`${style.BurgerConstructorItems}`}>
-				<div className={`${style.BurgerConstructorItem} ${dragBuns && style.BurgerConstructorBorder} mb-4`}>
+		<section className={classNames(style.BurgerConstructor, "pt-25")}>
+			<div ref={drop} className={style.BurgerConstructorItems}>
+				<div
+					className={classNames(style.BurgerConstructorItem, "mb-4", {
+						[style.BurgerConstructorBorder]: dragBuns,
+					})}
+				>
 					{bunItem && (
 						<ConstructorElement
 							type="top"
@@ -91,17 +93,29 @@ const BurgerConstructor: FC = () => {
 				</div>
 
 				<div
-					className={`${style.BurgerConstructorItem} ${style.BurgerConstructorContainer} ${
-						dragIngredients && style.BurgerConstructorBorder
-					} ${mainList.length > 0 && "pr-2"} `}
+					className={classNames(style.BurgerConstructorItem, style.BurgerConstructorContainer, {
+						[style.BurgerConstructorBorder]: dragIngredients,
+						"pr-2": mainList.length > 0,
+					})}
 				>
 					{mainList.length > 0 &&
 						mainList.map((item, index) => {
-							return <BurgerConstructorItem key={item.sortingId} index={index} item={item} moveCard={moveCard} />
+							return (
+								<BurgerConstructorItem
+									key={item.sortingId}
+									index={index}
+									item={item}
+									moveCard={moveCard}
+								/>
+							)
 						})}
 				</div>
 
-				<div className={`${style.BurgerConstructorItem} ${dragBuns && style.BurgerConstructorBorder} mt-4`}>
+				<div
+					className={classNames(style.BurgerConstructorItem, "mt-4", {
+						[style.BurgerConstructorBorder]: dragBuns,
+					})}
+				>
 					{bunItem && (
 						<ConstructorElement
 							type="bottom"
@@ -114,8 +128,8 @@ const BurgerConstructor: FC = () => {
 				</div>
 			</div>
 
-			<div className={`${style.BurgerConstructorOrder} mt-10`}>
-				<div className={`${style.BurgerConstructorOrderPrice} mr-10`}>
+			<div className={classNames(style.BurgerConstructorOrder, "mt-10")}>
+				<div className={classNames(style.BurgerConstructorOrderPrice, "mr-10")}>
 					<div className="mr-2 text text_type_digits-medium">{totalPrice}</div>
 					<CurrencyIcon type="primary" />
 				</div>

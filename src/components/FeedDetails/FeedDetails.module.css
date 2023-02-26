@@ -1,0 +1,95 @@
+.detail {
+	width: 640px;
+}
+
+.detail.detailModal {
+	padding: calc(var(--offset-base-size) * 10);
+}
+
+.detail .detailHeader .detailHeaderClose {
+	display: none;
+}
+
+.detailHeader {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 100%;
+}
+
+.detail.detailModal .detailHeader {
+	justify-content: space-between;
+}
+
+.detail.detailModal .detailHeader .detailHeaderClose {
+	margin: 0;
+	padding: 3px;
+
+	border: none;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	cursor: pointer;
+
+	width: 30px;
+	height: 30px;
+
+	background-color: transparent;
+}
+
+.detail.detailModal .detailHeader .detailHeaderClose svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.detailList {
+	padding-top: 2px;
+	max-height: 326px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.detailList.detailListPadding {
+	padding-right: calc(var(--offset-base-size) * 6);
+}
+
+.detailList::-webkit-scrollbar {
+	width: 8px;
+	height: 100%;
+	max-height: 100%;
+}
+
+.detailList::-webkit-scrollbar-track {
+	background: #2f2f37;
+}
+
+.detailList::-webkit-scrollbar-thumb,
+.detailList::-webkit-scrollbar-thumb:hover,
+.detailList::-webkit-scrollbar-thumb:active {
+	background: #8585ad;
+}
+
+.detailList > div:not(:last-child) {
+	margin-bottom: calc(var(--offset-base-size) * 4);
+}
+
+.detailFooter {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.detailFooter .detailFooterDate {
+	display: flex;
+	align-items: center;
+}
+
+.detailFooter .detailFooterPrice {
+	display: flex;
+	align-items: center;
+	column-gap: 9px;
+}

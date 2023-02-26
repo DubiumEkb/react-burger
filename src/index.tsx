@@ -6,9 +6,13 @@ import { BrowserRouter } from "react-router-dom"
 // Import Components
 import App from "components/App/App"
 import reportWebVitals from "./reportWebVitals"
+
 // Import Store
 import { Provider } from "react-redux"
 import { store } from "services"
+
+// Import Style
+import "assets/style.css"
 
 const root = createRoot(document.getElementById("root") as HTMLElement)
 
@@ -25,4 +29,4 @@ root.render(
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-process.env.NODE_ENV === "development" && reportWebVitals(console.debug)
+process.env.NODE_ENV === "development" && reportWebVitals(console.log)

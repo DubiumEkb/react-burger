@@ -1,6 +1,9 @@
+// Import Assets
+
 // Import Library
 import { ChangeEvent, FormEvent, useEffect } from "react"
 import { Link, useNavigate, useLocation } from "react-router-dom"
+import classNames from "classnames"
 
 // Import Framework
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
@@ -8,11 +11,10 @@ import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burg
 // Import Components
 import { FormContainer } from "components/FormContainer/FormContainer"
 
+// Import Pages
+
 // Import Store
 import { checkToken, changePassword, postResetPassword } from "services/user/userSlice"
-
-// Import Types
-import type { FC } from "react"
 
 // Import Style
 import styles from "./ResetPasswordPage.module.css"
@@ -20,7 +22,12 @@ import styles from "./ResetPasswordPage.module.css"
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
-const ResetPasswordPage: FC = () => {
+// Import Utils
+
+// Import Types
+import type { FC } from "react"
+
+export const ResetPasswordPage: FC = () => {
 	const location = useLocation()
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
@@ -51,7 +58,7 @@ const ResetPasswordPage: FC = () => {
 	return (
 		<FormContainer>
 			<p className="text text_type_main-medium">Восстановление пароля</p>
-			<form className={`${styles.form} pt-6 pb-20`} onSubmit={handlerForm}>
+			<form className={classNames(styles.form, "pt-6", "pb-20")} onSubmit={handlerForm}>
 				<PasswordInput
 					placeholder="Введите новый пароль"
 					onChange={onChangePassword}
@@ -76,7 +83,7 @@ const ResetPasswordPage: FC = () => {
 				</Button>
 			</form>
 			<div className={styles.links}>
-				<div className={`${styles.linksItem} pb-4`}>
+				<div className={classNames(styles.linksItem, "pb-4")}>
 					<p className="text text_type_main-default text_color_inactive">Вспомнили пароль?</p>
 					<Link to="/login" className="text text_type_main-default">
 						Войти
@@ -86,5 +93,3 @@ const ResetPasswordPage: FC = () => {
 		</FormContainer>
 	)
 }
-
-export default ResetPasswordPage

@@ -1,4 +1,7 @@
+// Import Assets
+
 // Import Library
+import classNames from "classnames"
 import { FormEvent, ChangeEvent, useEffect } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 
@@ -8,11 +11,10 @@ import { Input, EmailInput, PasswordInput, Button } from "@ya.praktikum/react-de
 // Import Components
 import { FormContainer } from "components/FormContainer/FormContainer"
 
+// Import Pages
+
 // Import Store
 import { changeName, changeEmail, changePassword, postRegister } from "services/user/userSlice"
-
-// Import Types
-import type { FC } from "react"
 
 // Import Style
 import styles from "./RegisterPage.module.css"
@@ -20,7 +22,12 @@ import styles from "./RegisterPage.module.css"
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
 
-const RegisterPage: FC = () => {
+// Import Utils
+
+// Import Types
+import type { FC } from "react"
+
+export const RegisterPage: FC = () => {
 	const navigate = useNavigate()
 	const location = useLocation()
 	const dispatch = useAppDispatch()
@@ -55,7 +62,7 @@ const RegisterPage: FC = () => {
 	return (
 		<FormContainer>
 			<p className="text text_type_main-medium">Регистрация</p>
-			<form className={`${styles.form} pt-6 pb-20`} onSubmit={handlerForm}>
+			<form className={classNames(styles.form, "pt-6", "pb-20")} onSubmit={handlerForm}>
 				<Input
 					type={"text"}
 					placeholder={"Имя"}
@@ -65,15 +72,19 @@ const RegisterPage: FC = () => {
 					errorText={"Укажите имя"}
 					extraClass="mb-6"
 				/>
+
 				<EmailInput onChange={onChangeEmail} value={user.email} extraClass="mb-6" />
+
 				<PasswordInput onChange={onChangePassword} value={user.password} extraClass="mb-6" />
+
 				<Button htmlType="submit" type="primary" size="medium">
 					Зарегистрироваться
 				</Button>
 			</form>
 			<div className={styles.links}>
-				<div className={`${styles.linksItem} pb-4`}>
+				<div className={classNames(styles.linksItem, "pb-4")}>
 					<p className="text text_type_main-default text_color_inactive">Уже зарегистрированы?</p>
+
 					<Link to="/login" className="text text_type_main-default">
 						Войти
 					</Link>
@@ -82,5 +93,3 @@ const RegisterPage: FC = () => {
 		</FormContainer>
 	)
 }
-
-export default RegisterPage

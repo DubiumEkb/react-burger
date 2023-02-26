@@ -61,8 +61,8 @@
 
 .header .headerNavLeft .headerNavLeftItem.headerNavLeftItemActive svg,
 .header .headerNavLeft .headerNavLeftItem.headerNavLeftItemActive span,
-.header .headerNavRight .headerNavRightItem.headerNavLeftItemActive svg,
-.header .headerNavRight .headerNavRightItem.headerNavLeftItemActive span {
+.header .headerNavRight .headerNavRightItem.headerNavRightItemActive svg,
+.header .headerNavRight .headerNavRightItem.headerNavRightItemActive span {
 	fill: #F2F2F3;
 	color: #F2F2F3;
 }

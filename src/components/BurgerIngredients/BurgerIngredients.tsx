@@ -1,12 +1,16 @@
+// Import Assets
+
 // Import Library
 import { useState, useRef } from "react"
 import { Link, useLocation } from "react-router-dom"
-
+import classNames from "classnames"
 // Import Framework
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components"
 
 // Import Components
 import { BurgerIngredientsItem } from "./ui"
+
+// Import Pages
 
 // Import Store
 import { openModal } from "services/modal/modalSlice"
@@ -69,7 +73,7 @@ const BurgerIngredients: FC = () => {
 	}
 
 	return (
-		<section className={`${style.BurgerIngredients} pr-10`}>
+		<section className={classNames(style.BurgerIngredients, "pr-10")}>
 			<div className="pt-10 pb-5">
 				<h1 className="text text_type_main-large">Соберите бургер</h1>
 			</div>
@@ -110,11 +114,12 @@ const BurgerIngredients: FC = () => {
 			</nav>
 
 			<div className={style.BurgerIngredientsContent} onScroll={(event) => handleOnScroll(event)}>
-				<section className={`${style.BurgerIngredientsContentSection} pt-10`} ref={refBuns}>
+				<section className={classNames(style.BurgerIngredientsContentSection, "pt-10")} ref={refBuns}>
 					<h2 className="text text_type_main-medium pb-6">Булки</h2>
 
 					<div className={style.BurgerIngredientsContentSectionRow}>
 						{pending && <div className="text text_type_main-large p-15">Загрузка...</div>}
+
 						{fulfilled &&
 							items.map((item: DataType) => {
 								return item.type === "bun" ? (
@@ -129,14 +134,17 @@ const BurgerIngredients: FC = () => {
 									</Link>
 								) : null
 							})}
+
 						{rejected && <div className="text text_type_main-large p-15">Ошибка!</div>}
 					</div>
 				</section>
 
 				<section className={style.BurgerIngredientsContentSection} ref={refSauces}>
 					<h2 className="text text_type_main-medium pb-6">Соусы</h2>
+
 					<div className={style.BurgerIngredientsContentSectionRow}>
 						{pending && <div className="text text_type_main-large p-15">Загрузка...</div>}
+
 						{fulfilled &&
 							items.map((item: DataType) => {
 								return item.type === "sauce" ? (

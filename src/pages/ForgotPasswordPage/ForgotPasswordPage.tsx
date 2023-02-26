@@ -1,4 +1,7 @@
+// Import Assets
+
 // Import Library
+import classNames from "classnames"
 import { ChangeEvent, FormEvent, useEffect } from "react"
 import { Link, useNavigate, useLocation } from "react-router-dom"
 
@@ -8,20 +11,23 @@ import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-comp
 // Import Components
 import { FormContainer } from "components/FormContainer/FormContainer"
 
+// Import Pages
+
 // Import Store
 import { changeEmail, postForgotPassword } from "services/user/userSlice"
-
-// Import Types
-import type { FC } from "react"
 
 // Import Style
 import styles from "./ForgotPasswordPage.module.css"
 
 // Import Hooks
 import { useAppDispatch, useAppSelector } from "utils/hooks/useAppStore"
-// import { getCookie } from "utils/cookie/getCookie"
 
-const ForgotPasswordPage: FC = () => {
+// Import Utils
+
+// Import Types
+import type { FC } from "react"
+
+export const ForgotPasswordPage: FC = () => {
 	const navigate = useNavigate()
 	const location = useLocation()
 	const dispatch = useAppDispatch()
@@ -48,7 +54,8 @@ const ForgotPasswordPage: FC = () => {
 	return (
 		<FormContainer>
 			<p className="text text_type_main-medium">Восстановление пароля</p>
-			<form className={`${styles.form} pt-6 pb-20`} onSubmit={handlerForm}>
+
+			<form className={classNames(styles.form, "pt-6", "pb-20")} onSubmit={handlerForm}>
 				<EmailInput
 					placeholder={"Укажите e-mail"}
 					onChange={onChangeEmail}
@@ -58,13 +65,16 @@ const ForgotPasswordPage: FC = () => {
 					extraClass="mb-6"
 					required
 				/>
+
 				<Button htmlType="submit" type="primary" size="medium">
 					Восстановить
 				</Button>
 			</form>
+
 			<div className={styles.links}>
-				<div className={`${styles.linksItem} pb-4`}>
+				<div className={classNames(styles.linksItem, "pb-4")}>
 					<p className="text text_type_main-default text_color_inactive">Вспомнили пароль?</p>
+
 					<Link to="/login" className="text text_type_main-default">
 						Войти
 					</Link>
@@ -73,5 +83,3 @@ const ForgotPasswordPage: FC = () => {
 		</FormContainer>
 	)
 }
-
-export default ForgotPasswordPage

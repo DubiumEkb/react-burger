@@ -1,19 +1,23 @@
-// Import Library
-import { useDrag } from "react-dnd"
+// Import Assets
 
+// Import Library
+import classNames from "classnames"
+import { useDrag } from "react-dnd"
 // Import Framework
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components"
+// Import Components
+
+// Import Pages
+
+// Import Store
 
 // Import Style
 import style from "./BurgerIngredientsItem.module.css"
-
 // Import Hooks
 import { useAppSelector } from "utils/hooks/useAppStore"
-
 // Import Types
 import type { FC } from "react"
 import { DataType } from "utils/types/dataType"
-
 type BurgerIngredientsProps = {
 	ingredient: DataType
 	classname: string
@@ -31,11 +35,14 @@ export const BurgerIngredientsItem: FC<BurgerIngredientsProps> = ({ ingredient, 
 		}),
 	})
 
-	const opacity = isDragging && style.BurgerIngredientsItemDragging
-
 	return (
-		<div ref={drag} className={`${style.BurgerIngredientsItem} ${classname} ${opacity}`}>
-			<div className={`${style.BurgerIngredientsItemImage} pl-4 pr-4`}>
+		<div
+			ref={drag}
+			className={classNames(style.BurgerIngredientsItem, classname, {
+				[style.BurgerIngredientsItemDragging]: isDragging,
+			})}
+		>
+			<div className={classNames(style.BurgerIngredientsItemImage, "pl-4", "pr-4")}>
 				{count > 0 && <Counter count={count} size="default" />}
 
 				{bunItem && bunItem._id === ingredient._id && <Counter count={2} size="default" />}
@@ -43,7 +50,7 @@ export const BurgerIngredientsItem: FC<BurgerIngredientsProps> = ({ ingredient, 
 				<img src={ingredient?.image} alt={ingredient?.name} />
 			</div>
 
-			<div className={`${style.BurgerIngredientsItemPrice} pt-1 pb-1`}>
+			<div className={classNames(style.BurgerIngredientsItemPrice, "pt-1", "pb-1")}>
 				<div className="pr-2 text text_type_digits-default">{ingredient?.price}</div>
 				{/* @ts-ignore */}
 				<CurrencyIcon />

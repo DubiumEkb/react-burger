@@ -1,17 +1,27 @@
 export interface DataType {
-	filter(arg0: (item: any) => void): unknown
-	_id: string
-	name: string
-	type: string
-	proteins: number
-	fat: number
-	carbohydrates: number
 	calories: number
-	price: number
+	carbohydrates: number
+	fat: number
 	image: string
-	image_mobile: string
 	image_large: string
+	image_mobile: string
+	name: string
+	price: number
+	proteins: number
+	type: string
 	__v: number
+	_id: string
 	sortingId: string
 	index?: number
+	count?: number
+}
+
+export interface OrderType {
+	createdAt: string
+	ingredients: (string | DataType)[]
+	name: string
+	number: number
+	status: string
+	updatedAt: string
+	_id: string
 }
